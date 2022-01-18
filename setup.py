@@ -1,9 +1,9 @@
-import setuptools
+from setuptools import setup, find_packages
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
-setuptools.setup(
+setup(
     name="age_bot",
     version="0.0.1",
     author="IotaSpencer",
@@ -20,7 +20,16 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    package_dir={"": "lib"},
-    packages=setuptools.find_packages(where="lib"),
+    packages=find_packages(),
     python_requires=">=3.7",
+    install_requires=[
+        'asyncclick',
+        'py-cord'
+    ],
+    include_package_data=True,
+    entry_points={
+        'console_scripts': [
+            'age_bot = age_bot.scripts.main:start'
+        ],
+    },
 )
