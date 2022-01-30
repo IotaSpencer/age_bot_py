@@ -7,7 +7,7 @@ module.exports = {
     watch: true,
     ignore_watch: [
       "discord.log"
-    ]
+    ],
     pid: '/home/ken/.age_bot_py.pid',
     instances: 1,
     env: {
@@ -26,7 +26,7 @@ module.exports = {
       repo : 'GIT_REPOSITORY',
       path : 'DESTINATION_PATH',
       'pre-deploy-local': '',
-      'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env production',
+    
       'pre-setup': ''
     }
   }
