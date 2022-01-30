@@ -103,7 +103,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
 
 def setup(bot: discord.bot):
     bot.add_cog(IDStuff(bot))
-    bot.add
+    bot.add_c
     logger.info('Loaded IDStuff')
 
 
