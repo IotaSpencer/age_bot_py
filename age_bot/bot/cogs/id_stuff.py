@@ -34,7 +34,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
 
 
     @slash_command(name="verify")
-    @command
+    @commands.command
     async def slash_verify(self, ctx: ApplicationContext):
 
         ctx.respond('Pong!')
