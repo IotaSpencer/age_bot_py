@@ -26,7 +26,7 @@ module.exports = {
       repo : 'GIT_REPOSITORY',
       path : 'DESTINATION_PATH',
       'pre-deploy-local': '',
-    
+
       'pre-setup': ''
     }
   }
