@@ -8,7 +8,7 @@ module.exports = {
     pid: '',
     instances: 1,
     env: {
-      
+      ENV
     }
   }],
   deploy: {
