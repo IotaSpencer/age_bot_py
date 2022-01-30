@@ -34,7 +34,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
 
 
     @slash_command
-    async def s(self, parameter_list):
+    async def slash(self, parameter_list):
         pass
 
 
