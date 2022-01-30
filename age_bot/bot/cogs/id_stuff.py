@@ -33,7 +33,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
         self.ext_path = 'age_bot.bot.cogs.id_stuff'
 
 
-    @slash_command(name="verify", description="Verify your age")
+    @slash_command(name="verify", description="Verify your age via")
     @commands.command()
     async def slash_verify(self, ctx: ApplicationContext):
 
