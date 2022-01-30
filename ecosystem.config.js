@@ -5,7 +5,8 @@ module.exports = {
     args: 'start',
     autorestart: false,
     watch: true,
-    pid: ''
+    pid: '',
+    
   }],
   deploy: {
     production : {
