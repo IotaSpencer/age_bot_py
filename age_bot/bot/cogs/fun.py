@@ -1,10 +1,15 @@
+# built-in
+
+# 3rd party
 import discord
-import logging
 from discord.ext import commands
 
+# local
+from age_bot.logger import logger
 class Fun(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.ext_path = 'age_bot.bot.cogs.fun'
 
     @commands.command()
     async def ping(self, ctx):
@@ -15,8 +20,8 @@ class Fun(commands.Cog):
 
 def setup(bot):
     bot.add_cog(Fun(bot))
-    logging.info('Loaded Fun')
+    logger.info('Loaded Fun')
 
 def teardown(bot):
     bot.remove_cog(Fun(bot))
-    logging.info('Unloaded Fun')
+    logger.info('Unloaded Fun')

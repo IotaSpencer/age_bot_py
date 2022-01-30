@@ -1,6 +1,11 @@
 #! /usr/bin/env python3
-
+import asyncio
 from age_bot.scripts.main import start
 
-if __name__ == '__main__':
-    start()
+
+def main():
+    if __name__ == '__main__':
+        start()
+
+
+main()

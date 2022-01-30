@@ -14,16 +14,16 @@ def cli(ctx, debug):
     ctx.obj = AgeBotCLI(debug)
 
 
-@click.command()
+@cli.command()
 async def start():
     await age_bot.bot.bot.start()
 
-@click.command()
+@cli.command()
 async def repl():
     import code
     code.interact(local=globals())
 
-@click.command
+@cli.command
 async def deploy_commands():
     pass
 
