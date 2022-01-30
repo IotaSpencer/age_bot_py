@@ -11,7 +11,7 @@
             "request": "launch",
             "autoReload": {},
             "console": "internalConsole",
-            ""
+            "subProcess": t,
             "connect": {
                 "host": "localhost",
                 "port": 5678
