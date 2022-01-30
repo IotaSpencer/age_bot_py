@@ -33,7 +33,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
         self.ext_path = 'age_bot.bot.cogs.id_stuff'
 
 
-
+    
 
 
 
@@ -95,12 +95,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
             await ctx.send("An example would be '{}verify 00000000000000000'".format(ctx.bot.command_prefix))
 
 
-@slash_command(name='verify', cog=IDStuff)
-async def slash_verify(self, ctx):
-    if ctx.guild:
-        ctx.respond('Pong')
 
-        ctx.delete()
 
 def setup(bot):
     bot.add_cog(IDStuff(bot))
