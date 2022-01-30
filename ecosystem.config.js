@@ -5,7 +5,7 @@ module.exports = {
     args: 'start',
     autorestart: false,
     watch: true,
-    pid: '/home/k',
+    pid: '/home/ken',
     instances: 1,
     env: {
       ENV: 'development'
