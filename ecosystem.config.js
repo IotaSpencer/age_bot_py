@@ -9,7 +9,8 @@ module.exports = {
     instances: 1,
     env: {
       ENV: 'development'
-    }
+    },
+    
   }],
   deploy: {
     production : {
