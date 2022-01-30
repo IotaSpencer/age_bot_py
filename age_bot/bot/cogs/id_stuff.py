@@ -34,8 +34,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
 
 
     @verify_commands = 
-    @verify_commandscommand(name="verify", description="Verify your age via Nenrei-Sama")
-    @commands.command()
+    @verify_commands.command(name="verify", description="Verify your age via Nenrei-Sama")
     async def slash_verify(self, ctx: ApplicationContext):
 
         ctx.respond('Pong!')
