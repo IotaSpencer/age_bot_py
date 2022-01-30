@@ -9,7 +9,7 @@
             "name": "Python: Remote Attach",
             "type": "python",
             "request": "launch",
-            "autoReload": {tr},
+            "autoReload": {},
             "connect": {
                 "host": "localhost",
                 "port": 5678
