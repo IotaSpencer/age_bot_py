@@ -101,7 +101,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
 
 
 
-def setup(bot):
+def setup(bot: ):
     bot.add_cog(IDStuff(bot))
     bot.
     logger.info('Loaded IDStuff')
