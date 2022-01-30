@@ -34,49 +34,49 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
 
 
     @slash_command(name="verify")
-    @commands.command
+    @commands.command()
     async def slash_verify(self, ctx: ApplicationContext):
 
         ctx.respond('Pong!')
 
 
 
-    @commands.command()
-    @has_attachment()
-    async def verify(self, ctx: commands.Context, *, guild: discord.Guild = None):
-        if guild:
-            member = await guild.fetch_member(ctx.author.id)
-            file_url = ctx.message.attachments.first.url
-            db_guild = ServerDB.servers.to_dict()[str(guild.id)]
-            verify_channel = db_guild.verify_channel
-            channel = await guild.fetch_channel(verify_channel)
-            confirm_msg = await channel.send("""
-                {file_url}
-                      To add the 'Adult' role to this user, enter the following:
-                      `{prefix}confirm $XXXXX$ "#{user_distinct}"`
+    # @commands.command()
+    # @has_attachment()
+    # async def verify(self, ctx: commands.Context, *, guild: discord.Guild = None):
+    #     if guild:
+    #         member = await guild.fetch_member(ctx.author.id)
+    #         file_url = ctx.message.attachments.first.url
+    #         db_guild = ServerDB.servers.to_dict()[str(guild.id)]
+    #         verify_channel = db_guild.verify_channel
+    #         channel = await guild.fetch_channel(verify_channel)
+    #         confirm_msg = await channel.send("""
+    #             {file_url}
+    #                   To add the 'Adult' role to this user, enter the following:
+    #                   `{prefix}confirm $XXXXX$ "#{user_distinct}"`
     
-                      Sent as of #{timestamp} UTC
+    #                   Sent as of #{timestamp} UTC
     
-                      To reject this user use the message ID and a reasonable reason--
+    #                   To reject this user use the message ID and a reasonable reason--
     
-                      `{prefix}reject $XXXXX$ "#{user_distinct}" "username is photoshopped in"`
-                      or 
-                      `{prefix}reject $XXXXX$ "#{user_distinct}" "user is not 18+"`
-                      or
-                      `{prefix}reject $XXXXX$ "#{user_distinct}" "XXXXX is needed as well as XXXXX in the same shot"`
-                      or 
-                      `{prefix}reject $XXXXX$ "#{user_distinct}" "XXXXX is needed see #id-example"`
+    #                   `{prefix}reject $XXXXX$ "#{user_distinct}" "username is photoshopped in"`
+    #                   or 
+    #                   `{prefix}reject $XXXXX$ "#{user_distinct}" "user is not 18+"`
+    #                   or
+    #                   `{prefix}reject $XXXXX$ "#{user_distinct}" "XXXXX is needed as well as XXXXX in the same shot"`
+    #                   or 
+    #                   `{prefix}reject $XXXXX$ "#{user_distinct}" "XXXXX is needed see #id-example"`
     
-                      The given reason will be sent to the user. So be nice and concise.
-                """.format(timestamp=ctx.message.created_at, file_url=file_url,
-                           user_distinct=member_distinct(ctx, member), prefix=ctx.bot.command_prefix))
-            msg_id = confirm_msg.id
-            edited_msg = confirm_msg.content.replace('$XXXXX$', msg_id)
-            await confirm_msg.edit(content=edited_msg)
-            await member.send("Your submission has been sent.")
-            logger.debug('Making sure we sent our message')
-            await member.send("If you haven't received a message that your submission has been sent, let the admins of "
-                              "the applicable server know to contact the owner of this bot(iotaspencer#0001).")
+    #                   The given reason will be sent to the user. So be nice and concise.
+    #             """.format(timestamp=ctx.message.created_at, file_url=file_url,
+    #                        user_distinct=member_distinct(ctx, member), prefix=ctx.bot.command_prefix))
+    #         msg_id = confirm_msg.id
+    #         edited_msg = confirm_msg.content.replace('$XXXXX$', msg_id)
+    #         await confirm_msg.edit(content=edited_msg)
+    #         await member.send("Your submission has been sent.")
+    #         logger.debug('Making sure we sent our message')
+    #         await member.send("If you haven't received a message that your submission has been sent, let the admins of "
+    #                           "the applicable server know to contact the owner of this bot(iotaspencer#0001).")
 
     @verify.error
     async def verify_error(self, ctx, error):
