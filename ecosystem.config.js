@@ -5,7 +5,7 @@ module.exports = {
     args: 'start',
     autorestart: false,
     watch: true,
-    ignore_watch
+    ignore_watch: 
     pid: '/home/ken/.age_bot_py.pid',
     instances: 1,
     env: {
