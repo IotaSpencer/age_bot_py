@@ -10,7 +10,7 @@ module.exports = {
     env: {
       ENV: 'development'
     },
-    env
+    env_pr
   }],
   deploy: {
     production : {
