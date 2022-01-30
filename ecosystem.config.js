@@ -3,7 +3,7 @@ module.exports = {
     name: 'age_bot_py',
     cmd: 'age_bot/bin/age_bot',
     args: 'start',
-    auto
+    autoresta
   }],
   deploy: {
     production : {
