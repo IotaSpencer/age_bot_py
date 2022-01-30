@@ -2,7 +2,7 @@
 
 # 3rd party
 import discord
-from discord import Message
+from discord import ApplicationContext, Message
 from discord.ext import commands
 from discord.commands import \
     slash_command
