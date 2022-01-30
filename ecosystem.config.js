@@ -20,11 +20,11 @@ module.exports = {
   }],
   deploy: {
     production : {
-      user : 'SSH_USERNAME',
+      user : '',
       host : '',
       ref: 'origin/master',
       repo : 'github.com:IotaSpencer/age_bot_py',
-      path : 'DESTINATION_PATH',
+      path : '',
       'pre-deploy-local': '',
       'pre-setup': ''
     }
