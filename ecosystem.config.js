@@ -23,7 +23,7 @@ module.exports = {
       user : 'SSH_USERNAME',
       host : 'SSH_HOSTMACHINE',
       ref  : 'origin/master',
-      repo : 'github.com:IotaSpencer/age_bot',
+      repo : 'github.com:IotaSpencer/age_bot_p',
       path : 'DESTINATION_PATH',
       'pre-deploy-local': '',
       'pre-setup': ''
