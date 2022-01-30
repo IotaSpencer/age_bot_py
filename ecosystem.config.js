@@ -2,7 +2,7 @@ module.exports = {
   apps: [{
     name: 'age_bot_py',
     cmd: ''
-  
+  }]
   deploy: {
     production : {
       user : 'SSH_USERNAME',
