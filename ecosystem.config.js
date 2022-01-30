@@ -6,7 +6,7 @@ module.exports = {
     autorestart: false,
     watch: true,
     pid: '',
-    instances
+    instances: 
   }],
   deploy: {
     production : {
