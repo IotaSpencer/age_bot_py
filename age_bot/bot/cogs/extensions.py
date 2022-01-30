@@ -48,7 +48,7 @@ class Extensions(commands.Cog, command_attrs=dict(hidden=True)):
                 ctx.bot.reload_extension(cog_class.ext_path)
         await ctx.reply("Reloaded all cogs.")
         await ctx.bot.register_commands()
-        await ctx.reply('')
+        await ctx.reply("")
 
 
 def setup(bot):
