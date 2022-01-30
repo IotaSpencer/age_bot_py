@@ -23,10 +23,9 @@ module.exports = {
       user : 'SSH_USERNAME',
       host : 'SSH_HOSTMACHINE',
       ref  : 'origin/master',
-      repo : 'GIT_REPOSITORY',
+      repo : 'GIT_REPOSITOR',
       path : 'DESTINATION_PATH',
       'pre-deploy-local': '',
-
       'pre-setup': ''
     }
   }
