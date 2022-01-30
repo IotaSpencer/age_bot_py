@@ -34,7 +34,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
 
 
     @slash_command
-    async def slash_ver(self, parameter_list):
+    async def slash_verify(self, parameter_list):
         pass
 
 
