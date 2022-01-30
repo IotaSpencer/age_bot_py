@@ -6,7 +6,7 @@ module.exports = {
     autorestart: false,
     watch: true,
     ignore_watch: [
-      "dis"
+      "discord"
     ]
     pid: '/home/ken/.age_bot_py.pid',
     instances: 1,
