@@ -1,4 +1,4 @@
-py-cord==
+py-cord==2.
 yaml2object==1.0.13
 asyncclick==8.0.3.2
 setuptools==60.5.0
