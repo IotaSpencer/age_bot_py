@@ -21,7 +21,7 @@ module.exports = {
   deploy: {
     production : {
       user : 'SSH_USERNAME',
-      host : 'SSH_HOSTMACHINE',
+      host : 'SSH_',
       ref: 'origin/master',
       repo : 'github.com:IotaSpencer/age_bot_py',
       path : 'DESTINATION_PATH',
