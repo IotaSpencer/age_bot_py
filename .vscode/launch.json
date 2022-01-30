@@ -13,11 +13,8 @@
             "console": "internalConsole",
             "subProcess": true,
             "program": "${workspaceFolder}/age_bot/bin/age_bot",
-            "args": ["start"'],
-            "connect": {
-                "host": "localhost",
-                "port": 5678
-            },
+            "args": ["start"],
+
             "pathMappings": [
                 {
                     "localRoot": "${workspaceFolder}",
