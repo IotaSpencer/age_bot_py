@@ -5,7 +5,7 @@ module.exports = {
     args: 'start',
     autorestart: false,
     watch: true,
-    pid: '',
+    pid: '/',
     instances: 1,
     env: {
       ENV: 'development'
@@ -13,7 +13,7 @@ module.exports = {
     env_production: {
       ENV: 'production'
     },
-    interpreter: 'python'
+    interpreter: 'python3'
   }],
   deploy: {
     production : {
