@@ -1,8 +1,8 @@
 module.exports = {
   apps: [{
     name: 'age_bot_py',
-    cmd: ''
-  }]
+    cmd: 'age'
+  }],
   deploy: {
     production : {
       user : 'SSH_USERNAME',
