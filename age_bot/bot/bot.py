@@ -20,7 +20,7 @@ async def start() -> object:
     """
     token = Config.bot.token
     prefix = Config.bot.prefix
-    bot = commands.AuBot(
+    bot = commands.AutoBot(
         owner_id=234093061045616642,
         debug_guild=626522675224772658,
         command_prefix=prefix,
