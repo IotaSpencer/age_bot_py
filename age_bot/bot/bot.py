@@ -22,7 +22,7 @@ async def start() -> object:
     prefix = Config.bot.prefix
     bot = commands.AutoShardedBot(
         owner_id=234093061045616642,
-        debug_guild='626522675224772658',
+        debug_guilds=['626522675224772658'],
         command_prefix=prefix,
         max_messages=10000,
         intents=discord.Intents(
