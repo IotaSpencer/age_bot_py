@@ -33,7 +33,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
         self.ext_path = 'age_bot.bot.cogs.id_stuff'
 
 
-    @slas
+    @slash_
 
 
 
