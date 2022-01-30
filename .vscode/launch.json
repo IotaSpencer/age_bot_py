@@ -12,7 +12,7 @@
             "autoReload": {},
             "console": "internalConsole",
             "subProcess": true,
-            ""
+            "program": "",
             "connect": {
                 "host": "localhost",
                 "port": 5678
