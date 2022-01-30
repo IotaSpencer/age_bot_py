@@ -13,7 +13,7 @@ module.exports = {
     env_production: {
       ENV: 'production'
     },
-    interpreter
+    interpreter: ''
   }],
   deploy: {
     production : {
