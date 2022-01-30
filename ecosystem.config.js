@@ -1,7 +1,7 @@
 module.exports = {
   apps: [{
     name: 'age_bot_py',
-    cmd: 'age_bot'
+    cmd: 'age_bot/b'
   }],
   deploy: {
     production : {
