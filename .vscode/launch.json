@@ -14,7 +14,6 @@
             "subProcess": true,
             "program": "${workspaceFolder}/age_bot/bin/age_bot",
             "args": ["start"],
-
             "pathMappings": [
                 {
                     "localRoot": "${workspaceFolder}",
@@ -22,11 +21,6 @@
                 }
             ]
         },
-        {
-            "name": "Python: Attach using Process Id",
-            "type": "python",
-            "request": "attach",
-            "processId": "${command:pickProcess}"
-        }
+
     ]
 }
