@@ -33,7 +33,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
         self.ext_path = 'age_bot.bot.cogs.id_stuff'
 
 
-    @slash_command(name="verify")
+    @slash_command(name="verify", )
     @commands.command()
     async def slash_verify(self, ctx: ApplicationContext):
 
@@ -78,25 +78,25 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
     #         await member.send("If you haven't received a message that your submission has been sent, let the admins of "
     #                           "the applicable server know to contact the owner of this bot(iotaspencer#0001).")
 
-    @verify.error
-    async def verify_error(self, ctx, error):
-        if isinstance(error, NoAttachmentError):
-            await ctx.send("You are supposed to attach a file, the ID+Discord™ tag")
-        if isinstance(error, TooManyAttachmentError):
-            await ctx.send("""Hi, you're trying to send more than one photograph to me at a time.
-                        Please only send one shot to me,
-                        using the examples in the channel possibly called '#id-example'""")
-        if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send('Server ID is needed for verification')
-            mutual_guilds = ctx.author.mutual_guilds
-            guild_string = []
-            for guild in mutual_guilds:
-                guild_string.append("{0}({1})".format(guild.name, guild.id))
-            await ctx.send("Applicable Server IDs are {0}".format(', '.join(guild_string)))
-            await ctx.send(
-                "Send your ID+tag (using the examples in #id-example and #upload-example), with one of the server IDs "
-                "listed, the server ID is the number in parentheses.")
-            await ctx.send("An example would be '{}verify 00000000000000000'".format(ctx.bot.command_prefix))
+    # @verify.error
+    # async def verify_error(self, ctx, error):
+    #     if isinstance(error, NoAttachmentError):
+    #         await ctx.send("You are supposed to attach a file, the ID+Discord™ tag")
+    #     if isinstance(error, TooManyAttachmentError):
+    #         await ctx.send("""Hi, you're trying to send more than one photograph to me at a time.
+    #                     Please only send one shot to me,
+    #                     using the examples in the channel possibly called '#id-example'""")
+    #     if isinstance(error, commands.MissingRequiredArgument):
+    #         await ctx.send('Server ID is needed for verification')
+    #         mutual_guilds = ctx.author.mutual_guilds
+    #         guild_string = []
+    #         for guild in mutual_guilds:
+    #             guild_string.append("{0}({1})".format(guild.name, guild.id))
+    #         await ctx.send("Applicable Server IDs are {0}".format(', '.join(guild_string)))
+    #         await ctx.send(
+    #             "Send your ID+tag (using the examples in #id-example and #upload-example), with one of the server IDs "
+    #             "listed, the server ID is the number in parentheses.")
+    #         await ctx.send("An example would be '{}verify 00000000000000000'".format(ctx.bot.command_prefix))
 
 
 

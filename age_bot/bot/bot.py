@@ -21,7 +21,6 @@ async def start() -> object:
     token = Config.bot.token
     prefix = Config.bot.prefix
     bot = commands.Bot(
-        debug_guild=626522675224772658,
         owner_id=234093061045616642,
         command_prefix=prefix,
         max_messages=10000,
