@@ -34,7 +34,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
 
 
     @slash_command
-    as
+    async
 
 
 
