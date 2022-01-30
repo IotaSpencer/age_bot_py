@@ -11,6 +11,7 @@
             "request": "launch",
             "autoReload": {},
             "console": "internalConsole",
+            ""
             "connect": {
                 "host": "localhost",
                 "port": 5678
