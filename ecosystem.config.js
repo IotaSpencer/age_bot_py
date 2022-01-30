@@ -23,7 +23,6 @@ module.exports = {
       user : 'SSH_USERNAME',
       host : 'SSH_HOSTMACHINE',
       ref: 'origin/master',
-  
       repo : 'github.com:IotaSpencer/age_bot_py',
       path : 'DESTINATION_PATH',
       'pre-deploy-local': '',
