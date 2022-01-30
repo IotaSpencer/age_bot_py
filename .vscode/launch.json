@@ -13,6 +13,7 @@
             "console": "internalConsole",
             "subProcess": true,
             "program": "${workspaceFolder}/age_bot/bin/age_bot",
+            ""
             "connect": {
                 "host": "localhost",
                 "port": 5678
