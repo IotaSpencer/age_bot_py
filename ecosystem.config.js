@@ -4,7 +4,7 @@ module.exports = {
     cmd: 'age_bot/bin/age_bot',
     args: 'start',
     autorestart: false,
-    
+    watc
   }],
   deploy: {
     production : {
