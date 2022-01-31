@@ -14,7 +14,7 @@
             "subProcess": true,
             "program": "${workspaceFolder}/age_bot/bin/age_bot",
             "args": ["start"],
-            "preLaunchTask": ["pip"],
+            "preLaunchTask": ["pip-install"],
             "pathMappings": [
                 {
                     "localRoot": "${workspaceFolder}",
