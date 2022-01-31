@@ -15,8 +15,8 @@
             "program": "${workspaceFolder}/age_bot/bin/age_bot",
             "args": ["start"],
             "preLaunchTask": {
-                "task": "pi",
-                "type": ""
+                "task": "pip",
+                "type": "
             },
             "pathMappings": [
                 {
