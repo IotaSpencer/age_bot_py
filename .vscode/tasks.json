@@ -5,7 +5,7 @@
             "label": "Build",
             "type": "shell",
             "command": "pip",
-            "args": ["install", ]
+            "args": ["install", '.']
             "options": {
                 "cwd": "~/PycharmProjects/age_bot",
             }
