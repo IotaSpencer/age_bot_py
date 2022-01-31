@@ -16,7 +16,7 @@
             "args": ["start"],
             "preLaunchTask": {
                 "task": "pip-install",
-                "type": "pro"
+                "type": "process"
             },
             "pathMappings": [
                 {
