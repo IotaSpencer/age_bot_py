@@ -15,7 +15,7 @@
             "program": "${workspaceFolder}/age_bot/bin/age_bot",
             "args": ["start"],
             "preLaunchTask": {
-                "task": "pip-install",
+                "task": "1",
                 "type": "process"
             },
             "pathMappings": [
