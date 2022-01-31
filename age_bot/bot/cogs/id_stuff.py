@@ -38,7 +38,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
 
         if ctx.channel.name == 'hello':
             member = ctx.author
-            db
+            db_guild = 
             verify_channel = 
 
 
