@@ -4,7 +4,7 @@
         {
             "type": "shell",
             "command": "pip install .",
-            "options": {"cwd": "~/P"}
+            "options": {"cwd": "~/Pyc"}
         }
     ]
 }
