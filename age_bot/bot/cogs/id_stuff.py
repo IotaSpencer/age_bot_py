@@ -42,7 +42,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
             db_guild = ServerDB.servers.to_dict()[str(guild)]
             verify_channel = db_guild.verify_channel
             channel = ctx.guild.fetch_channel(verify_channel)
-            confirm
+            confirm_msg
 
 
 
