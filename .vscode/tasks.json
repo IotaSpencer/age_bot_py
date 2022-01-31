@@ -6,7 +6,9 @@
             "command": "pip install .",
             "options": {
                 "cwd": "~/PycharmProjects/age_bot",
-                "shell": {}
+                "shell": {
+                    ""
+                }
             }
         }
     ]
