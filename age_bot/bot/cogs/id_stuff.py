@@ -40,7 +40,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
             member = ctx.author
             guild = ctx.guild_id
             db_guild = ServerDB.servers.to_dict()[str(guild)]
-            verify_channel = 
+            verify_channel = db
 
 
 
