@@ -36,7 +36,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
     @slash_command(name="verify", description="Verify your age via Nenrei-Sama")
     async def slash_verify(self, ctx: ApplicationContext):
 
-        awactx.respond('Pong!')
+        await ctx.respond('Pong!')
 
 
 
