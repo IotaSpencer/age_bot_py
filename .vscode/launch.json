@@ -14,7 +14,7 @@
             "subProcess": true,
             "program": "${workspaceFolder}/age_bot/bin/age_bot",
             "args": ["start"],
-            
+            "preLaunchTask": ,
             "pathMappings": [
                 {
                     "localRoot": "${workspaceFolder}",
