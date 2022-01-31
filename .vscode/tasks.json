@@ -7,7 +7,7 @@
             "options": {
                 "cwd": "~/PycharmProjects/age_bot",
                 "shell": {
-                    ""
+                    "executable": "x"
                 }
             }
         }
