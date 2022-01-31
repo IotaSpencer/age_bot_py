@@ -16,7 +16,7 @@
             "args": ["start"],
             "preLaunchTask": {
                 "task": "pip",
-                "type": "
+                "type": ""
             },
             "pathMappings": [
                 {
