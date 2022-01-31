@@ -3,7 +3,7 @@
     "tasks": [
         {
             "label": "pip-install",
-            "type": "shell",
+            "type": "",
             "command": "pip install .",
             "options": {
                 "cwd": "~/PycharmProjects/age_bot",
