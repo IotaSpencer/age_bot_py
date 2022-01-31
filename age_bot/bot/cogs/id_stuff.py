@@ -100,4 +100,4 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
 
 
 
-```pyt```
+```python```
