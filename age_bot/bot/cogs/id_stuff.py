@@ -33,7 +33,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
         self.ext_path = 'age_bot.bot.cogs.id_stuff'
 
 
-    @slashcommand(name="verify", description="Verify your age via Nenrei-Sama")
+    @slash_command(name="verify", description="Verify your age via Nenrei-Sama")
     async def slash_verify(self, ctx: ApplicationContext):
 
         ctx.respond('Pong!')
@@ -100,7 +100,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
 
 
 
-def setup(bot: discord.bot):
+```def setup(bot: discord.bot):
     bot.add_cog(IDStuff(bot))
     bot.add_command()
     logger.info('Loaded IDStuff')
@@ -109,3 +109,4 @@ def setup(bot: discord.bot):
 def teardown(bot):
     bot.remove_cog(IDStuff(bot))
     logger.info('Unloaded IDStuff')
+```
