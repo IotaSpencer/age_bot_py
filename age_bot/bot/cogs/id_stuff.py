@@ -37,7 +37,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
     async def slash_verify(self, ctx: ApplicationContext):
 
         if ctx.channel.name == 'hello':
-            member 
+            member = 
 
 
 
