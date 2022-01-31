@@ -36,7 +36,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
     @slash_command(name="verify", description="Verify your age via Nenrei-Sama")
     async def slash_verify(self, ctx: ApplicationContext):
 
-        ctx.respond('Pong!')
+        awactx.respond('Pong!')
 
 
 
@@ -102,7 +102,6 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
 
 def setup(bot: discord.bot):
     bot.add_cog(IDStuff(bot))
-    bot.add_command()
     logger.info('Loaded IDStuff')
 
 
