@@ -7,7 +7,6 @@
             "command": "pip",
             "args": ["install", "."],
             "options": {
-            
             }
         }
     ]
