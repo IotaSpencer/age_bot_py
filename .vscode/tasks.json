@@ -3,7 +3,7 @@
     "tasks": [
         {
             "type": "shell",
-            "command": "pip install "
+            "command": "pip install .",
         }
     ]
 }
