@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "p",
+            "label": "pip",
             "type": "shell",
             "command": "pip install .",
             "options": {
