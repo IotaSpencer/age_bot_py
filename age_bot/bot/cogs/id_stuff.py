@@ -100,7 +100,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
 
 
 
-```def setup(bot: discord.bot):
+``def setup(bot: discord.bot):
     bot.add_cog(IDStuff(bot))
     bot.add_command()
     logger.info('Loaded IDStuff')
@@ -109,4 +109,4 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
 def teardown(bot):
     bot.remove_cog(IDStuff(bot))
     logger.info('Unloaded IDStuff')
-```
+``
