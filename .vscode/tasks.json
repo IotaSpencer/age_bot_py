@@ -5,7 +5,7 @@
             "label": "Build",
             "type": "process",
             "command": "pip",
-            "args": ["install", ".", "-r", "requirements"],
+            "args": ["install", ".", "-r", "requirements.t"],
             "options": {
             }
         }
