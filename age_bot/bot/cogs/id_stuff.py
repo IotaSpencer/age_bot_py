@@ -45,10 +45,10 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
             verify_channel = db_guild.verify_channel
             ctx.author.send("I'm going to wait for you to send a message with an attachment,", 
             " it can be an empty message. But there has to be a file attached.")
-            try: 
+            try:
                 ctx.bot.wait_for('message', timeout=86400.0, check=has_attachment)
             except asyncio.TimeoutError:
-                ctx.author
+                ctx.author.
 
 
     # @commands.command()
