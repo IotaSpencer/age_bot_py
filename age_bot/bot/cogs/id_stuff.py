@@ -42,7 +42,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
         if ctx.channel.name == 'hello':
             member = ctx.author # type: Union[Member, User]
             guild = ctx.guild_id
-            db_guild = ServerDB.servers.to_dict()[str(guild)]
+            db_guild = ServerDB.servers.geguild)]
             verify_channel = db_guild.verify_channel
             ctx.author.send("I'm going to wait for you to send a message with an attachment,", 
             " it can be an empty message. But there has to be a file attached.")

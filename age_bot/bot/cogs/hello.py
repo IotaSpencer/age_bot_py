@@ -44,7 +44,6 @@ class Hello(commands.Cog):
         orig_msg = msg
         if msg.guild and msg.channel:
             if msg.channel.name == 'hello':
-                logger.info(msg.channel_mentions)
                 if msg.channel_mentions:
                     if msg.channel_mentions[0].name == 'hello':
                         shame_msg = await msg.reply(content="The command is '&hello' nothing else"
