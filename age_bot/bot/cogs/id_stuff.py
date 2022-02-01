@@ -53,7 +53,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
             except asyncio.TimeoutError:
                 ctx.author.send("Timeout while waiting for attachment.")
                 ctx.author.send("Please try again later.")
-
+    
 
     # @commands.command()
     # @has_attachment()
