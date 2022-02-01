@@ -10,6 +10,6 @@ class Configs:
         return OmegaConf.load(src_path)
 
 
-    def ServerDB(YAMLObject):
+    def ServerDB():
         src_path = os.path.join(os.path.expanduser('~'), '.age_bot', 'serverdb.yml')
         return OmegaConf.load(src_path)
