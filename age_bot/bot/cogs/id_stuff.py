@@ -46,7 +46,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
             " it can be an empty message. But there has to be a file attached.")
             try: 
                 ctx.bot.wait_for('message', timeout=86400.0, check=has_attachment)
-            excep
+            except asynct
 
 
     # @commands.command()
