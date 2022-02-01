@@ -48,7 +48,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
             try:
                 ctx.bot.wait_for('message', timeout=86400.0, check=has_attachment)
             except asyncio.TimeoutError:
-                ctx.author.send("Timeout")
+                ctx.author.send("Timeout while waiting for attachment")
 
 
     # @commands.command()
