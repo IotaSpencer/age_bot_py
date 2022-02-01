@@ -3,7 +3,7 @@
 # 3rd party
 from ctypes import Union
 import discord
-from discord import ApplicationContext, Message, SlashCommandGroup, Member,
+from discord import ApplicationContext, Message, SlashCommandGroup, Member, User
 from discord.ext import commands
 from discord.commands import \
     slash_command
