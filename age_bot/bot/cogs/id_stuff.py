@@ -41,7 +41,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
             guild = ctx.guild_id
             db_guild = ServerDB.servers.to_dict()[str(guild)]
             verify_channel = db_guild.verify_channel
-            ctx.author.send("I'm going to wait for you to send a message with an attachment,", ve" it can be an empty message. But there has to be a file attached.")
+            ctx.author.send("I'm going to wait for you to send a message with an attachment,", " it can be an empty message. But there has to be a file attached.")
             ctx.bot.wait_for('message', timeout=86400.0, check=has_attachment)
 
 
