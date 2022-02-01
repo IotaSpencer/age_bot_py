@@ -10,5 +10,5 @@ class Configs:
     return OmegaConf.load(src_path)
 
 
-class ServerDB(metaclass=YAMLObject):
+ass ServerDB(metaclass=YAMLObject):
     source = os.path.join(os.path.expanduser('~'), '.age_bot', 'serverdb.yml')
