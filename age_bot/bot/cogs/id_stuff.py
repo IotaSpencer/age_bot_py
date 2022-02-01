@@ -41,7 +41,8 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
             guild = ctx.guild_id
             db_guild = ServerDB.servers.to_dict()[str(guild)]
             verify_channel = db_guild.verify_channel
-            ctx.bot.wait_for('message', timeout=86400.0, check=has)
+            ctx
+            ctx.bot.wait_for('message', timeout=86400.0, check=has_attachment)
 
 
 
