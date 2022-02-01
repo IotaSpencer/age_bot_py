@@ -5,4 +5,4 @@ asyncclick==8.0.3.2
 setuptools==60.5.0
 PyYAML==6.0
 anyio==3.5.0
-omegaconf==2.1.
+omegaconf==2.1.1
