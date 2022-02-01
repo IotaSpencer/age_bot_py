@@ -46,10 +46,10 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
             ctx.author.send("I'm going to wait for you to send a message with an attachment,", 
             " it can be an empty message. But there has to be a file attached.")
             try:
-                ctx.bot.wait_for('message', timeout=86400.0, check=has_attachment)
+                ctx.bot.wait_for('message', timeout=60.0, check=has_attachment)
             except asyncio.TimeoutError:
                 ctx.author.send("Timeout while waiting for attachment.")
-                ctx.author.send("Please try aga")
+                ctx.author.send("Please try again later.")
 
 
     # @commands.command()
