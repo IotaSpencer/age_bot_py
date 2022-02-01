@@ -1,8 +1,8 @@
 # built-in
 
-# 3rd 
+# 3rd party
 from yaml2object import YAMLObject
-import os
+
 
 
 class Config(metaclass=YAMLObject):
