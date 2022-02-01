@@ -35,6 +35,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
         self.ext_path = 'age_bot.bot.cogs.id_stuff'
 
 
+
     @slash_command(name="verify", description="Verify your age via Nenrei-Sama", guild_ids=[626522675224772658])
     async def slash_verify(self, ctx: ApplicationContext):
 
@@ -45,6 +46,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
             verify_channel = db_guild.verify_channel
             ctx.author.send("I'm going to wait for you to send a message with an attachment,", 
             " it can be an empty message. But there has to be a file attached.")
+            de
             try:
                 ctx.bot.wait_for('message', timeout=60.0, check=has_attachment)
             except asyncio.TimeoutError:
