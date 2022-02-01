@@ -6,7 +6,7 @@ from omegaconf import OmegaConf
 
 class Configs:
     def Config():
-    srcos.path.join(os.path.expanduser('~'), '.age_bot', 'config.yml')
+    src_path = os.path.join(os.path.expanduser('~'), '.age_bot', 'config.yml')
 
 
 class ServerDB(metaclass=YAMLObject):
