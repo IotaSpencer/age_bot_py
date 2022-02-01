@@ -6,7 +6,7 @@ from omegaconf import OmegaConf
 
 def Config():
     src_path = os.path.join(os.path.expanduser('~'), '.age_bot', 'config.yml')
-        return OmegaConf.load(src_path)
+    return OmegaConf.load(src_path)
 
 
 def ServerDB():
