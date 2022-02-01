@@ -47,7 +47,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
             ctx.author.send("I'm going to wait for you to send a message with an attachment,", 
             " it can be an empty message. But there has to be a file attached.")
             def check(m):
-                return len(m.attachments) == 1 and m.author.id == ct
+                return len(m.attachments) == 1 and m.author.id == ctx.author.id
             try:
                 ctx.bot.wait_for('message', timeout=60.0, check=has_attachment)
             except asyncio.TimeoutError:
