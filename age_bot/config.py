@@ -9,6 +9,6 @@ def Config():
         return OmegaConf.load(src_path)
 
 
-    def ServerDB():
+ def ServerDB():
         src_path = os.path.join(os.path.expanduser('~'), '.age_bot', 'serverdb.yml')
         return OmegaConf.load(src_path)
