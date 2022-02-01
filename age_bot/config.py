@@ -12,4 +12,4 @@ class Configs:
 
     def ServerDB(metaclass=YAMLObject):
         src_path = os.path.join(os.path.expanduser('~'), '.age_bot', 'serverdb.yml')
-        return Omeg
+        return OmegaConf
