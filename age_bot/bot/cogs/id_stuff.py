@@ -37,7 +37,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
     async def slash_verify(self, ctx: ApplicationContext):
 
         if ctx.channel.name == 'hello':
-            member = ctx.author # 
+            member = ctx.author # type
             guild = ctx.guild_id
             db_guild = ServerDB.servers.to_dict()[str(guild)]
             verify_channel = db_guild.verify_channel
