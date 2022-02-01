@@ -11,4 +11,4 @@ class Configs:
 
 
     def ServerDB(metaclass=YAMLObject):
-     = os.path.join(os.path.expanduser('~'), '.age_bot', 'serverdb.yml')
+    src = os.path.join(os.path.expanduser('~'), '.age_bot', 'serverdb.yml')
