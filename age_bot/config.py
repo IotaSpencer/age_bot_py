@@ -6,9 +6,9 @@ from omegaconf import OmegaConf
 
 class Configs:
     def Config():
-    src_path = os.path.join(os.path.expanduser('~'), '.age_bot', 'config.yml')
+        `src_path = os.path.join(os.path.expanduser('~'), '.age_bot', 'config.yml')
     return OmegaConf.load(src_path)
 
 
     def ServerDB(metaclass=YAMLObject):
-    src_path = os.path.join(os.path.expanduser('~'), '.age_bot', 'serverdb.yml')
+        src_path = os.path.join(os.path.expanduser('~'), '.age_bot', 'serverdb.yml')
