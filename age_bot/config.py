@@ -2,7 +2,7 @@
 import os
 # 3rd party
 from yaml2object import YAMLObject
-from 
+from Om
 
 
 class Config(metaclass=YAMLObject):
