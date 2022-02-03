@@ -9,7 +9,7 @@ import discord
 import discord.ext.commands as commands
 
 # local import
-from ..config import Config, ServerDB
+from ..config import Configs
 from ..logger import logger
 
 
@@ -18,11 +18,11 @@ async def start() -> object:
 
     :rtype: object
     """
-    token = Config.bot.token
-    prefix = Config.bot.prefix
+    token = Configs.config.bot.token
+    prefix = Configs.config.bot.prefix
     bot = commands.AutoShardedBot(
         owner_id=234093061045616642,
-        debug_guilds=['626522675224772658'],
+        debug_guilds=[626522675224772658],
         command_prefix=prefix,
         max_messages=10000,
         intents=discord.Intents(
@@ -56,7 +56,15 @@ async def start() -> object:
     bot.load_extension('age_bot.bot.cogs.owner')
     bot.load_extension('age_bot.bot.cogs.id_stuff')
     bot.load_extension('age_bot.bot.cogs.hello')
+    bot.load_extension('age_bot.bot.cogs.bad_hello')
+
+    @bot.event
+    async def on_ready():
+        logger.info(f"Bot is online and ready! Name is {bot.user}")
+
     await bot.start(token)
+
+
 
 
 class Bot:

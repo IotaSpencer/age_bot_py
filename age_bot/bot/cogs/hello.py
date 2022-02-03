@@ -5,8 +5,8 @@ import discord
 from discord.ext import commands
 
 # local imports
-import age_bot.bot.helpers.discord as dhelpers
-from ...config import Config, ServerDB
+from age_bot.bot.helpers.discord import member_distinct
+from ...config import Configs
 from age_bot.logger import logger
 
 
@@ -24,20 +24,19 @@ class Hello(commands.Cog):
 
     @commands.command()
     async def hello(self, ctx):
-        await ctx.reply("""
-            Hello, {user}, in order to post or read {server_name} messages you must be a certain role as well as submitted a form of ID with the server in question.
+        await ctx.reply(f"""
+            Hello, {member_distinct(ctx, ctx.author)}, in order to post or read {ctx.guild.name} messages you must be a certain role as well as 
+            submitted a form of ID with the server in question.
 
-            For {server_name} that role is {adult_role}
+            For {ctx.guild.name} that role is \
+            {ctx.guild.get_role(Configs.serverdb.servers.to_dict()[str(ctx.guild.id)]['role'])} 
 
-            To do so, please send me a picture of your ID with everything but your 'date of birth' blacked out along with some sort of Discord™ proof (Your account page with the email blacked out or a handwritten Discord™ tag)
-
-            For you that would be {author_distinct}
-            When you do so, attach this string below to the picture as a caption.
-
-            &verify {server_id}""".format(user=ctx.author.name, server_id=ctx.guild.id,
-                                          author_distinct=dhelpers.author_distinct(ctx), server_name=ctx.guild.name,
-                                          adult_role=ctx.guild.get_role(
-                                              ServerDB.servers.to_dict()[str(ctx.guild.id)]['role'])))
+            To do so, please run the command /verify
+            """)
+        # .format(user=ctx.author.name, server_id=ctx.guild.id,
+        # author_distinct=dhelpers.author_distinct(ctx), server_name=ctx.guild.name,
+        # adult_role=ctx.guild.get_role(
+        #    )
 
     @commands.Cog.listener()
     async def on_message(self, msg: discord.Message):
@@ -53,8 +52,9 @@ class Hello(commands.Cog):
                             shame_channel = await find_shamed(msg.guild.text_channels)
                             shamed_user = msg.author
                             shamed_time = msg.created_at
-                            await shame_channel.send("{shamed_user} mentioned '#hello' in #hello at {shamed_time}".format(
-                                shamed_user=dhelpers.member_distinct(msg, shamed_user), shamed_time=shamed_time))
+                            await shame_channel.send(
+                                "{shamed_user} mentioned '#hello' in #hello at {shamed_time}".format(
+                                    shamed_user=member_distinct(msg, shamed_user), shamed_time=shamed_time))
                             await shame_msg.delete(delay=10)
                             await msg.delete(delay=10)
                     else:

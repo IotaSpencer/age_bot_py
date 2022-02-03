@@ -3,10 +3,11 @@
 # 3rd party
 from discord import Message
 from discord.ext import commands
+from discord import ApplicationContext, SlashCommandGroup, Member, User
 
 # local
 from age_bot.logger import logger
-from age_bot.config import Config, ServerDB
+from age_bot.config import Configs
 from age_bot.bot.helpers.discord import *
 
 
@@ -15,14 +16,14 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
         self.bot = bot
         self.ext_path = 'age_bot.bot.cogs.confirm'
 
-    @commands.command()
+    @commands.command(usage="<message> <user>", description="Confirm an ID as valid")
     @commands.has_any_role('Discord moderator', 'Mods', 'Server manager', 'Sub overlord', 'Discord owner')
-    async def confirm(self, ctx, message_id, user):
+    async def confirm(self, ctx, message: Message, user: Union[Member, User, str]):
         member = ctx.guild.get_member_named(user)
-        adult_role = ctx.guild.get_role(ServerDB.servers.to_dict()[str(ctx.guild.id)]['role'])
+        adult_role = ctx.guild.get_role(Configs.serverdb.servers[str(ctx.guild.id)].role)
         if not member.get_role(adult_role.id):
             await member.add_roles(adult_role, reason='Moderator adulted member', atomic=True)
-            msg = await ctx.channel.fetch_message(message_id)
+            msg = await ctx.channel.fetch_message(message)
             await ctx.channel.send(
                 f"{member} was confirmed to be an {adult_role}".format(member=member_distinct(ctx, member),
                                                                        adult_role=adult_role.name))
@@ -30,7 +31,7 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
             await msg.delete()
 
         else:
-            msg: Message = await ctx.channel.fetch_message(message_id)
+            msg: Message = await ctx.channel.fetch_message(message)
             await ctx.channel.send(
                 "{member} already has the role {adult_role}.".format(member=member_distinct(ctx, member),
                                                                      adult_role=adult_role.name))
@@ -42,6 +43,28 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
             await ctx.send(
                 "You are not allowed to use this command, you're missing all of these roles ({error})".format(
                     error=error.missing_roles))
+
+    @commands.command(usage="<message> <user> <reason...>", description="Reject an ID.")
+    @commands.has_any_role('Discord moderator', 'Mods', 'Server manager', 'Sub overlord', 'Discord owner')
+    async def reject(self, ctx: Context, message: int, user: str, reason: str):
+        member = ctx.guild.get_member_named(user)  # type: Member
+        msg = await ctx.channel.fetch_message(message)
+        await ctx.channel.send(f"{user} was rejected on grounds of \"{reason}\"")
+        await msg.delete(delay=5.0)
+        await member.send(f"Your submission was rejected due to the reason — {reason}")
+        await member.send(f"If applicable, try again later following the instructions laid out in the rejection "
+                          f"message above.")
+
+    @reject.error
+    async def reject_error(self, ctx, error):
+        if isinstance(error, commands.MissingAnyRole):
+            await ctx.send(
+                f"You are not allowed to use this command, you're missing all of these roles ({error})".format(
+                    error=error.missing_roles))
+        if isinstance(error, commands.MessageNotFound):
+            await ctx.send(
+                f"This message does not exist or is too old to delete."
+            )
 
 
 def setup(bot):

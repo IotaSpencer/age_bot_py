@@ -6,6 +6,8 @@ from discord.ext import commands
 
 # local
 from age_bot.logger import logger
+
+
 class Fun(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
