@@ -25,7 +25,7 @@ class JoinMessage(commands.Cog):
             f"\n\n"
             f"To do so.. please run the command /verify in #hello and I will message you with further instructions."
             f"\n\n"
-            f"You may ask questions about the process in #{member.channel} but other than that, "
+            f"You may ask questions about the process in #hello but other than that, "
             f"non-complying questions or messages will be deleted."
         )
 
