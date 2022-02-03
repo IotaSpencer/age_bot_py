@@ -27,4 +27,4 @@ def setup(bot):
 
 def teardown(bot):
     bot.remove_cog(JoinMessage(bot))
-    logger.info('Unloaded F')
+    logger.info('Unloaded K')
