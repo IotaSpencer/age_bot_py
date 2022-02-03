@@ -4,6 +4,7 @@
 import discord
 from discord.ext import commands
 
+
 # local
 from age_bot.logger import logger
 
@@ -14,7 +15,7 @@ class Fun(commands.Cog):
         self.ext_path = 'age_bot.bot.cogs.join_message'
 
     @commands.Cog.listener()
-    async def on_member_join(self, member: .Member):
+    async def on_member_join(self, member: Member):
         await ctx.reply("Pong %sms" % ctx.bot.latency)
 
 
