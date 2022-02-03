@@ -1,6 +1,7 @@
 {
     "python.linting.pylintEnabled": false,
     "cSpell.words": [
+        "envvar",
         "rtype",
         "serverdb",
         "Sharded"
