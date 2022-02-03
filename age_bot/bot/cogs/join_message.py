@@ -1,4 +1,5 @@
 # built-in
+import asyncio
 
 # 3rd party
 import discord
@@ -9,7 +10,7 @@ from discord import Member
 from age_bot.logger import logger
 
 
-class Fun(commands.Cog):
+class J(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.ext_path = 'age_bot.bot.cogs.join_message'
