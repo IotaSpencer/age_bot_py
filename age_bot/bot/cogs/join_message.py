@@ -26,5 +26,5 @@ def setup(bot):
     logger.info('Loaded JoinMessage')
 
 def teardown(bot):
-    bot.remove_cog((bot))
+    bot.remove_cog(Join(bot))
     logger.info('Unloaded Fun')
