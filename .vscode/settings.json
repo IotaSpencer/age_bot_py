@@ -4,5 +4,7 @@
         "rtype",
         "serverdb",
         "Sharded"
-    ]
+    ],
+    "scm.alwaysShowRepositories": true,
+    "scm.providerCountBadge": "auto"
 }

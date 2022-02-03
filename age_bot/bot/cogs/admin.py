@@ -2,7 +2,7 @@
 
 # 3rd party
 import discord
-from discord.commands import SlashCommandGroup, CommandPermission
+from discord import SlashCommandGroup, CommandPermission
 from discord.ext import commands
 
 # local
