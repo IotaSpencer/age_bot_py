@@ -24,19 +24,15 @@ class Hello(commands.Cog):
 
     @commands.command()
     async def hello(self, ctx):
-        await ctx.reply(f"""
-            Hello, {member_distinct(ctx, ctx.author)}, in order to post or read {ctx.guild.name} messages you must be a certain role as well as 
-            submitted a form of ID with the server in question.
-
-            For {ctx.guild.name} that role is \
-            {ctx.guild.get_role(Configs.serverdb.servers.to_dict()[str(ctx.guild.id)]['role'])} 
-
-            To do so, please run the command /verify
-            """)
-        # .format(user=ctx.author.name, server_id=ctx.guild.id,
-        # author_distinct=dhelpers.author_distinct(ctx), server_name=ctx.guild.name,
-        # adult_role=ctx.guild.get_role(
-        #    )
+        await ctx.reply(
+            f"Hello, {member_distinct(ctx, ctx.author)}, in order to post or read {ctx.guild.name} messages you must be a certain role as well as "
+            f"submitted a form of ID with the server in question."
+            f"\n\n"
+            f"For {ctx.guild.name} that role is "
+            f"{ctx.guild.get_role(Configs.serverdb.servers[str(ctx.guild.id)].role)} "
+            f"\n\n"
+            f"To do so, please run the command /verify"
+            )
 
     @commands.Cog.listener()
     async def on_message(self, msg: discord.Message):
