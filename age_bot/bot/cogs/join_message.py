@@ -3,7 +3,7 @@
 # 3rd party
 import discord
 from discord.ext import commands
-from discord.commands 
+from discord.commands import 
 
 # local
 from age_bot.logger import logger
