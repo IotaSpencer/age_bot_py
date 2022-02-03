@@ -23,7 +23,7 @@ class JoinMessage(commands.Cog):
 
 def setup(bot):
     bot.add_cog(JoinMessage(bot))
-    logger.info('Loaded Fun')
+    logger.info('Loaded ')
 
 def teardown(bot):
     bot.remove_cog(Fun(bot))
