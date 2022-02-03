@@ -14,7 +14,7 @@ class Fun(commands.Cog):
         self.ext_path = 'age_bot.bot.cogs.join_message'
 
     @commands.Cog.listener()
-    async def ping(self, ctx):
+    async def onping(self, ctx):
         await ctx.reply("Pong %sms" % ctx.bot.latency)
 
 
