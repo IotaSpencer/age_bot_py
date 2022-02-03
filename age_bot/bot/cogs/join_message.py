@@ -11,7 +11,7 @@ from age_bot.logger import logger
 class Fun(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.ext_path = 'age_bot.bot.cogs.join'
+        self.ext_path = 'age_bot.bot.cogs.join_message'
 
     @commands.command()
     async def ping(self, ctx):
