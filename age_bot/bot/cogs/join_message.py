@@ -17,7 +17,7 @@ class JoinMessage(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_join(self, member: Member):
-        asyncio.sleep(60)
+        await asyncio.sleep(60)
         await member.send(
             f"Hello, {member}, in order to post or read {member.guild} messages you must be a certain"
             f" role as well as submitted a form of ID with the server in question. For {member.guild} "
