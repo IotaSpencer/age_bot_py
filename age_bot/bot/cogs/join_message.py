@@ -10,7 +10,7 @@ from discord import Member
 from age_bot.logger import logger
 
 
-class J(commands.Cog):
+class JoinMessage(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.ext_path = 'age_bot.bot.cogs.join_message'
