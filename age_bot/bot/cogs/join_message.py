@@ -16,7 +16,7 @@ class Fun(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_join(self, member: Member):
-        asyncio.sleep
+        asyncio.sleep(1)
 
 
 
