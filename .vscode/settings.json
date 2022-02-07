@@ -2,6 +2,7 @@
     "python.linting.pylintEnabled": false,
     "cSpell.words": [
         "envvar",
+        "fhello",
         "rtype",
         "serverdb",
         "Sharded"
