@@ -21,9 +21,14 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
     async def confirm(self, ctx: Context, message: Message, user: Member):
         member = ctx.guild.get_member_named(user)
         adult_role = ctx.guild.get_role(Configs.serverdb.servers[str(ctx.guild.id)].role)
+        msg = None
+
         if not member.get_role(adult_role.id):
             await member.add_roles(adult_role, reason='Moderator adulted member', atomic=True)
-            msg = await ctx.channel.fetch_message(message)
+            if type(message) == 'int':
+                msg = await ctx.channel.fetch_message(message)
+            elif type(message) == 'Message':
+                msg = message
             await ctx.channel.send(
                 f"{member} was confirmed to be an {adult_role}".format(member=member_distinct(ctx, member),
                                                                        adult_role=adult_role.name))
@@ -52,9 +57,10 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
     @commands.has_any_role('Discord moderator', 'Mods', 'Server manager', 'Sub overlord', 'Discord owner')
     async def reject(self, ctx: Context, message: Message, user: Member, reason: str):
         member = ctx.guild.get_member_named(user)  # type: Member
-        if type(message) == Message:
+        msg = None
+        if type(message) == 'Message':
             msg = message
-        elif type(message) == int:
+        elif type(message) == 'int':
             msg = await ctx.channel.fetch_message(message)
         await ctx.channel.send(f"{user} was rejected on grounds of \"{reason}\"")
         await msg.delete(delay=5.0)
