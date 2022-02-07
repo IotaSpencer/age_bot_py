@@ -20,7 +20,7 @@ async def start() -> object:
     """
     token = Configs.config.bot.token
     prefix = Configs.config.bot.prefix
-    bot = commands.AutoShardedBot(
+    bot = commands.Bot(
         owner_id=234093061045616642,
         debug_guilds=[626522675224772658],
         command_prefix=prefix,
