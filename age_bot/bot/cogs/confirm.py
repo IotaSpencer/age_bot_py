@@ -18,7 +18,7 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
 
     @commands.command(usage="<message> <user>", description="Confirm an ID as valid")
     @commands.has_any_role('Discord moderator', 'Mods', 'Server manager', 'Sub overlord', 'Discord owner')
-    async def confirm(self, ctx, message: Message, user: Member):
+    async def confirm(self, ctx: Context, message: Message, user: Member):
         member = ctx.guild.get_member_named(user)
         adult_role = ctx.guild.get_role(Configs.serverdb.servers[str(ctx.guild.id)].role)
         if not member.get_role(adult_role.id):
@@ -43,12 +43,19 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
             await ctx.send(
                 "You are not allowed to use this command, you're missing all of these roles ({error})".format(
                     error=error.missing_roles))
+        elif isinstance(error, commands.MemberNotFound):
+            await ctx.send(
+                "This user is not in this guild, or is not cached."
+            )
 
     @commands.command(usage="<message> <user> <reason...>", description="Reject an ID.")
     @commands.has_any_role('Discord moderator', 'Mods', 'Server manager', 'Sub overlord', 'Discord owner')
-    async def reject(self, ctx: Context, message: int, user: str, reason: str):
+    async def reject(self, ctx: Context, message: Message, user: Member, reason: str):
         member = ctx.guild.get_member_named(user)  # type: Member
-        msg = await ctx.channel.fetch_message(message)
+        if type(message) == Message:
+            msg = message
+        elif type(message) == int:
+            msg = await ctx.channel.fetch_message(message)
         await ctx.channel.send(f"{user} was rejected on grounds of \"{reason}\"")
         await msg.delete(delay=5.0)
         await member.send(f"Your submission was rejected due to the reason — {reason}")
@@ -63,7 +70,11 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
                     error=error.missing_roles))
         if isinstance(error, commands.MessageNotFound):
             await ctx.send(
-                f"This message does not exist or is too old to delete."
+                f"This message ({error.argument}) does not exist or is too old to delete. If need be, delete the message manually."
+            )
+        if isinstance(error, commands.MemberNotFound):
+            await ctx.send(
+                f"This member ({error.argument}) does not exist, or is not in the cache"
             )
 
 
