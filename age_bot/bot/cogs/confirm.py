@@ -4,6 +4,7 @@
 from discord import Message
 from discord.ext import commands
 from discord import ApplicationContext, SlashCommandGroup, Member, User
+from numpy import isin
 
 # local
 from age_bot.logger import logger
@@ -18,7 +19,7 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
 
     @commands.command(usage="<message> <user>", description="Confirm an ID as valid")
     @commands.has_any_role('Discord moderator', 'Mods', 'Server manager', 'Sub overlord', 'Discord owner')
-    async def confirm(self, ctx: Context, message: Message, user: Member):
+    async def confirm(self, ctx: Context, message: int, user: str):
         member = ctx.guild.get_member_named(user)
         adult_role = ctx.guild.get_role(Configs.serverdb.servers[str(ctx.guild.id)].role)
         msg = None
@@ -36,7 +37,7 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
             await msg.delete()
 
         else:
-            msg: Message = await ctx.channel.fetch_message(message)
+            msg = await ctx.channel.fetch_message(message)  # type: Message
             await ctx.channel.send(
                 "{member} already has the role {adult_role}.".format(member=member_distinct(ctx, member),
                                                                      adult_role=adult_role.name))
@@ -52,10 +53,14 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
             await ctx.send(
                 "This user is not in this guild, or is not cached."
             )
+        elif isinstance(error, commands.MessageNotFound):
+            await ctx.send(
+                "This message does not exist, or is too old to delete through me, if need be, delete the message manually."
+            )
 
     @commands.command(usage="<message> <user> <reason...>", description="Reject an ID.")
     @commands.has_any_role('Discord moderator', 'Mods', 'Server manager', 'Sub overlord', 'Discord owner')
-    async def reject(self, ctx: Context, message: Message, user: Member, reason: str):
+    async def reject(self, ctx: Context, message: int, user: str, reason: str):
         member = ctx.guild.get_member_named(user)  # type: Member
         msg = None
         if type(message) == 'Message':
