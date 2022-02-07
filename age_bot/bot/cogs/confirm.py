@@ -18,7 +18,7 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
 
     @commands.command(usage="<message> <user>", description="Confirm an ID as valid")
     @commands.has_any_role('Discord moderator', 'Mods', 'Server manager', 'Sub overlord', 'Discord owner')
-    async def confirm(self, ctx, message: Message, user: Union[Member, User, str]):
+    async def confirm(self, ctx, message: Message, user: Member):
         member = ctx.guild.get_member_named(user)
         adult_role = ctx.guild.get_role(Configs.serverdb.servers[str(ctx.guild.id)].role)
         if not member.get_role(adult_role.id):
