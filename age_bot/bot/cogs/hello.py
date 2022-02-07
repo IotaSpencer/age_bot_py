@@ -3,6 +3,7 @@
 # 3rd Party
 import discord
 from discord.ext import commands
+from discord import Member, Message
 
 # local imports
 from age_bot.bot.helpers.discord import member_distinct
@@ -40,7 +41,7 @@ class Hello(commands.Cog):
     @commands.has_any_role('Server Helpers', 'Discord moderator', 'Mods')
     @commands.command()
     async def fhello(self, ctx, user: str):
-        usr = await ctx.guild.get_member_named(user)
+        usr = ctx.guild.get_member_named(user)  # type: Member
         await usr.send(
             f"Hello, {member_distinct(ctx, usr)}, in order to post or read {ctx.guild.name} messages you must be a certain role as well as "
             f"submitted a form of ID with the server in question."
