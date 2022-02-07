@@ -4,7 +4,6 @@
 from discord import Message
 from discord.ext import commands
 from discord import ApplicationContext, SlashCommandGroup, Member, User
-from numpy import isin
 
 # local
 from age_bot.logger import logger
