@@ -22,7 +22,7 @@ async def start() -> object:
     prefix = Configs.config.bot.prefix
     bot = commands.Bot(
         owner_id=234093061045616642,
-        debug_guilds=['626522675224772658'],
+        debug_guilds=[],
         command_prefix=prefix,
         max_messages=10000,
         intents=discord.Intents(
