@@ -22,24 +22,27 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
         member = ctx.guild.get_member_named(user)
         adult_role = ctx.guild.get_role(Configs.serverdb.servers[str(ctx.guild.id)].role)
         msg = None
+        try:
 
-        if not member.get_role(adult_role.id):
-            await member.add_roles(adult_role, reason='Moderator adulted member', atomic=True)
-            if type(message) == 'int':
-                msg = await ctx.channel.fetch_message(message)
-            elif type(message) == 'Message':
-                msg = message
-            await ctx.channel.send(
-                f"{member} was confirmed to be an {adult_role}".format(member=member_distinct(ctx, member),
-                                                                       adult_role=adult_role.name))
-            await member.send("You've been confirmed for '{adult_role}'".format(adult_role=adult_role.name))
+            if not member.get_role(adult_role.id):
+                await member.add_roles(adult_role, reason='Moderator adulted member')
+                if type(message) == 'int':
+                    msg = await ctx.channel.fetch_message(message)
+                elif type(message) == 'Message':
+                    msg = message
+                await ctx.channel.send(
+                    f"{member} was confirmed to be an {adult_role}".format(member=member_distinct(ctx, member),
+                                                                        adult_role=adult_role.name))
+                await member.send("You've been confirmed for '{adult_role}'".format(adult_role=adult_role.name))
+            else:
+                msg = await ctx.channel.fetch_message(message)  # type: Message
+                await ctx.channel.send(
+                    "{member} already has the role {adult_role}.".format(member=member_distinct(ctx, member),
+                                                                     adult_role=adult_role.name))
+        finally:
             await msg.delete()
 
-        else:
-            msg = await ctx.channel.fetch_message(message)  # type: Message
-            await ctx.channel.send(
-                "{member} already has the role {adult_role}.".format(member=member_distinct(ctx, member),
-                                                                     adult_role=adult_role.name))
+        
             await msg.delete()
 
     @confirm.error
