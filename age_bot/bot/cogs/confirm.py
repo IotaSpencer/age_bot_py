@@ -1,7 +1,10 @@
 # built-in
 
 # 3rd party
-from discord import Message
+import asyncio
+
+import discord
+from discord import Message, slash_command
 from discord.ext import commands
 from discord import ApplicationContext, SlashCommandGroup, Member, User
 
@@ -16,6 +19,18 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
         self.bot = bot
         self.ext_path = 'age_bot.bot.cogs.confirm'
 
+    @slash_command(name="adultify", description="Manually add the 'adult' role to a member",
+                   guild_ids=[626522675224772658])
+    async def slash_adultify(self, ctx: ApplicationContext, user: discord.Member = None):
+        adult_role = ctx.guild.get_role(Configs.serverdb.servers[str(ctx.guild.id)].role)
+        audit_log_string = f"{ctx.user.mention} manually gave {user.mention} the {adult_role} Role."
+        await user.add_roles(adult_role.id, reason=audit_log_string)
+        e = discord.Embed()
+        e.set_author(name=ctx.author)
+        e.add_field(name="Action", value=audit_log_string)
+        e.colour = adult_role.color
+        await ctx.respond(embed=e)  # sends the embed
+
     @commands.command(usage="<message> <user>", description="Confirm an ID as valid")
     @commands.has_any_role('Discord moderator', 'Mods', 'Server manager', 'Sub overlord', 'Discord owner')
     async def confirm(self, ctx: Context, message: int, user: str):
@@ -26,23 +41,17 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
 
             if not member.get_role(adult_role.id):
                 await member.add_roles(adult_role, reason='Moderator adulted member')
-                if type(message) == 'int':
-                    msg = await ctx.channel.fetch_message(message)
-                elif type(message) == 'Message':
-                    msg = message
+                msg = await ctx.channel.fetch_message(message)
                 await ctx.channel.send(
                     f"{member} was confirmed to be an {adult_role}".format(member=member_distinct(ctx, member),
-                                                                        adult_role=adult_role.name))
+                                                                           adult_role=adult_role.name))
                 await member.send("You've been confirmed for '{adult_role}'".format(adult_role=adult_role.name))
             else:
                 msg = await ctx.channel.fetch_message(message)  # type: Message
                 await ctx.channel.send(
                     "{member} already has the role {adult_role}.".format(member=member_distinct(ctx, member),
-                                                                     adult_role=adult_role.name))
+                                                                         adult_role=adult_role.name))
         finally:
-            await msg.delete()
-
-        
             await msg.delete()
 
     @confirm.error
