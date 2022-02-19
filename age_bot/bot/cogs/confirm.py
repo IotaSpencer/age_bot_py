@@ -38,7 +38,7 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
         e.set_author(name=ctx.author)
         e.add_field(name="Action", value=audit_log_string)
         e.colour = adult_role.color
-        await ctx.respond()
+        await ctx.respond(content="Command Triggered.", ephemeral=True)
         await channel.send(embed=e)  # sends the embed
         await user.send(content=f"You've been confirmed to be a(n) {adult_role.name} on {ctx.guild.name}")
 
