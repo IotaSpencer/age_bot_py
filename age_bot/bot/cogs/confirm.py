@@ -33,7 +33,7 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
         verify_channel = db_guild.verify_channel
         channel = await guild.fetch_channel(verify_channel)
         audit_log_string = f"{ctx.user.mention} manually gave {user.mention} the {adult_role} Role."
-        await user.add_roles(adult_role.id, reason=audit_log_string)
+        await user.add_roles(adult_role, reason=audit_log_string)
         e = discord.Embed()
         e.title("Manual Adult")
         e.set_author(name=ctx.author)
