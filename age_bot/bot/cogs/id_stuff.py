@@ -45,7 +45,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
             verify_channel = db_guild.verify_channel
             await ctx.author.send("I'm going to wait for you to send a photo with an attachment,"
                                   " it can be an empty message. But there has to be a file attached.")
-            await ctx.send_response("Check your DMs", ephemeral=True)
+            await ctx.send_followup("Check your DMs", ephemeral=True)
 
             def check(m):
                 return len(m.attachments) == 1 and m.author.id == ctx.author.id
