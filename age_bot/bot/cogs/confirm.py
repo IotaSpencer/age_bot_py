@@ -21,8 +21,8 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
         self.ext_path = 'age_bot.bot.cogs.confirm'
 
     @slash_command(name="adultify", description="Manually add the 'adult' role to a member",
-                   guild_ids=[626522675224772658], default_premission=False)
-    @commands.has_any_role('Discord moderator', 'Mods', 'Server manager', 'Sub overlord', 'Discord owner')
+                   guild_ids=[626522675224772658], default_permission=False)
+    @permissions.has_any_role('Discord moderator', 'Mods', 'Server manager', 'Sub overlord', 'Discord owner')
     async def slash_adultify(self, ctx: ApplicationContext, user: discord.Member = None):
         await ctx.defer()
         adult_role = ctx.guild.get_role(Configs.serverdb.servers[str(ctx.guild.id)].role)
