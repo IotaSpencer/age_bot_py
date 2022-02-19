@@ -4,9 +4,10 @@
 import asyncio
 
 import discord
-from discord import Message, slash_command
 from discord.ext import commands
-from discord import ApplicationContext, SlashCommandGroup, Member, User
+from discord import \
+    ApplicationContext, SlashCommandGroup, Member, User, Message, \
+    slash_command, permissions
 
 # local
 from age_bot.logger import logger
@@ -20,20 +21,24 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
         self.ext_path = 'age_bot.bot.cogs.confirm'
 
     @slash_command(name="adultify", description="Manually add the 'adult' role to a member",
-                   guild_ids=[626522675224772658])
+                   guild_ids=[626522675224772658], default_premission=False)
+    @permissions.has_any_role('Discord moderator', 'Mods', 'Server manager', 'Sub overlord', 'Discord owner')
     async def slash_adultify(self, ctx: ApplicationContext, user: discord.Member = None):
         adult_role = ctx.guild.get_role(Configs.serverdb.servers[str(ctx.guild.id)].role)
         audit_log_string = f"{ctx.user.mention} manually gave {user.mention} the {adult_role} Role."
         await user.add_roles(adult_role.id, reason=audit_log_string)
         e = discord.Embed()
+        e.title("Manual Adult")
         e.set_author(name=ctx.author)
         e.add_field(name="Action", value=audit_log_string)
         e.colour = adult_role.color
         await ctx.respond(embed=e)  # sends the embed
+        await user.send(content=f"You've been confirmed to be a(n) {adult_role.name} on {ctx.guild.name}")
 
     @commands.command(usage="<message> <user>", description="Confirm an ID as valid")
     @commands.has_any_role('Discord moderator', 'Mods', 'Server manager', 'Sub overlord', 'Discord owner')
     async def confirm(self, ctx: Context, message: int, user: str):
+        global msg
         member = ctx.guild.get_member_named(user)
         adult_role = ctx.guild.get_role(Configs.serverdb.servers[str(ctx.guild.id)].role)
         msg = None
@@ -72,16 +77,15 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
     @commands.command(usage="<message> <user> <reason...>", description="Reject an ID.")
     @commands.has_any_role('Discord moderator', 'Mods', 'Server manager', 'Sub overlord', 'Discord owner')
     async def reject(self, ctx: Context, message: int, user: str, reason: str):
+        global msg
         member = ctx.guild.get_member_named(user)  # type: Member
-        msg = None
-        if type(message) == 'Message':
-            msg = message
-        elif type(message) == 'int':
-            msg = await ctx.channel.fetch_message(message)
-        await ctx.channel.send(f"{user} was rejected on grounds of \"{reason}\"")
-        await msg.delete(delay=5.0)
-        await member.send(f"Your submission was rejected due to the reason — {reason}")
-        await member.send(f"If applicable, try again later following the instructions laid out in the rejection "
+        try:
+            msg = await ctx.channel.fetch_message(message)  # type: Message
+        finally:
+            await ctx.channel.send(f"{user} was rejected on grounds of \"{reason}\"")
+            await msg.delete()
+            await member.send(f"Your submission was rejected due to the reason — {reason}")
+            await member.send(f"If applicable, try again later following the instructions laid out in the rejection "
                           f"message above.")
 
     @reject.error
