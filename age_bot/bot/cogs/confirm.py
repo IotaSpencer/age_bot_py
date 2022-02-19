@@ -24,7 +24,13 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
                    guild_ids=[626522675224772658], default_premission=False)
     @permissions.has_any_role('Discord moderator', 'Mods', 'Server manager', 'Sub overlord', 'Discord owner')
     async def slash_adultify(self, ctx: ApplicationContext, user: discord.Member = None):
+        await ctx.defer()
         adult_role = ctx.guild.get_role(Configs.serverdb.servers[str(ctx.guild.id)].role)
+        guild = ctx.guild_id
+        db_guild = Configs.serverdb.servers[str(guild)]
+        guild = ctx.guild
+        verify_channel = db_guild.verify_channel
+        channel = await guild.fetch_channel(verify_channel)
         audit_log_string = f"{ctx.user.mention} manually gave {user.mention} the {adult_role} Role."
         await user.add_roles(adult_role.id, reason=audit_log_string)
         e = discord.Embed()
@@ -32,7 +38,8 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
         e.set_author(name=ctx.author)
         e.add_field(name="Action", value=audit_log_string)
         e.colour = adult_role.color
-        await ctx.respond(embed=e)  # sends the embed
+        await ctx.respond()
+        await channel.send(embed=e)  # sends the embed
         await user.send(content=f"You've been confirmed to be a(n) {adult_role.name} on {ctx.guild.name}")
 
     @commands.command(usage="<message> <user>", description="Confirm an ID as valid")

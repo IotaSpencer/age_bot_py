@@ -36,6 +36,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
 
     @slash_command(name="verify", description="Verify your age via Nenrei-Sama", guild_ids=[626522675224772658])
     async def slash_verify(self, ctx: ApplicationContext):
+        await ctx.defer()
         if ctx.channel.name == 'hello':
             member = ctx.author  # type: Union[Member, User]
             guild = ctx.guild_id
