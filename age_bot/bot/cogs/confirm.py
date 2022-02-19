@@ -7,7 +7,8 @@ import discord
 from discord.ext import commands
 from discord import \
     ApplicationContext, SlashCommandGroup, Member, User, Message, \
-    slash_command, permissions
+    slash_command
+from discord.commands import permissions
 
 # local
 from age_bot.logger import logger
@@ -43,7 +44,7 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
         await user.send(content=f"You've been confirmed to be a(n) {adult_role.name} on {ctx.guild.name}")
 
     @commands.command(usage="<message> <user>", description="Confirm an ID as valid")
-    @commands.has_any_role('Discord moderator', 'Mods', 'Server manager', 'Sub overlord', 'Discord owner')
+    @permissions.has_any_role('Discord moderator', 'Mods', 'Server manager', 'Sub overlord', 'Discord owner')
     async def confirm(self, ctx: Context, message: int, user: str):
         global msg
         member = ctx.guild.get_member_named(user)
@@ -82,7 +83,7 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
             )
 
     @commands.command(usage="<message> <user> <reason...>", description="Reject an ID.")
-    @commands.has_any_role('Discord moderator', 'Mods', 'Server manager', 'Sub overlord', 'Discord owner')
+    @permissions.has_any_role('Discord moderator', 'Mods', 'Server manager', 'Sub overlord', 'Discord owner')
     async def reject(self, ctx: Context, message: int, user: str, reason: str):
         global msg
         member = ctx.guild.get_member_named(user)  # type: Member
