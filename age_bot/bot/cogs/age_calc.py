@@ -29,7 +29,7 @@ class AgeConverter(commands.Converter):
 class AgeCalc(commands.Cog, command_attrs=dict(hidden=True)):
     def __init__(self, bot):
         self.bot = bot
-        self.ext_path = 'age_bot.bot.cogs.id_stuff'
+        self.ext_path = 'age_bot.bot.cogs.age_calc'
 
     @commands.command()
     @slash_command(name='agecalc', guild_ids=[626522675224772658])

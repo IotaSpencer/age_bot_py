@@ -58,6 +58,7 @@ async def start() -> object:
     bot.load_extension('age_bot.bot.cogs.hello')
     bot.load_extension('age_bot.bot.cogs.bad_hello')
     bot.load_extension('age_bot.bot.cogs.join_message')
+    bot.load_extension('age_bot.bot.cogs.age_calc')
 
     @bot.event
     async def on_ready():
