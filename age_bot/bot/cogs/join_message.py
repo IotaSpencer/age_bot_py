@@ -11,6 +11,7 @@ from discord import Member, TextChannel
 from age_bot.logger import logger
 from age_bot.config import Configs
 
+
 class JoinMessage(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -33,8 +34,8 @@ class JoinMessage(commands.Cog):
         except Forbidden:
             hello_channel = Configs.serverdb.servers[str(member.guild.id)].hello_channel
             hello_chan = await member.guild.fetch_channel(hello_channel)  # type: TextChannel
-            await hello_chan.send('')
-
+            await hello_chan.send(f"Hey {member.mention}, I can't seem to send you a message, please make sure you "
+                                  f"have accept messages from server members ticked.", delete_after=60)
 
 
 def setup(bot):
