@@ -15,7 +15,7 @@ from age_bot.logger import logger
 from age_bot.config import Configs
 from age_bot.bot.helpers.discord import *
 
-
+confirm_roles = ['Discord moderator', 'Mods', 'Server manager', 'Sub overlord', 'Discord owner']
 class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
     def __init__(self, bot):
         self.bot = bot
@@ -23,24 +23,35 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
 
     @slash_command(name="adultify", description="Manually add the 'adult' role to a member",
                    guild_ids=[626522675224772658], default_permission=False)
-    @permissions.has_any_role('Discord moderator', 'Mods', 'Server manager', 'Sub overlord', 'Discord owner')
+    @permissions.has_any_role(*confirm_roles)
     async def slash_adultify(self, ctx: ApplicationContext, user: discord.Member = None):
         await ctx.defer()
+        author = ctx.user
+        author_roles = author.roles
+        author_named_roles = [role.name for role in author_roles]
         adult_role = ctx.guild.get_role(Configs.serverdb.servers[str(ctx.guild.id)].role)
         guild = ctx.guild_id
         db_guild = Configs.serverdb.servers[str(guild)]
         guild = ctx.guild
         verify_channel = db_guild.verify_channel
         channel = await guild.fetch_channel(verify_channel)
-        audit_log_string = f"{ctx.user.mention} manually gave {user.mention} the {adult_role} Role."
-        await user.add_roles(adult_role, reason=audit_log_string)
-        e = discord.Embed(title="Manual Adult")
-        e.set_author(name=ctx.author)
-        e.add_field(name="Action", value=audit_log_string)
-        e.colour = adult_role.color
-        await ctx.respond(content="Command Triggered.", ephemeral=True)
-        await channel.send(embed=e)  # sends the embed
-        await user.send(content=f"You've been confirmed to be a(n) {adult_role.name} on {ctx.guild.name}")
+        if any(item in author_named_roles for item in confirm_roles):
+            audit_log_string = f"{ctx.user.mention} manually gave {user.mention} the {adult_role} Role."
+            await user.add_roles(adult_role, reason=audit_log_string)
+            e = discord.Embed(title="Manual Adult")
+            e.set_author(name=ctx.author)
+            e.add_field(name="Action", value=audit_log_string)
+            e.colour = adult_role.color
+            await ctx.respond(content="Command Triggered.", ephemeral=True)
+            await channel.send(embed=e)  # sends the embed
+            await user.send(content=f"You've been confirmed to be a(n) {adult_role.name} on {ctx.guild.name}")
+        else:
+            ctx.respond(content="You don't have permission to change user roles.")
+            e = discord.Embed(title="Failed Adult")
+            e.set_author(name=ctx.author)
+            e.add_field(name='No Permission', value="User does not have permission to change user roles")
+            await ctx.respond("You don't have permission to change user roles")
+            await channel.send(embed=e)
 
     @commands.command(usage="<message> <user>", description="Confirm an ID as valid")
     @permissions.has_any_role('Discord moderator', 'Mods', 'Server manager', 'Sub overlord', 'Discord owner')

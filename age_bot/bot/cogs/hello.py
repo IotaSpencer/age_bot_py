@@ -52,7 +52,7 @@ class Hello(commands.Cog):
             f"For {ctx.guild.name} that role is "
             f"{ctx.guild.get_role(Configs.serverdb.servers[str(ctx.guild.id)].role)} "
             f"\n\n"
-            f"To do so, please run the command /verify"
+            f"To do so, please run the command /verify in #hello"
         )
 
 
