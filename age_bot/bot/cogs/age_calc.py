@@ -32,10 +32,13 @@ class AgeCalc(commands.Cog, command_attrs=dict(hidden=True)):
         self.ext_path = 'age_bot.bot.cogs.age_calc'
 
     @commands.command(name='agecalc', aliases=['age'])
-    @slash_command(name='agecalc', guild_ids=[626522675224772658])
-    async def agecalc(self, ctx: Union[Context, ApplicationContext], age: AgeConverter):
-        ctx.respond(age, ephemeral=True)
+    async def agecalc(self, ctx: Context, age: AgeConverter):
+        await ctx.reply(age, delete_after=60)
 
+    @slash_command(name='agecalc', description='calculates age of users', guild_ids=[626522675224772658])
+    async def agecalc(self, ctx: ApplicationContext, age: AgeConverter):
+        await ctx.defer(ephemeral=True)
+        await ctx.respond(age, ephemeral=True)
 
 def setup(bot):
     bot.add_cog(AgeCalc(bot))
