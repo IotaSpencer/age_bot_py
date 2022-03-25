@@ -42,15 +42,17 @@ class Hello(commands.Cog):
     @commands.command()
     async def fhello(self, ctx, user: str):
         usr = ctx.guild.get_member_named(user)  # type: Member
+        adult_role = ctx.guild.get_role(Configs.serverdb.servers[str(ctx.guild.id)].role)
         await usr.send(
-            f"Hello, {member_distinct(ctx, usr)}, in order to post or read {ctx.guild.name} messages you must be a certain role as well as "
+            f"Hello, {member_distinct(ctx, usr)}, in order to post or read {ctx.guild.name} messages you must be a "
+            f"certain role as well as "
             f"submitted a form of ID with the server in question."
             f"\n\n"
             f"Please see #id-example and #upload-example for examples on how to upload and format your message.\n"
-            f"Do not worry about the '&verify 626...."
+            
             f"\n\n"
             f"For {ctx.guild.name} that role is "
-            f"{ctx.guild.get_role(Configs.serverdb.servers[str(ctx.guild.id)].role)} "
+            f"{adult_role} "
             f"\n\n"
             f"To do so, please run the command /verify in #hello"
         )

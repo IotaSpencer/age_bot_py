@@ -4,8 +4,10 @@ from discord.ext.commands import Context
 from discord.ext import commands
 from age_bot.config import Configs
 
+__all__ = ['is_other_bot_offline', 'is_other_bot_offline']
 
-def is_other_bot_offline(self):
+
+def is_other_bot_offline(self) -> bool:
     def predicate(ctx: Context):
         return ctx.guild.get_member(719736166819037314).status != 'online'
 

@@ -47,7 +47,11 @@ async def start() -> object:
         activity=discord.Activity(name="the interwebs", type=discord.ActivityType.watching),
 
     )
+    # todo: either use config files to retrieve the environment or use a platform+user checker
 
+
+    # Load Jishaku
+    bot.load_extension('jishaku')
     # work out cogs then uncomment
     bot.load_extension('age_bot.bot.cogs.extensions')
     bot.load_extension('age_bot.bot.cogs.admin')
@@ -59,12 +63,14 @@ async def start() -> object:
     bot.load_extension('age_bot.bot.cogs.bad_hello')
     bot.load_extension('age_bot.bot.cogs.join_message')
     bot.load_extension('age_bot.bot.cogs.age_calc')
+    bot.load_extension('age_bot.bot.helpers.info_embeds')
 
     @bot.event
     async def on_ready():
         logger.info(f"Bot is online and ready! Name is {bot.user}")
 
     await bot.start(token)
+
 
 
 
