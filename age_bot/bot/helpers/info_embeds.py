@@ -10,6 +10,8 @@ from discord.ext.commands import Context, Cog
 from discord import Member, Guild, Message, utils, Component
 
 # local imports
+from typing import List, Union
+
 from age_bot.config import Configs
 from age_bot.logger import logger
 
@@ -53,10 +55,49 @@ class ServerInfo(Cog, command_attrs=dict(hidden=True)):
         e.add_field(name="\u200b", value="\u200b", inline=False)
         e.add_field(name=f"Total Channels:", value=f"{len(channels)}", inline=True)
         e.add_field(name=f"Server Owner:", value=f"{guild.owner}({guild.owner_id})", inline=True)
+        return e
 
 
 class ServersInfo(Cog, command_attrs=dict(hidden=True)):
     """Returns discord.Embed lists"""
+
+    async def make_servers_pages(self, ctx: Context) -> List[List[Union[discord.Embed, str]]]:
+        """
+        :rtype: List[List[str, Union[str, discord.Embed]]]
+        :param ctx: The Context
+        :param guild: The Guild
+        :arg ctx Context: current context
+        :arg guild Guild ID
+        """
+        db_server_embeds = []  # type: list[discord.Embed]
+        db_server_pages = []  # type: list[str,discord.Embed]
+        discord_embeds = []  # type: list[discord.Embed]
+
+        db_servers = [item for item in Configs.serverdb.servers.keys()]
+        discord_servers = ctx.bot.guilds
+        for server in db_servers:
+            fetched_guild = ctx.bot.get_guild(int(server))
+            #title_embed = discord.Embed(title=f"")
+            # title_embed.set_image(url="https://cdn.discordapp.com/attachments/732338702193524806/958978135003631646"
+            #                          "/tentacle_banner_dbserver.png")
+            e = await ServerInfo(ctx.bot).make_db_server_info_embed(ctx, fetched_guild)
+            e.set_image(url="https://cdn.discordapp.com/attachments/732338702193524806/958978135003631646"
+                                      "/tentacle_banner_dbserver.png")
+            db_server_embeds.append([e])
+
+        for item in discord_servers:
+            # title_embed = discord.Embed(title=f"**Discord Server**")
+            #title_embed = discord.Embed(title=f"")
+            # title_embed.set_image(url="https://cdn.discordapp.com/attachments/732338702193524806/958978135393706065"
+            #                           "/tentacle_banner_discordserver.png")
+            e = await ServerInfo(ctx.bot).make_discord_server_info_embed(ctx, item)
+            e.set_image(url="https://cdn.discordapp.com/attachments/732338702193524806/958978135393706065"
+                                      "/tentacle_banner_discordserver.png")
+            discord_embeds.append([e])
+
+        lists = db_server_embeds + discord_embeds
+        return lists  # type: List[List[str, Union[str, discord.Embed]]]
+
     async def make_servers_info_embed(self, ctx: Context, guild: Guild):
         """
         :arg ctx Context
@@ -75,8 +116,7 @@ class ServersInfo(Cog, command_attrs=dict(hidden=True)):
         for item in discord_servers:
             e = await ServerInfo(ctx.bot).make_discord_server_info_embed(ctx, item)
             discord_embeds.append(e)
-
-        return [db_server_embeds, discord_embeds]
+        return db_server_embeds + discord_embeds
 
 
 def setup(bot):

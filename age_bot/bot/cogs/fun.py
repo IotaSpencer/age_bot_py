@@ -3,7 +3,7 @@ import asyncio
 
 # 3rd party
 import discord
-from discord.ext import commands
+from discord.ext import commands, pages
 
 # local
 from discord.ext.commands import Context
@@ -37,12 +37,22 @@ class Fun(commands.Cog):
         waiting = await ctx.reply("Grabbing all servers' info..")
         async with ctx.channel.typing():
             await asyncio.sleep(2)
-            embeds = await ServersInfo(ctx.bot).make_servers_info_embed(ctx, ctx.guild)
-            await ctx.reply(embeds=embeds)
+            server_pages = await ServersInfo(ctx.bot).make_servers_pages(ctx)
+            # await ctx.reply(content="**Servers Info**", embeds=embeds)
+            paginator = pages.Paginator(
+                pages=server_pages,
+                show_disabled=True,
+                show_indicator=True,
+                use_default_buttons=True,
+                loop_pages=True,
+            )
+            await paginator.send(ctx)
+
 
 def setup(bot):
     bot.add_cog(Fun(bot))
     logger.info('Loaded Fun')
+
 
 def teardown(bot):
     bot.remove_cog(Fun(bot))
