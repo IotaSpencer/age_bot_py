@@ -99,7 +99,8 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
             hello_channel = Configs.serverdb.servers[str(member.guild.id)].hello_channel
             hello_chan = await member.guild.fetch_channel(hello_channel)  # type: TextChannel
             await hello_chan.send(f"Hey {member.mention}, I can't seem to send you a message, please make sure you "
-                                  f"have accept messages from server members ticked.", delete_after=120)
+                                  f"have accept messages from server members ticked. If you are really sure this is "
+                                  f"not the case. Then please say so in {hello_chan.mention}.", delete_after=120)
 
     # @commands.command()
     # @has_attachment()
