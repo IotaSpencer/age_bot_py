@@ -4,7 +4,7 @@ import asyncio
 # 3rd party
 import discord
 from discord.errors import Forbidden
-from discord.ext import commands
+from discord.ext import commands, bridge
 from discord import Member, TextChannel
 
 # local
@@ -25,7 +25,6 @@ class JoinMessage(commands.Cog):
         if Configs.config.env.env is 'development':
             logger.debug('dev env active, not messaging member')
         else:
-            guild = member.guild
             await asyncio.sleep(5)
             try:
                 await member.send(
@@ -39,7 +38,7 @@ class JoinMessage(commands.Cog):
                     f"You may ask questions about the process in #hello but other than that, "
                     f"non-complying questions or messages will be deleted."
                 )
-            except discord.errors.ApplicationCommandInvokeError:
+            except Forbidden:
                 hello_channel = Configs.serverdb.servers[str(member.guild.id)].hello_channel
                 hello_chan = await member.guild.fetch_channel(hello_channel)  # type: TextChannel
                 await hello_chan.send(f"Hey {member.mention}, I can't seem to send you a message, please make sure you "
