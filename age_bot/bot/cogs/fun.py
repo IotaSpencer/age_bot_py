@@ -3,7 +3,7 @@ import asyncio
 
 # 3rd party
 import discord
-from discord.ext import commands, pages
+from discord.ext import commands, pages, bridge
 
 # local
 from discord.ext.commands import Context
@@ -18,11 +18,12 @@ class Fun(commands.Cog):
         self.bot = bot
         self.ext_path = 'age_bot.bot.cogs.fun'
 
-    @commands.command()
+    @bridge.bridge_command()
     async def ping(self, ctx: Context):
         await ctx.reply("Pong %sms" % ctx.bot.latency)
 
     @commands.guild_only()
+    @commands.is_owner()
     @commands.command()
     async def serverinfo(self, ctx: Context):
         waiting = await ctx.reply("Grabbing server info..")
@@ -38,7 +39,6 @@ class Fun(commands.Cog):
         async with ctx.channel.typing():
             await asyncio.sleep(2)
             server_pages = await ServersInfo(ctx.bot).make_servers_pages(ctx)
-            # await ctx.reply(content="**Servers Info**", embeds=embeds)
             paginator = pages.Paginator(
                 pages=server_pages,
                 show_disabled=True,

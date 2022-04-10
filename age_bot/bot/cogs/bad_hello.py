@@ -18,7 +18,7 @@ class BadHello(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message: Message):
-        if re.search("^([!@$]?[Hh][Ee][Ll][Ll][Oo][!?]?|[!@$/]verify)$", message.content) and message.channel.name == 'hello':
+        if re.search("^([!@$]?[Hh][Ee][Ll][Ll][Oo][!?]?|[!@$/]verify\S+)$", message.content) and message.channel.name == 'hello':
             our_message = await message.author.send(
                 f"Hello, {message.author}, in order to post or read {message.guild} messages you must be a certain"
                 f" role as well as submitted a form of ID with the server in question. For {message.guild} "

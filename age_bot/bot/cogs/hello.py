@@ -1,8 +1,7 @@
 # built-in
 
 # 3rd Party
-import discord
-from discord.ext import commands
+from discord.ext import commands, bridge
 from discord import Member, Message
 
 # local imports
@@ -23,10 +22,10 @@ class Hello(commands.Cog):
         self.bot = bot
         self.ext_path = 'age_bot.bot.cogs.hello'
 
-    @commands.command()
+    @bridge.bridge_command()
     async def hello(self, ctx):
         await ctx.reply(
-            f"Hello, {member_distinct(ctx, ctx.author)}, in order to post or read {ctx.guild.name} messages you must be a certain role as well as "
+            f"Hello, {member_distinct(ctx.author)}, in order to post or read {ctx.guild.name} messages you must be a certain role as well as "
             f"submitted a form of ID with the server in question."
             f"\n\n"
             f"Please see #id-example and #upload-example for examples on how to upload and format your message.\n"
@@ -44,7 +43,7 @@ class Hello(commands.Cog):
         usr = ctx.guild.get_member_named(user)  # type: Member
         adult_role = ctx.guild.get_role(Configs.serverdb.servers[str(ctx.guild.id)].role)
         await usr.send(
-            f"Hello, {member_distinct(ctx, usr)}, in order to post or read {ctx.guild.name} messages you must be a "
+            f"Hello, {member_distinct(usr)}, in order to post or read {ctx.guild.name} messages you must be a "
             f"certain role as well as "
             f"submitted a form of ID with the server in question."
             f"\n\n"
@@ -59,7 +58,7 @@ class Hello(commands.Cog):
 
 
     @commands.Cog.listener()
-    async def on_message(self, msg: discord.Message):
+    async def on_message(self, msg: Message):
         orig_msg = msg
         if msg.guild and msg.channel:
             if msg.channel.name == 'hello':
@@ -74,7 +73,7 @@ class Hello(commands.Cog):
                             shamed_time = msg.created_at
                             await shame_channel.send(
                                 "{shamed_user} mentioned '#hello' in #hello at {shamed_time}".format(
-                                    shamed_user=member_distinct(msg, shamed_user), shamed_time=shamed_time))
+                                    shamed_user=member_distinct(shamed_user), shamed_time=shamed_time))
                             await shame_msg.delete(delay=10)
                             await msg.delete(delay=10)
                     else:
@@ -85,6 +84,7 @@ class Hello(commands.Cog):
                 pass
         else:
             pass
+
 
 def setup(bot):
     bot.add_cog(Hello(bot))

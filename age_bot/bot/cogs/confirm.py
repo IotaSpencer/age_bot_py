@@ -15,14 +15,17 @@ from age_bot.logger import logger
 from age_bot.config import Configs
 from age_bot.bot.helpers.discord import *
 
-confirm_roles = ['Discord moderator', 'Mods', 'Server manager', 'Sub overlord', 'Discord owner']
+
 class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
+    confirm_roles = ['Discord moderator', 'Mods', 'Server manager', 'Sub overlord', 'Discord owner']
     def __init__(self, bot):
         self.bot = bot
+        self.confirm_roles = ['Discord moderator', 'Mods', 'Server manager', 'Sub overlord', 'Discord owner']
+
         self.ext_path = 'age_bot.bot.cogs.confirm'
 
     @slash_command(name="adultify", description="Manually add the 'adult' role to a member",
-                   guild_ids=[626522675224772658], default_permission=False)
+                   default_permission=False)
     @permissions.has_any_role(*confirm_roles)
     async def slash_adultify(self, ctx: ApplicationContext, user: discord.Member = None):
         await ctx.defer()
@@ -35,7 +38,7 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
         guild = ctx.guild
         verify_channel = db_guild.verify_channel
         channel = await guild.fetch_channel(verify_channel)
-        if any(item in author_named_roles for item in confirm_roles):
+        if any(item in author_named_roles for item in self.confirm_roles):
             audit_log_string = f"{ctx.user.mention} manually gave {user.mention} the {adult_role} Role."
             await user.add_roles(adult_role, reason=audit_log_string)
             e = discord.Embed(title="Manual Adult")
@@ -56,29 +59,29 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
     @commands.command(usage="<message> <user>", description="Confirm an ID as valid")
     @permissions.has_any_role('Discord moderator', 'Mods', 'Server manager', 'Sub overlord', 'Discord owner')
     async def confirm(self, ctx: Context, message: int, user: str):
-        global msg
         member = ctx.guild.get_member_named(user)
         adult_role = ctx.guild.get_role(Configs.serverdb.servers[str(ctx.guild.id)].role)
-        msg = None
+        msg = {}
         try:
 
             if not member.get_role(adult_role.id):
                 await member.add_roles(adult_role, reason='Moderator adulted member')
                 msg = await ctx.channel.fetch_message(message)
                 await ctx.channel.send(
-                    f"{member} was confirmed to be an {adult_role}".format(member=member_distinct(ctx, member),
+                    f"{member} was confirmed to be an {adult_role}".format(member=member_distinct(member),
                                                                            adult_role=adult_role.name))
                 await member.send("You've been confirmed for '{adult_role}'".format(adult_role=adult_role.name))
             else:
                 msg = await ctx.channel.fetch_message(message)  # type: Message
                 await ctx.channel.send(
-                    "{member} already has the role {adult_role}.".format(member=member_distinct(ctx, member),
+                    "{member} already has the role {adult_role}.".format(member=member_distinct(member),
                                                                          adult_role=adult_role.name))
         finally:
             await msg.delete()
 
     @confirm.error
     async def confirm_error(self, ctx, error):
+        # if isinstance(error, TypeError):
         if isinstance(error, commands.MissingAnyRole):
             await ctx.send(
                 "You are not allowed to use this command, you're missing all of these roles ({error})".format(
@@ -89,14 +92,15 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
             )
         elif isinstance(error, commands.MessageNotFound):
             await ctx.send(
-                "This message does not exist, or is too old to delete through me, if need be, delete the message manually."
+                "This message does not exist, or is too old to delete through me, if need be, delete the message "
+                "manually. "
             )
 
     @commands.command(usage="<message> <user> <reason...>", description="Reject an ID.")
     @permissions.has_any_role('Discord moderator', 'Mods', 'Server manager', 'Sub overlord', 'Discord owner')
     async def reject(self, ctx: Context, message: int, user: str, reason: str):
-        global msg
         member = ctx.guild.get_member_named(user)  # type: Member
+        msg = {}
         try:
             msg = await ctx.channel.fetch_message(message)  # type: Message
         finally:
@@ -104,7 +108,7 @@ class Confirm(commands.Cog, command_attrs=dict(hidden=True)):
             await msg.delete()
             await member.send(f"Your submission was rejected due to the reason — {reason}")
             await member.send(f"If applicable, try again later following the instructions laid out in the rejection "
-                          f"message above.")
+                              f"message above.")
 
     @reject.error
     async def reject_error(self, ctx, error):
