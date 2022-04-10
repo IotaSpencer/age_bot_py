@@ -77,19 +77,12 @@ class ServersInfo(Cog, command_attrs=dict(hidden=True)):
         discord_servers = ctx.bot.guilds
         for server in db_servers:
             fetched_guild = ctx.bot.get_guild(int(server))
-            #title_embed = discord.Embed(title=f"")
-            # title_embed.set_image(url="https://cdn.discordapp.com/attachments/732338702193524806/958978135003631646"
-            #                          "/tentacle_banner_dbserver.png")
             e = await ServerInfo(ctx.bot).make_db_server_info_embed(ctx, fetched_guild)
             e.set_image(url="https://cdn.discordapp.com/attachments/732338702193524806/958978135003631646"
                                       "/tentacle_banner_dbserver.png")
             db_server_embeds.append([e])
 
         for item in discord_servers:
-            # title_embed = discord.Embed(title=f"**Discord Server**")
-            #title_embed = discord.Embed(title=f"")
-            # title_embed.set_image(url="https://cdn.discordapp.com/attachments/732338702193524806/958978135393706065"
-            #                           "/tentacle_banner_discordserver.png")
             e = await ServerInfo(ctx.bot).make_discord_server_info_embed(ctx, item)
             e.set_image(url="https://cdn.discordapp.com/attachments/732338702193524806/958978135393706065"
                                       "/tentacle_banner_discordserver.png")
