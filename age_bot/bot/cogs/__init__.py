@@ -1,6 +1,2 @@
-from . import admin
-from . import fun
-from . import owner
-from . import confirm
-from . import id_stuff
-from . import hello
+from . import admin, fun, owner, confirm, id_stuff, hello, age_calc, bad_hello, extensions, \
+    join_message, purge_users
