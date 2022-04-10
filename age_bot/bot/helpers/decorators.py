@@ -1,5 +1,3 @@
-from age_bot.bot.helpers.exceptions import NoAttachmentError, TooManyAttachmentError
-from age_bot.logger import logger
 from discord.ext.commands import Context
 from discord.ext import commands
 from age_bot.config import Configs
