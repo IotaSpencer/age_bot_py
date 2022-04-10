@@ -1,5 +1,5 @@
 --pre
-py-cord==2.0.0b4
+py-cord==2.0.0b7
 yaml2object==1.0.13
 asyncclick==8.0.3.2
 setuptools==60.9.3
@@ -8,3 +8,4 @@ anyio==3.5.0
 omegaconf==2.1.1
 arrow~=1.2.2
 jishaku==2.3.2
+pathtools==0.1.2
