@@ -140,3 +140,23 @@ cython_debug/
 
 # Editor settings
 .idea/
+/bin/activate
+/bin/activate.csh
+/bin/activate.fish
+/bin/Activate.ps1
+/bin/age_bot
+/bin/import-expression
+/bin/import-expression-rewrite
+/bin/import_expression
+/lib64/
+/bin/normalizer
+/bin/pip
+/bin/pip3
+/bin/pip3.10
+/bin/python
+/bin/python3
+/bin/python3.10
+/pyvenv.cfg
+/bin/wheel
+
+
