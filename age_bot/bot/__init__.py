@@ -1,1 +1,1 @@
-__all__ = ['bot']
+__all__ = ['client.py']

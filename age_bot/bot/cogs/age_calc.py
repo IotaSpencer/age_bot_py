@@ -1,7 +1,7 @@
 # built-in
 
 import asyncio
-from ctypes import Union
+from typing import Union
 
 # 3rd party
 

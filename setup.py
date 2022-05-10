@@ -1,11 +1,12 @@
 from setuptools import setup, find_packages
-
+with open('VERSION', 'r', encoding='utf-8') as fh:
+    version = fh.read().rstrip()
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
     name="age_bot",
-    version="0.0.1",
+    version=f"{version}",
     author="IotaSpencer",
     author_email="me@iotaspencer.me",
     description="A small example package",

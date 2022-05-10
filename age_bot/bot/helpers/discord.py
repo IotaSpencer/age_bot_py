@@ -1,12 +1,156 @@
+# built-in
+from typing import Union, List, Optional
+
+# 3rd-party
 import discord
+from discord import Guild, Member, User, TextChannel
+from discord.ext.bridge import BridgeApplicationContext, BridgeExtContext
 from discord.ext.commands import Context
-from typing import Union
+from discord.commands import ApplicationContext
+from omegaconf.dictconfig import DictConfig
+
+# local
+from age_bot.config import Configs
 
 
-def author_distinct(ctx: Context):
-    user = ctx.author
-    return user.name + user.discriminator
+def member_distinct(member: discord.Member) -> str:
+    """
+    From a discord.Member object return the member's username and discrim
+    as username#0000
 
-
-def member_distinct(member: discord.Member):
+    :param member: a discord member object
+    :return: str
+    """
     return "{}#{}".format(member.name, member.discriminator)
+
+
+author_distinct = member_distinct
+
+
+def is_not_adult(member: Member, guild: Guild):
+    """
+    :rtype: bool
+    :arg member: Guild Member
+    :arg guild: Guild
+    """
+    try:
+        adult_role = guild.get_role(Configs.serverdb.servers[str(guild.id)].role)
+        member_roles = member.roles
+        if not member.bot:
+            member_is_not_adult = adult_role not in member_roles
+            return member_is_not_adult
+        else:
+            return False
+    except ConfigKeyError:
+        raise GuildNotInDBError
+
+
+def grab_guild(ctx: ApplicationContext):
+    if ctx.guild:
+        return ctx.guild
+    else:
+        raise NoGuildInContextError
+
+
+def find_shamed(channels: List[TextChannel]) -> TextChannel:
+    for channel in channels:
+        if channel.name == 'named-and-shamed':
+            return channel  # type: TextChannel
+    return None
+
+
+def is_slash_command(ctx: Union[BridgeApplicationContext, BridgeExtContext]):
+    if ctx.__class__.__name__ == BridgeApplicationContext:
+        return True
+    else:
+        return False
+
+
+def has_role(user, role):
+    if role in user.roles:
+        return True
+    else:
+        return False
+
+
+def server_confirm_roles(server: Guild, way: Optional[str]) -> List[discord.Role] | List[str] | List[DictConfig]:
+    """
+    :param way: how to return the roles
+    :param server: Guild to check confirm'able roles on
+    :return: list[discord.Role]
+    """
+    # usually just admin and mod roles
+    server_id = server.id
+    guild_db_obj = Configs.serverdb.servers[str(server_id)]
+    roles = guild_db_obj.can_confirm
+    server_roles = server.roles
+    confirm_roles = [role for role in server_roles if role.id in roles]
+    if way == 'list-of-name':  # returns List[str]
+        return [role.name for role in confirm_roles]
+    elif way == 'list-of-role':  # returns List[discord.Role]
+        return [role for role in confirm_roles]
+    else:
+        return roles  # otherwise, do whatever we want with the object and return DictConfig
+
+
+def has_server_confirm_role(server: Guild, user: Union[Member, User]) -> bool:
+    """
+    Check if 'user' has 'confirmable' role in 'server'
+
+    :param server: Guild to check against
+    :param user: user to check roles of
+    :return: bool
+    """
+    s_c_rs = server_confirm_roles(server, 'list-of-role')
+    shared_roles = []
+    for role in s_c_rs:
+        if has_role(user, role):
+            shared_roles.append(role)
+    if shared_roles:
+        return True
+    else:
+        return False
+
+
+def server_helper_roles(server: Guild, way: Optional[str]) -> List[discord.Role] | List[str] | List[DictConfig]:
+    """
+    Get a list of 'helper' roles in 'server' and return them in a certain 'way'
+
+    :param way: how to return roles
+    :param server: Guild to check helper roles on
+    :return: Union[List[str], List[discord.Role], DictConfig]
+    """
+    # usually just 'Server Helpers'
+    server_id = server.id
+    guild_db_obj = Configs.serverdb.servers[str(server_id)]
+    roles = guild_db_obj.can_help
+    server_roles = server.roles
+    help_roles = [role for role in server_roles if role.id in roles]
+    if way == 'list-of-name':  # returns List[str]
+        return [role.name for role in help_roles]
+    elif way == 'list-of-role':  # returns List[discord.Role]
+        return [role for role in help_roles]
+    else:
+        return roles  # otherwise do whatever we want with the object
+
+
+def has_server_helper_role(server: Guild, user: Union[Member, User]) -> bool:
+    """
+
+    :param server: Guild to check
+    :param user: User to check
+    :return: bool
+    """
+    s_c_rs = server_helper_roles(server, 'list-of-role')
+    shared_roles = []
+    for role in s_c_rs:
+        if has_role(user, role):
+            shared_roles.append(role)
+    if shared_roles:
+        return True
+    else:
+        return False
+
+
+async def get_adult_role(ctx):
+    return ctx.guild.get_role(Configs.serverdb.servers[str(ctx.guild.id)].role)

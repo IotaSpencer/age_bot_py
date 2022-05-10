@@ -10,7 +10,7 @@ from discord.ext.commands import Context
 
 from age_bot.logger import logger
 from age_bot.config import Configs
-from age_bot.bot.helpers.info_embeds import ServerInfo, ServersInfo
+from age_bot.bot.helpers.info_embeds import *
 
 
 class Fun(commands.Cog):

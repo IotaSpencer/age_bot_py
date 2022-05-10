@@ -11,8 +11,8 @@ from discord.ext import commands, bridge
 from discord.ext.commands import guild_only
 
 from age_bot.config import Configs
-from age_bot.bot.helpers.discord import member_distinct
-from age_bot.exceptions import NoAttachmentError, TooManyAttachmentError
+from age_bot.bot.helpers.discord import *
+from age_bot.exceptions import *
 from age_bot.logger import logger
 
 
@@ -94,8 +94,22 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
                     "If you haven't received a message that your submission has been sent, let the admins of "
                     "the applicable server know to contact the owner of this bot(iotaspencer#0001).")
 
-    @verify.error
-    async def verify_error(self, ctx, error):
+    async def on_application_command_error(self, ctx, error):
+        if isinstance(error, NoAttachmentError):
+            await ctx.respond("You are supposed to attach a file, the ID+Discord™ tag")
+        if isinstance(error, TooManyAttachmentError):
+            await ctx.respond("""Hi, you're trying to send more than one photograph to me at a time.
+                        Please only send one shot to me,
+                        using the examples in the channel possibly called '#id-example'""")
+
+        if isinstance(error, Forbidden):
+            hello_channel = Configs.serverdb.servers[str(ctx.guild.id)].hello_channel
+            hello_chan = await ctx.guild.fetch_channel(hello_channel)  # type: TextChannel
+            await hello_chan.send(f"Hey {ctx.member.mention}, I can't seem to send you a message, please make sure you "
+                                  f"have accept messages from server members ticked. If you are really sure this is "
+                                  f"not the case. Then please say so in {hello_chan.mention}.", delete_after=120)
+
+    async def on_command_error(self, ctx, error):
         if isinstance(error, NoAttachmentError):
             await ctx.respond("You are supposed to attach a file, the ID+Discord™ tag")
         if isinstance(error, TooManyAttachmentError):

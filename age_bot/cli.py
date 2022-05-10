@@ -1,6 +1,6 @@
 import os.path
 import asyncclick as click
-import age_bot.bot.bot
+import age_bot.bot.client
 
 
 class AgeBotCLI(object):
@@ -18,7 +18,7 @@ def cli(ctx, debug):
 
 @cli.command()
 async def start():
-    await age_bot.bot.bot.start()
+    await age_bot.bot.client.start()
 
 
 @cli.command()

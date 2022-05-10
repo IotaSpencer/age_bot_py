@@ -2,14 +2,16 @@ from discord.ext.commands import Context
 from discord.ext import commands
 from age_bot.config import Configs
 
-__all__ = ['is_other_bot_offline', 'is_other_bot_offline']
-
-
-def is_other_bot_offline(self) -> bool:
+# Decorator version
+def is_other_bot_offline() -> bool:
     def predicate(ctx: Context):
         return ctx.guild.get_member(719736166819037314).status != 'online'
 
     return commands.check(predicate)
+
+# Non-Decorator
+async def is_other_bot_offline2(self, ctx: Context) -> bool:
+    return await ctx.get_or_fetch_user(719736166819037314).status != 'online'
 
 
 def is_valid_server_in_db(self):

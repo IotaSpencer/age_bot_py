@@ -1,79 +1,49 @@
-# built-ins(?)
-import os.path
-from pathlib import Path
-import asyncio
-
-# (3rd party)
-import yaml as YAML
+# built-in
 import discord
-import discord.ext.commands as commands
-
-# local import
+# 3rd party
+import omegaconf.errors
+from discord.ext import bridge
+import arrow as arw
+# local
 from ..config import Configs
 from ..logger import logger
+from ..bot.helpers.discord import *
+from ..bot.helpers.decorators import *
+
+puts = print
+
+class Bot(bridge.Bot):
+    def __init__(self, **options):
+        super().__init__(**options)
+        token = Configs.config.bot.token
+        prefix = Configs.config.bot.prefix
+        db_guilds = Configs.serverdb.servers.keys()
+        debug_guilds = [server for server in db_guilds]
+        self.command_prefix = prefix
+        try:
+            self.owner_ids = Configs.config.bot.owners
+            puts(self.owner_ids)
+        except omegaconf.errors.ConfigAttributeError:
+            self.owner_ids = [Configs.config.bot.owner]
+        self.debug_guilds = debug_guilds
+        self.max_messages = 10000
+        self.status = discord.Status.online
 
 
-async def start() -> object:
-    """
+class DevBot(Bot):
+    def __init__(self, **options):
+        super().__init__(**options)
 
-    :rtype: object
-    """
-    token = Configs.config.bot.token
-    prefix = Configs.config.bot.prefix
-    bot = commands.Bot(
-        owner_id=234093061045616642,
-        debug_guilds=[],
-        command_prefix=prefix,
-        max_messages=10000,
-        intents=discord.Intents(
-            bans=True,
-            dm_messages=True,
-            dm_reactions=True,
-            dm_typing=True,
-            emojis=True,
-            guild_messages=True,
-            guild_reactions=True,
-            guild_typing=True,
-            guilds=True,
-            integrations=True,
-            invites=True,
-            members=True,
-            messages=True,
-            presences=True,
-            reactions=True,
-            typing=True,
-            webhooks=True),
-        status=discord.Status.online,
-        activity=discord.Activity(name="the interwebs", type=discord.ActivityType.watching),
-
-    )
-    # todo: either use config files to retrieve the environment or use a platform+user checker
+    async def on_ready(self):
+        logger.info(f"Bot is online and ready! Name is {self.user}")
+        app = await self.application_info()
+        app_name = app.name
+        await self.change_presence(activity=discord.Activity(
+            type=discord.ActivityType.playing,
+            name=f"{app_name}"
+        ), status='online')
 
 
-    # Load Jishaku
-    bot.load_extension('jishaku')
-    # work out cogs then uncomment
-    bot.load_extension('age_bot.bot.cogs.extensions')
-    bot.load_extension('age_bot.bot.cogs.admin')
-    bot.load_extension('age_bot.bot.cogs.confirm')
-    bot.load_extension('age_bot.bot.cogs.fun')
-    bot.load_extension('age_bot.bot.cogs.owner')
-    bot.load_extension('age_bot.bot.cogs.id_stuff')
-    bot.load_extension('age_bot.bot.cogs.hello')
-    bot.load_extension('age_bot.bot.cogs.bad_hello')
-    bot.load_extension('age_bot.bot.cogs.join_message')
-    bot.load_extension('age_bot.bot.cogs.age_calc')
-    bot.load_extension('age_bot.bot.helpers.info_embeds')
-
-    @bot.event
-    async def on_ready():
-        logger.info(f"Bot is online and ready! Name is {bot.user}")
-
-    await bot.start(token)
-
-
-
-
-
-class Bot:
-    pass
+class ProdBot(Bot):
+    def __init__(self, **options):
+        super().__init__(**options)
