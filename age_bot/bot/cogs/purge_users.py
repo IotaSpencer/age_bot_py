@@ -66,7 +66,6 @@ class PurgeUsers(commands.Cog, command_attrs=dict(hidden=True)):
                 not_adult = []
                 for member in mem_list:
                     if is_not_adult(member, guild):
-                        logger.info(f"{member} has '{member.roles}' roles")
                         not_adult.append(member)
                 today = arrow.now('US/Pacific')  # Discord's TimeZone
                 grace_period = timedelta(seconds=1209600)
@@ -87,6 +86,7 @@ class PurgeUsers(commands.Cog, command_attrs=dict(hidden=True)):
                     await ctx.respond(content="Finished Purge.")
                 else:
                     with open(f"{Path.home()}/purge_log.yml", 'w') as file:
+
                         YAML.safe_dump(yml_object, file)
                     await ctx.respond('The Purge is near!', file=File(f"{Path.home()}/purge_log.yml"))
             else:

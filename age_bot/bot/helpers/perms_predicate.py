@@ -4,16 +4,22 @@ from typing import Union
 from discord.ext.bridge import BridgeApplicationContext, BridgeExtContext
 # local
 from .discord import *
+from discord import commands
+from discord.ext.commands import check
 from ...exceptions import ConfirmPermError, HelperPermError
 
-async def confirmable_check(ctx: BridgeExtContext):
-    if has_server_confirm_role(ctx.guild, ctx.user):
-        return True
-    else:
-        raise ConfirmPermError
+def confirmable_check():
+    def predicate(ctx):
+        if has_server_confirm_role(ctx.guild, ctx.author):
+            return True
+        else:
+            raise ConfirmPermError
+    return check(predicate)
 
-async def helper_check(ctx: Context):
-    if has_server_helper_role(ctx.guild, ctx.user):
-        return True
-    else:
-        raise HelperPermError
+def helper_check():
+    def predicate(ctx):
+        if has_server_helper_role(ctx.guild, ctx.author):
+            return True
+        else:
+            raise HelperPermError
+    return check(predicate)
