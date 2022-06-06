@@ -160,3 +160,6 @@ cython_debug/
 /bin/wheel
 
 
+/src/py-cord/
+/lib64/
+/lib64/
