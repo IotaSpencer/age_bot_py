@@ -14,7 +14,6 @@ from age_bot.bot.helpers.decorators import *
 
 class BadHello(commands.Cog):
     def __init__(self, bot):
-        print(bot.__class__.__name__())
         self.bot = bot
         self.ext_path = 'age_bot.bot.cogs.bad_hello'
 
