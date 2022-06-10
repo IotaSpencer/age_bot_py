@@ -64,7 +64,7 @@ class Hello(discord.Cog):
             f"To do so, please run the command /verify in #hello"
         )
 
-    @commands.Cog.listener()
+    @discord.Cog.listener()
     async def on_message(self, msg: Message):
         if check_if_tester_or_main_bot(msg):
             orig_msg = msg
