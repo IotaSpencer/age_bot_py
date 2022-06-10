@@ -41,7 +41,6 @@ class Hello(discord.Cog):
                 f""
             )
 
-    @commands.has_any_role('Server Helpers', 'Discord moderator', 'Mods')
     @helper_check()
     @bridge.bridge_command(signature='')
     async def fhello(self, ctx: Union[BridgeApplicationContext, BridgeExtContext], user: discord.Member):
