@@ -3,7 +3,7 @@ from typing import Union, List, Optional
 
 # 3rd-party
 import discord
-from discord import Guild, Member, User, TextChannel
+from discord import Guild, Member, User, TextChannel, Message
 from discord.ext.bridge import BridgeApplicationContext, BridgeExtContext
 from discord.ext.commands import Context
 from discord.commands import ApplicationContext
@@ -12,6 +12,26 @@ from omegaconf.dictconfig import DictConfig
 # local
 from age_bot.config import Configs
 
+
+def check_if_tester_or_main_bot(ctx: Union[Context, Message, ApplicationContext]) -> bool:
+    if ctx.bot.user.id == 719736166819037314 or (ctx.user.id in Configs.devconfig.bot.testers or ctx.user.id in Configs.config.bot.testers):
+        return True
+    else:
+        return False
+
+async def reply_self_is_dev(ctx: Union[Context,Message, ApplicationContext]):
+    nenrei_user = ctx.bot.get_user(719736166819037314)
+    self_is_dev_string = f"""
+    Hello {member_distinct(ctx.user or ctx.author)},
+    This is the development(alpha/beta) bot for {user_distinct(nenrei_user)}
+    
+    You should see if there is another command that has "{nenrei_user.name}" next to it.
+    Instead of "{ctx.bot.user.name}"
+    """
+    if ctx.__class__.__name__ == 'Context' or ctx.__class__.__name__ == 'Message':
+        await ctx.reply(self_is_dev_string)
+    elif ctx.__class__.__name__ == 'ApplicationContext':
+        await ctx.respond(content=self_is_dev_string)
 
 def member_distinct(member: discord.Member) -> str:
     """
@@ -25,6 +45,7 @@ def member_distinct(member: discord.Member) -> str:
 
 
 author_distinct = member_distinct
+user_distinct = member_distinct
 
 
 def is_not_adult(member: Member, guild: Guild):
