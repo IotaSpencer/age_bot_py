@@ -15,20 +15,25 @@ from ..config import Configs
 from ..logger import logger
 
 
-async def start() -> object:
+async def start(env) -> None:
     """
 
     :rtype: object
     """
-    token = Configs.config.bot.token
-    env = Configs.config.env.env
+    token = ''
+
     bot = {}
+    print(env)
     if env == 'prod':
-        bot = ProdBot()
+        bot = ProdBot(intents=discord.Intents.all())
+        token = Configs.config.bot.token
+        #env = Configs.config.env.env
         bot.disable_sending = False
 
     elif env == 'dev':
         bot = DevBot(intents=discord.Intents.all())
+        token = Configs.devconfig.bot.token
+        #env = Configs.config.env.env
         bot.disable_sending = True
         bot.load_extension('jishaku')
 
