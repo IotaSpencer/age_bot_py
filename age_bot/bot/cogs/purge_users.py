@@ -43,7 +43,7 @@ class PurgeUsers(discord.Cog, command_attrs=dict(hidden=True)):
 
     @bridge.bridge_command(guild_id=626522675224772658)
     @acommands.guild_only()
-    @confirmable_check
+    @confirmable_check()
     async def purge(self, ctx: Union[BridgeApplicationContext, BridgeExtContext], wet: bool = False,
                     guild: Guild = None):
         """
