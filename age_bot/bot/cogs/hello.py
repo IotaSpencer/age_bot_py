@@ -17,7 +17,7 @@ from ...config import Configs
 from age_bot.logger import logger
 
 
-class Hello(commands.Cog):
+class Hello(discord.commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.ext_path = 'age_bot.bot.cogs.hello'
