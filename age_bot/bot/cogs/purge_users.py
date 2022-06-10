@@ -34,7 +34,7 @@ async def run_purge(guild: Guild = None, users: list = None):
         await asyncio.sleep(10)
 
 
-class PurgeUsers(commands.Cog, command_attrs=dict(hidden=True)):
+class PurgeUsers(discord.Cog, command_attrs=dict(hidden=True)):
     def __init__(self, bot):
         self.bot = bot
         self.ext_path = 'age_bot.bot.cogs.purge_users'
