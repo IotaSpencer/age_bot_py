@@ -3,7 +3,7 @@ from typing import Union, List, Optional
 
 # 3rd-party
 import discord
-from discord import Guild, Member, User, TextChannel, Message
+from discord import Guild, Member, User, TextChannel, Message, Bot
 from discord.ext.bridge import BridgeApplicationContext, BridgeExtContext
 from discord.ext.commands import Context
 from discord.commands import ApplicationContext
@@ -13,7 +13,7 @@ from omegaconf.dictconfig import DictConfig
 from age_bot.config import Configs
 
 
-def check_if_tester_or_main_bot(ctx: Union[Context, Message, ApplicationContext]) -> bool:
+def check_if_tester_or_main_bot(ctx: Union[Context, Bot, ApplicationContext]) -> bool:
     if ctx.bot.user.id == 719736166819037314 or (ctx.user.id in Configs.devconfig.bot.testers or ctx.user.id in Configs.config.bot.testers):
         return True
     else:

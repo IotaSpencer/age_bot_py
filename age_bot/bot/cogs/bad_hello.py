@@ -14,12 +14,13 @@ from age_bot.bot.helpers.decorators import *
 
 class BadHello(commands.Cog):
     def __init__(self, bot):
+        print(bot.__class__.__name__())
         self.bot = bot
         self.ext_path = 'age_bot.bot.cogs.bad_hello'
 
     @commands.Cog.listener()
     async def on_message(self, message: Message):
-        if check_if_tester_or_main_bot(message):
+        if check_if_tester_or_main_bot(self.bot):
             if message.author.bot is not True:
                 if re.search("^([!@$/]?(verify|hello)\S+)$",
                              message.content, re.IGNORECASE) and message.channel.name == 'hello':
