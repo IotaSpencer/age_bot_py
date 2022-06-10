@@ -19,7 +19,7 @@ class BadHello(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message: Message):
-        if check_if_tester_or_main_bot(self.bot):
+        if check_if_tester_or_main_bot(message, self.bot):
             if message.author.bot is not True:
                 if re.search("^([!@$/]?(verify|hello)\S+)$",
                              message.content, re.IGNORECASE) and message.channel.name == 'hello':

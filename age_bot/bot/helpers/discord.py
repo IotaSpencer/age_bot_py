@@ -13,8 +13,8 @@ from omegaconf.dictconfig import DictConfig
 from age_bot.config import Configs
 
 
-def check_if_tester_or_main_bot(ctx: Union[Context, Bot, ApplicationContext]) -> bool:
-    if ctx.bot.user.id == 719736166819037314 or (ctx.user.id in Configs.devconfig.bot.testers or ctx.user.id in Configs.config.bot.testers):
+def check_if_tester_or_main_bot(ctx: Union[Context, Message, ApplicationContext], bot: Bot) -> bool:
+    if bot.user.id == 719736166819037314 or (ctx.user.id in Configs.devconfig.bot.testers or ctx.user.id in Configs.config.bot.testers):
         return True
     else:
         return False
