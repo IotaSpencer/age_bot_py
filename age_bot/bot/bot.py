@@ -1,6 +1,6 @@
 # built-in
-import discord
 # 3rd party
+import discord
 import omegaconf.errors
 from discord.ext import bridge
 import arrow as arw
@@ -10,7 +10,6 @@ from ..logger import logger
 from ..bot.helpers.discord import *
 from ..bot.helpers.decorators import *
 
-puts = print
 
 class Bot(bridge.Bot):
     def __init__(self, **options):
@@ -41,7 +40,7 @@ class DevBot(Bot):
         await self.change_presence(activity=discord.Activity(
             type=discord.ActivityType.playing,
             name=f"{app_name}"
-        ), status='online')
+        ), status=discord.Status.online)
 
 
 class ProdBot(Bot):
