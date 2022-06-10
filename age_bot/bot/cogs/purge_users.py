@@ -17,7 +17,7 @@ from age_bot.logger import logger
 from age_bot.exceptions import *
 from age_bot.bot.helpers.discord import *
 from chunk_list import chunks
-
+from age_bot.bot.helpers.perms_predicate import *
 
 async def run_purge(guild: Guild = None, users: list = None):
     if users is None:
@@ -43,6 +43,7 @@ class PurgeUsers(commands.Cog, command_attrs=dict(hidden=True)):
 
     @bridge.bridge_command(guild_id=626522675224772658)
     @acommands.guild_only()
+    @confirmable_check
     async def purge(self, ctx: Union[BridgeApplicationContext, BridgeExtContext], wet: bool = False,
                     guild: Guild = None):
         """
