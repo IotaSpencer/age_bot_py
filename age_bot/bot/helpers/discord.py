@@ -13,13 +13,27 @@ from omegaconf.dictconfig import DictConfig
 from age_bot.config import Configs
 
 
-def check_if_tester_or_main_bot(ctx: Union[Context, Message, ApplicationContext], bot: Bot) -> bool:
-    if bot.user.id == 719736166819037314 or (ctx.user.id in Configs.devconfig.bot.testers or ctx.user.id in Configs.config.bot.testers):
-        return True
+def check_if_tester_or_main_bot(ctx: Union[Context, Message, Member, ApplicationContext], bot: Bot) -> bool:
+    if ctx.__class__.__name__ == 'Message':
+        message = ctx # type: Message
+        if bot.user.id == 719736166819037314 or (message.author.id in Configs.devconfig.bot.testers or message.author.id in Configs.config.bot.testers):
+            return True
+        else:
+            return False
+    elif ctx.__class__.__name__ == 'Member':
+        member = ctx # type: Member
+        if bot.user.id == 719736166819037314 or (member.id in Configs.devconfig.bot.testers or member.id in Configs.config.bot.testers):
+            return True
+        else:
+            return False
     else:
-        return False
+        ctx = ctx # type: Union[Context, ApplicationContext]
+        if bot.user.id == 719736166819037314 or (ctx.user.id in Configs.devconfig.bot.testers or ctx.user.id in Configs.config.bot.testers):
+            return True
+        else:
+            return False
 
-async def reply_self_is_dev(ctx: Union[Context,Message, ApplicationContext]):
+async def reply_self_is_dev(ctx: Union[Context, Message, Member, ApplicationContext]):
     nenrei_user = ctx.bot.get_user(719736166819037314)
     self_is_dev_string = f"""
     Hello {member_distinct(ctx.user or ctx.author)},
