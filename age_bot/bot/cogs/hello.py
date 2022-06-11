@@ -1,16 +1,14 @@
 # built-in
-
-# 3rd Party
 from typing import Union
-
+import inspect
+from pathlib import Path
+# 3rd Party
 import discord
 from discord.ext import commands, bridge
 from discord import Member, Message
-
 # local imports
 from discord.ext.bridge import BridgeApplicationContext, BridgeExtContext
 from discord.ext.commands import guild_only
-
 from age_bot.bot.helpers.discord import *
 from age_bot.bot.helpers.perms_predicate import *
 from ...config import Configs
@@ -66,7 +64,7 @@ class Hello(discord.Cog):
 
     @discord.Cog.listener()
     async def on_message(self, msg: Message):
-        if check_if_tester_or_main_bot(msg):
+        if check_if_tester_or_main_bot(msg, self.bot):
             orig_msg = msg
             if msg.guild and msg.channel:
                 if msg.channel.name == 'hello':
@@ -93,7 +91,7 @@ class Hello(discord.Cog):
             else:
                 pass
         else:
-            logger.info('dev env active, not messaging member')
+            logger.info(f"dev env active, ignoring {inspect.stack()[0][3]} in {Path(__file__).stem}")
 
 def setup(bot):
     bot.add_cog(Hello(bot))

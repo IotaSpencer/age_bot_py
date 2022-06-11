@@ -1,6 +1,7 @@
 # built-in
 import re
-
+import inspect
+from pathlib import Path
 # 3rd party
 import discord
 from discord.ext import commands
@@ -11,6 +12,7 @@ from age_bot.bot.helpers.discord import *
 from age_bot.logger import logger
 from age_bot.config import Configs
 from age_bot.bot.helpers.decorators import *
+
 
 class BadHello(commands.Cog):
     def __init__(self, bot):
@@ -39,6 +41,8 @@ class BadHello(commands.Cog):
                         f"non-complying questions or messages will be deleted.")
                     await message.delete(delay=0)
                     await our_message.delete(delay=120)
+        else:
+            logger.info(f"dev env active, ignoring {inspect.stack()[0][3]} in {Path(__file__).stem}")
 
 
 def setup(bot: discord.Bot):

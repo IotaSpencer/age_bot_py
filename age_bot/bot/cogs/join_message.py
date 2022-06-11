@@ -1,6 +1,7 @@
 # built-in
 import asyncio
-
+from pathlib import Path
+import inspect
 # 3rd party
 import discord
 from discord.errors import Forbidden
@@ -21,7 +22,7 @@ class JoinMessage(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_join(self, member: Member):
-        if check_if_tester_or_main_bot:
+        if check_if_tester_or_main_bot(member, self.bot):
             await asyncio.sleep(5)
             try:
                 await member.send(
@@ -42,8 +43,7 @@ class JoinMessage(commands.Cog):
                                       f"have accept messages from server members ticked.", delete_after=120)
 
         else:
-            logger.info('dev env active, not messaging member')
-
+            logger.info(f"dev env active, ignoring {inspect.stack()[0][3]} in {Path(__file__).stem}")
 
 def setup(bot):
     bot.add_cog(JoinMessage(bot))
