@@ -15,7 +15,7 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+lib**/**
 lib64/
 parts/
 sdist/
@@ -148,7 +148,6 @@ cython_debug/
 /bin/import-expression
 /bin/import-expression-rewrite
 /bin/import_expression
-/lib64/
 /bin/normalizer
 /bin/pip
 /bin/pip3
