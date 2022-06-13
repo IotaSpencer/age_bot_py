@@ -36,6 +36,7 @@ async def start(env) -> None:
         #env = Configs.config.env.env
         bot.disable_sending = True
         bot.load_extension('jishaku')
+        bot.load_extension('age_bot.bot.cogs.devbotcog')
 
     # Load Jishaku
     bot.load_extension('age_bot.bot.cogs.extensions')

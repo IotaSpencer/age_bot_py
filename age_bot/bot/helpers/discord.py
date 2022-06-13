@@ -35,8 +35,9 @@ def check_if_tester_or_main_bot(ctx: Union[Context, Message, Member, Application
 
 async def reply_self_is_dev(ctx: Union[Context, Message, Member, ApplicationContext]):
     nenrei_user = ctx.bot.get_user(719736166819037314)
+    member = ctx.user if ctx.user else ctx.author
     self_is_dev_string = f"""
-    Hello {member_distinct(ctx.user or ctx.author)},
+    Hello {member_distinct(member)},
     This is the development(alpha/beta) bot for {user_distinct(nenrei_user)}
     
     You should see if there is another command that has "{nenrei_user.name}" next to it.
@@ -46,6 +47,32 @@ async def reply_self_is_dev(ctx: Union[Context, Message, Member, ApplicationCont
         await ctx.reply(self_is_dev_string)
     elif ctx.__class__.__name__ == 'ApplicationContext':
         await ctx.respond(content=self_is_dev_string)
+
+async def reply_self_is_dev2(message: Message, bot: Bot):
+    nenrei_user = ctx.bot.get_user(719736166819037314) # type: User
+    member = ctx.user if ctx.user else ctx.author
+    self_is_dev_string = f"""
+    Hello {member_distinct(member)},
+    This is the development(alpha/beta) bot for {user_distinct(nenrei_user)}
+    
+    You should probably be sending this to Nenrei-Sama.
+    
+    Depending on what you're sending, Here's your options.
+    
+        * If you're saying 'Hi' or something like that, then you're dumb,
+            as this is not a chat bot.
+            
+        * If you are trying to verify your ID+tag, then you need to run the '/verify'
+            command that has '{nenrei_user.name}' next to it, not 'DevBot for Nenrei-Sama'
+        
+        * If you're asking a question about verification, ask in #hello on the server that
+            you have in common with me, if there are multiple, then ask in the one you're trying 
+            to currently verify in.
+        
+        * If you're interested in Nenrei-Sama/DevBot for Nenrei-Sama, please speak to/message
+            our owner {self.bot.get_user(bot.owner_id)}
+            
+        *** Anything else that hasn't been anticipated, most likely is nonsense."""
 
 def member_distinct(member: discord.Member) -> str:
     """
