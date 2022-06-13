@@ -27,12 +27,6 @@ class Bot(bridge.Bot):
         self.debug_guilds = debug_guilds
         self.max_messages = 10000
         self.status = discord.Status.online
-
-
-class DevBot(Bot):
-    def __init__(self, **options):
-        super().__init__(**options)
-
     async def on_ready(self):
         logger.info(f"Bot is online and ready! Name is {self.user}")
         app = await self.application_info()
@@ -41,6 +35,10 @@ class DevBot(Bot):
             type=discord.ActivityType.playing,
             name=f"{app_name}"
         ), status=discord.Status.online)
+
+class DevBot(Bot):
+    def __init__(self, **options):
+        super().__init__(**options)
 
 
 class ProdBot(Bot):
