@@ -24,7 +24,7 @@ class Hello(discord.Cog):
     @bridge.bridge_command()
     async def hello(self, ctx):
         await ctx.defer(ephemeral=True)
-        if check_if_tester_or_main_bot(ctx):
+        if check_if_tester_or_main_bot(ctx, self.bot):
             await ctx.reply(
                 f"Hello, {member_distinct(ctx.author)}, in order to post or read {ctx.guild.name} messages you must be a certain role as well as "
                 f"submitted a form of ID with the server in question."

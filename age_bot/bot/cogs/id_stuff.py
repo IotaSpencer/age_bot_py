@@ -37,7 +37,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
     @bridge.bridge_command(name="verify", description="Verify your age via Nenrei-Sama")
     async def verify(self, ctx):
         await ctx.defer(ephemeral=True)
-        if check_if_tester_or_main_bot(ctx):
+        if check_if_tester_or_main_bot(ctx, self.bot):
             member = ctx.author  # type: Union[Member, User]
             guild = ctx.guild_id
             db_guild = Configs.serverdb.servers[str(guild)]

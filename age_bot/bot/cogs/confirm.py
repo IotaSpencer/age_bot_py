@@ -28,7 +28,7 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
                    default_permission=False)
     async def slash_adultify(self, ctx: ApplicationContext, user: discord.Member = None, dob: AgeConverter = None):
         """[user] [dob]"""
-        if check_if_tester_or_main_bot(ctx):
+        if check_if_tester_or_main_bot(ctx, self.bot):
             await ctx.defer()
             author = ctx.user
             author_roles = author.roles
