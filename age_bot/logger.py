@@ -1,30 +1,51 @@
-import logging
+import colorlog
+
 from asyncio.subprocess import STDOUT
 import sys
 import discord
 
 
-class LevelFilter(logging.Filter):
+class LevelFilter(colorlog.Filter):
     """
     This is a filter which changes the levelname to that of its Initial letter
 
     """
 
     def filter(self, record):
-
         record.levelname = record.levelname[0]
         return True
 
-logger = logging.getLogger('discord')
-logger.setLevel(logging.INFO)
-handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w+')
-handler2 = logging.StreamHandler(sys.stdout)
-handler.setFormatter(logging.Formatter("%(asctime)s:%(levelname)s:%(name)s:\n"
-                                       "       in %(filename)s:%(funcName)s:%(lineno)s\n"
-                                       "               %(message)s"))
-handler2.setFormatter(logging.Formatter("%(asctime)s:%(levelname)s:%(name)s:\n"
-                                        "       in %(filename)s:%(funcName)s:%(lineno)s\n"
-                                        "               %(message)s"))
+
+logger = colorlog.getLogger('discord')
+logger.setLevel(colorlog.INFO)
+handler = colorlog.FileHandler(filename='discord.log', encoding='utf-8', mode='w+')
+handler2 = colorlog.StreamHandler(sys.stdout)
+handler.setFormatter(colorlog.ColoredFormatter("%(asctime)s:%(levelname)s:%(name)s:\n"
+                                               "       in %(filename)s:%(funcName)s:%(lineno)s\n"
+                                               "               %(message)s",
+                                               reset=True,
+                                               log_colors={
+                                                   'DEBUG': 'cyan',
+                                                   'INFO': 'green',
+                                                   'WARNING': 'yellow',
+                                                   'ERROR': 'red',
+                                                   'CRITICAL': 'red,bg_white',
+                                               },
+                                               secondary_log_colors={},
+                                               ))
+handler2.setFormatter(colorlog.ColoredFormatter("%(asctime)s:%(levelname)s:%(name)s:\n"
+                                                "       in %(filename)s:%(funcName)s:%(lineno)s\n"
+                                                "               %(message)s",
+                                                reset=True,
+                                                log_colors={
+                                                    'DEBUG': 'cyan',
+                                                    'INFO': 'green',
+                                                    'WARNING': 'yellow',
+                                                    'ERROR': 'red',
+                                                    'CRITICAL': 'red,bg_white',
+                                                },
+                                                secondary_log_colors={},
+                                                ))
 logger.addHandler(handler)
 logger.addHandler(handler2)
 f = LevelFilter()
