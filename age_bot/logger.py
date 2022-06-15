@@ -19,11 +19,11 @@ logger = logging.getLogger('discord')
 logger.setLevel(logging.INFO)
 handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w+')
 handler2 = logging.StreamHandler(sys.stdout)
-handler.setFormatter(logging.Formatter("%(asctime)s:%(levelname)s:%(name)s:"
-                                       "       in %(filename)s:%(funcName)s:%(lineno)s"
+handler.setFormatter(logging.Formatter("%(asctime)s:%(levelname)s:%(name)s:\n"
+                                       "       in %(filename)s:%(funcName)s:%(lineno)s\n"
                                        "               %(message)s"))
-handler2.setFormatter(logging.Formatter("%(asctime)s:%(levelname)s:%(name)s:"
-                                        "       in %(filename)s:%(funcName)s:%(lineno)s"
+handler2.setFormatter(logging.Formatter("%(asctime)s:%(levelname)s:%(name)s:\n"
+                                        "       in %(filename)s:%(funcName)s:%(lineno)s\n"
                                         "               %(message)s"))
 logger.addHandler(handler)
 logger.addHandler(handler2)
