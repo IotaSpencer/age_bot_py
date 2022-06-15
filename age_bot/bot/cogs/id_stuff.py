@@ -36,7 +36,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
     @guild_only()
     @bridge.bridge_command(name="verify", description="Verify your age via Nenrei-Sama")
     async def verify(self, ctx):
-        await ctx.defer(ephemeral=True)
+        await ctx.defer(ephemeral=True) if ctx.__class__.__name__ in ['ApplicationContext', 'BridgeApplicationContext'] else await ctx.defer()
         if check_if_tester_or_main_bot(ctx, self.bot):
             member = ctx.author  # type: Union[Member, User]
             guild = ctx.guild_id
