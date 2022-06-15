@@ -2,6 +2,19 @@ import logging
 from asyncio.subprocess import STDOUT
 import sys
 import discord
+
+
+class LevelFilter(logging.Filter):
+    """
+    This is a filter which changes the levelname to that of its Initial letter
+
+    """
+
+    def filter(self, record):
+
+        record.levelname = record.levelname[0]
+        return True
+
 logger = logging.getLogger('discord')
 logger.setLevel(logging.INFO)
 handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w+')
@@ -14,3 +27,5 @@ handler2.setFormatter(logging.Formatter("%(asctime)s:%(levelname[0])s:%(name)s:"
                                         "               %(message)s"))
 logger.addHandler(handler)
 logger.addHandler(handler2)
+f = LevelFilter()
+logger.addFilter(f)
