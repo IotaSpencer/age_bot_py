@@ -23,7 +23,7 @@ class Hello(discord.Cog):
     @guild_only()
     @bridge.bridge_command()
     async def hello(self, ctx):
-        await ctx.defer(ephemeral=True)
+        await ctx.defer(ephemeral=True) if ctx.__class__.__name__ in ['ApplicationContext', 'BridgeApplicationContext'] else await ctx.defer()
         if check_if_tester_or_main_bot(ctx, self.bot):
             await ctx.reply(
                 f"Hello, {member_distinct(ctx.author)}, in order to post or read {ctx.guild.name} messages you must be a certain role as well as "
@@ -36,7 +36,7 @@ class Hello(discord.Cog):
                 f"{ctx.guild.get_role(Configs.serverdb.servers[str(ctx.guild.id)].role)} "
                 f"\n\n"
                 f"To do so, please run the **command** /verify"
-                f""
+                f"",
             )
 
     @helper_check()
