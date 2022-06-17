@@ -48,9 +48,9 @@ handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w+
 handler2 = colorlog.StreamHandler(sys.stdout)
 handler.setFormatter(
     colorlog.ColoredFormatter(
-        "%(asctime)s:%(log_color)s%(levelname)s%(reset)s:%(name_log_color)s%(name)s%(reset)s:\n"
-        "       in %(file_log_color)s%(filename)s:%(funcName)s:%(lineno)s%(reset)s\n"
-        "               %(message_log_color)s%(message)s%(reset)s",
+        "%(asctime)s:%(levelname)s:%(name)s:\n"
+        "       in %(filename)s:%(funcName)s:%(lineno)s:\n"
+        "               %(message)s",
         reset=True,
         log_colors={
             'DEBUG': 'cyan',
@@ -63,9 +63,9 @@ handler.setFormatter(
     ))
 handler2.setFormatter(
     colorlog.ColoredFormatter(
-        "%(asctime)s:%(levelname)s:%(name)s:\n"
-        "       in %(filename)s:%(funcName)s:%(lineno)s\n"
-        "               %(message)s",
+        "%(asctime)s:%(log_color)s%(levelname)s%(reset)s:%(name_log_color)s%(name)s%(reset)s:\n"
+        "       in %(file_log_color)s%(filename)s:%(funcName)s:%(lineno)s%(reset)s\n"
+        "               %(message_log_color)s%(message)s%(reset)s",
         reset=True,
         log_colors={
             'DEBUG': 'cyan',
