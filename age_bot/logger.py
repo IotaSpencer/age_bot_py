@@ -64,6 +64,11 @@ handler2.setFormatter(
             'WARNING': 'yellow',
             'ERROR': 'red',
             'CRITICAL': 'red,bg_white',
+            'D': 'cyan',
+            'I': 'green',
+            'W': 'yellow',
+            'E': 'red',
+            'C': 'red,bg_white',
         },
         secondary_log_colors=secondary_log_colors,
     ))
