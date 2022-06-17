@@ -1,11 +1,11 @@
 import colorlog
-
+import logging
 from asyncio.subprocess import STDOUT
 import sys
 import discord
 
 
-class LevelFilter(colorlog.Filter):
+class LevelFilter(logging.Filter):
     """
     This is a filter which changes the levelname to that of its Initial letter
 
