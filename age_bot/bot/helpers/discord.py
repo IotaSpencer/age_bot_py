@@ -70,7 +70,7 @@ async def reply_self_is_dev2(message: Message, bot: Bot):
             to currently verify in.
         
         * If you're interested in Nenrei-Sama/DevBot for Nenrei-Sama, please speak to/message
-            our owner {self.bot.get_user(bot.owner_id)}
+            our owner {bot.get_user(bot.owner_id)}
             
         *** Anything else that hasn't been anticipated, most likely is nonsense."""
 
