@@ -14,38 +14,68 @@ class LevelFilter(logging.Filter):
     def filter(self, record):
         record.levelname = record.levelname[0]
         return True
-
-
+seconary_log_colors = {
+    'message': {
+        'error': 'red',
+        'critical': 'red',
+        'warning': 'yellow',
+        'info': 'green',
+        'debug': 'blue',
+    },
+    'traceback': {
+        'error': 'red',
+        'critical': 'red',
+        'warning': 'yellow',
+    },
+    'name': {
+        'error': 'red bold',
+        'critical': 'red bold',
+        'warning': 'yellow bold',
+        'info': 'green bold',
+        'debug': 'blue bold',
+    },
+    'file': {
+        'error': 'red bold',
+        'critical': 'red bold',
+        'warning': 'yellow bold',
+        'info': 'green bold',
+        'debug': 'blue bold',
+    }
+}
 logger = colorlog.getLogger('discord')
 logger.setLevel(colorlog.INFO)
-handler = colorlog.FileHandler(filename='discord.log', encoding='utf-8', mode='w+')
+handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w+')
 handler2 = colorlog.StreamHandler(sys.stdout)
-handler.setFormatter(colorlog.ColoredFormatter("%(asctime)s:%(levelname)s:%(name)s:\n"
-                                               "       in %(filename)s:%(funcName)s:%(lineno)s\n"
-                                               "               %(message)s",
-                                               reset=True,
-                                               log_colors={
-                                                   'DEBUG': 'cyan',
-                                                   'INFO': 'green',
-                                                   'WARNING': 'yellow',
-                                                   'ERROR': 'red',
-                                                   'CRITICAL': 'red,bg_white',
-                                               },
-                                               secondary_log_colors={},
-                                               ))
-handler2.setFormatter(colorlog.ColoredFormatter("%(asctime)s:%(levelname)s:%(name)s:\n"
-                                                "       in %(filename)s:%(funcName)s:%(lineno)s\n"
-                                                "               %(message)s",
-                                                reset=True,
-                                                log_colors={
-                                                    'DEBUG': 'cyan',
-                                                    'INFO': 'green',
-                                                    'WARNING': 'yellow',
-                                                    'ERROR': 'red',
-                                                    'CRITICAL': 'red,bg_white',
-                                                },
-                                                secondary_log_colors={},
-                                                ))
+handler.setFormatter(
+    colorlog.ColoredFormatter(
+        "%(asctime)s:%(log_color)s%(levelname)s%(reset)s:%(name_log_color)s%(name)s%(reset)s:\n"
+        "       in %(file_log_color)s%(filename)s:%(funcName)s:%(lineno)s%(reset)s\n"
+        "               %(message_log_color)s%(message)s%(reset)s",
+        reset=True,
+        log_colors={
+            'DEBUG': 'cyan',
+            'INFO': 'green',
+            'WARNING': 'yellow',
+            'ERROR': 'red',
+            'CRITICAL': 'red,bg_white',
+        },
+        secondary_log_colors=secondary_log_colors,
+    ))
+handler2.setFormatter(
+    colorlog.ColoredFormatter(
+        "%(asctime)s:%(levelname)s:%(name)s:\n"
+        "       in %(filename)s:%(funcName)s:%(lineno)s\n"
+        "               %(message)s",
+        reset=True,
+        log_colors={
+            'DEBUG': 'cyan',
+            'INFO': 'green',
+            'WARNING': 'yellow',
+            'ERROR': 'red',
+            'CRITICAL': 'red,bg_white',
+        },
+        secondary_log_colors=secondary_log_colors,
+    ))
 logger.addHandler(handler)
 logger.addHandler(handler2)
 f = LevelFilter()
