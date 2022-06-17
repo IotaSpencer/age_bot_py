@@ -28,18 +28,18 @@ secondary_log_colors = {
         'warning': 'yellow',
     },
     'name': {
-        'error': 'red bold',
-        'critical': 'red bold',
-        'warning': 'yellow bold',
-        'info': 'green bold',
-        'debug': 'blue bold',
+        'error': 'red',
+        'critical': 'red',
+        'warning': 'yellow',
+        'info': 'green',
+        'debug': 'blue',
     },
     'file': {
-        'error': 'red bold',
-        'critical': 'red bold',
-        'warning': 'yellow bold',
-        'info': 'green bold',
-        'debug': 'blue bold',
+        'error': 'red',
+        'critical': 'red',
+        'warning': 'yellow',
+        'info': 'green',
+        'debug': 'blue',
     }
 }
 logger = colorlog.getLogger('discord')
