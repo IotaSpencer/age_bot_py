@@ -14,7 +14,7 @@ class LevelFilter(logging.Filter):
     def filter(self, record):
         record.levelname = record.levelname[0]
         return True
-seconary_log_colors = {
+secondary_log_colors = {
     'message': {
         'error': 'red',
         'critical': 'red',
