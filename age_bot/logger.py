@@ -16,30 +16,30 @@ class LevelFilter(logging.Filter):
         return True
 secondary_log_colors = {
     'message': {
-        'error': 'red',
-        'critical': 'red',
-        'warning': 'yellow',
-        'info': 'green',
-        'debug': 'blue',
+        'E': 'red',
+        'C': 'red',
+        'W': 'yellow',
+        'I': 'green',
+        'D': 'blue',
     },
     'traceback': {
-        'error': 'red',
-        'critical': 'red',
-        'warning': 'yellow',
+        'E': 'red',
+        'C': 'red',
+        'W': 'yellow',
     },
     'name': {
-        'error': 'red',
-        'critical': 'red',
-        'warning': 'yellow',
-        'info': 'green',
-        'debug': 'blue',
+        'E': 'red',
+        'C': 'red',
+        'W': 'yellow',
+        'I': 'green',
+        'D': 'blue',
     },
     'file': {
-        'error': 'red',
-        'critical': 'red',
-        'warning': 'yellow',
-        'info': 'green',
-        'debug': 'blue',
+        'E': 'red',
+        'C': 'red',
+        'W': 'yellow',
+        'I': 'green',
+        'D': 'blue',
     }
 }
 logger = colorlog.getLogger('discord')
