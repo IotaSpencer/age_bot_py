@@ -49,8 +49,8 @@ async def reply_self_is_dev(ctx: Union[Context, Message, Member, ApplicationCont
         await ctx.respond(content=self_is_dev_string)
 
 async def reply_self_is_dev2(message: Message, bot: Bot):
-    nenrei_user = ctx.bot.get_user(719736166819037314) # type: User
-    member = ctx.user if ctx.user else ctx.author
+    nenrei_user = bot.get_user(719736166819037314) # type: User
+    member = message.user if message.user else message.author
     self_is_dev_string = f"""
     Hello {member_distinct(member)},
     This is the development(alpha/beta) bot for {user_distinct(nenrei_user)}
