@@ -1,6 +1,7 @@
 # built-in
 
 # 3rd party
+import age_bot.bot.bot
 from discord.ext.commands import Cog, command
 
 # local
@@ -9,7 +10,7 @@ from age_bot.bot.helpers.discord import *
 
 
 class DevBotCog(Cog, command_attrs=dict(hidden=True)):
-    def __init__(self, bot):
+    def __init__(self, bot: Union[Bot, AutoShardedBot, discord.ext.bridge.Bot, age_bot.bot.bot.Bot, age_bot.bot.bot.DevBot, age_bot.bot.bot.ProdBot]):
         self.bot = bot
         self.ext_path = 'age_bot.bot.cogs.devbotcog'
 
@@ -19,9 +20,10 @@ class DevBotCog(Cog, command_attrs=dict(hidden=True)):
         Since this only loaded on the DevBot, we don't need to check if it is the dev bot
         """
         if check_if_tester_or_main_bot(message, self.bot):
-            pass # If they are a tester, act as usual
+            pass # If they are a tester, act casual
         else: # We're devbot, and user is not a tester
-            await reply_self_is_dev2(message, self.bot)
+            if message.author.id != self.bot.user.id:
+                await reply_self_is_dev2(message, self.bot)
 
 def setup(bot):
     bot.add_cog(DevBotCog(bot))
