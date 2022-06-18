@@ -92,6 +92,7 @@ class Hello(discord.Cog):
                 pass
         else:
             logger.info(f"dev env active, ignoring {inspect.stack()[0][3]} in {Path(__file__).stem}")
+            pass
 
 def setup(bot):
     bot.add_cog(Hello(bot))
