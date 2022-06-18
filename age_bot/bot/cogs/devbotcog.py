@@ -14,7 +14,7 @@ class DevBotCog(Cog, command_attrs=dict(hidden=True)):
         self.ext_path = 'age_bot.bot.cogs.devbotcog'
 
     @Cog.listener()
-    async def on_message(self, message):
+    async def self_is_dev(self, message):
         """
         Since this only loaded on the DevBot, we don't need to check if it is the dev bot
         """
