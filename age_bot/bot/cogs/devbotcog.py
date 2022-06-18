@@ -13,8 +13,8 @@ class DevBotCog(Cog, command_attrs=dict(hidden=True)):
         self.bot = bot
         self.ext_path = 'age_bot.bot.cogs.devbotcog'
 
-    @Cog.listener()
-    async def self_is_dev(self, message):
+    @Cog.listener('on_message')
+    async def self_is_dev(self, message: Message):
         """
         Since this only loaded on the DevBot, we don't need to check if it is the dev bot
         """
@@ -22,9 +22,6 @@ class DevBotCog(Cog, command_attrs=dict(hidden=True)):
             pass # If they are a tester, act as usual
         else: # We're devbot, and user is not a tester
             await reply_self_is_dev2(message, self.bot)
-
-        # then do things pertaining to devbot
-        # like telling people to use the main bot
 
 def setup(bot):
     bot.add_cog(DevBotCog(bot))
