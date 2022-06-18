@@ -70,7 +70,7 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
                 await ctx.respond("You don't have permission to change user roles")
                 await channel.send(embed=e)
         else:
-            reply_self_is_dev(ctx)
+            await reply_self_is_dev(ctx)
 
     @commands.command(usage="<message> <user>", description="Confirm an ID as valid")
     @confirmable_check()

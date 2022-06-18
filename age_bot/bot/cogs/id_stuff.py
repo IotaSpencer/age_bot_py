@@ -106,7 +106,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
                         "If you haven't received a message that your submission has been sent, let the admins of "
                         "the applicable server know to contact the owner of this bot(iotaspencer#0001).")
         else:
-            reply_self_is_dev(ctx)
+            await reply_self_is_dev(ctx)
 
     async def on_application_command_error(self, ctx, error):
         if isinstance(error, NoAttachmentError):
