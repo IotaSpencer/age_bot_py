@@ -39,8 +39,12 @@ class Bot(bridge.Bot):
 class DevBot(Bot):
     def __init__(self, **options):
         super().__init__(**options)
+        prefix = Configs.devconfig.bot.prefix
+        self.command_prefix = prefix
 
 
 class ProdBot(Bot):
     def __init__(self, **options):
         super().__init__(**options)
+        prefix = Configs.config.bot.prefix
+        self.command_prefix = prefix
