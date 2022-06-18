@@ -19,7 +19,7 @@ class BadHello(commands.Cog):
         self.bot = bot
         self.ext_path = 'age_bot.bot.cogs.bad_hello'
 
-    @commands.Cog.listener()
+    @discord.Cog.listener()
     async def on_message(self, message: Message):
         if check_if_tester_or_main_bot(message, self.bot):
             if message.author.bot is not True:
@@ -43,6 +43,7 @@ class BadHello(commands.Cog):
                     await our_message.delete(delay=120)
         else:
             logger.info(f"dev env active, ignoring {inspect.stack()[0][3]} in {Path(__file__).stem}")
+            pass
 
 
 def setup(bot: discord.Bot):
