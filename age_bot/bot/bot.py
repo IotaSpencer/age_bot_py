@@ -19,11 +19,6 @@ class Bot(bridge.Bot):
         db_guilds = Configs.serverdb.servers.keys()
         debug_guilds = [server for server in db_guilds]
         self.command_prefix = prefix
-        try:
-            self.owner_ids = Configs.config.bot.owners
-            puts(self.owner_ids)
-        except omegaconf.errors.ConfigAttributeError:
-            self.owner_ids = [Configs.config.bot.owner]
         self.debug_guilds = debug_guilds
         self.max_messages = 10000
         self.status = discord.Status.online
@@ -41,10 +36,19 @@ class DevBot(Bot):
         super().__init__(**options)
         prefix = Configs.devconfig.bot.prefix
         self.command_prefix = prefix
-
+        try:
+            self.owner_ids = Configs.devconfig.bot.owners
+            puts(self.owner_ids)
+        except omegaconf.errors.ConfigAttributeError:
+            self.owner_ids = [Configs.devconfig.bot.owner]
 
 class ProdBot(Bot):
     def __init__(self, **options):
         super().__init__(**options)
         prefix = Configs.config.bot.prefix
         self.command_prefix = prefix
+        try:
+            self.owner_ids = Configs.config.bot.owners
+            puts(self.owner_ids)
+        except omegaconf.errors.ConfigAttributeError:
+            self.owner_ids = [Configs.config.bot.owner]
