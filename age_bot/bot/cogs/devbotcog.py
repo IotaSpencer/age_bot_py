@@ -23,7 +23,9 @@ class DevBotCog(Cog, command_attrs=dict(hidden=True)):
             pass # If they are a tester, act casual
         else: # We're devbot, and user is not a tester
             if message.author.id != self.bot.user.id:
-                await reply_self_is_dev2(message, self.bot)
+                if message.author.bot == False:
+                    if message.channel.__class__.__name__ == 'DMChannel':
+                        await reply_self_is_dev2(message, self.bot)
 
 def setup(bot):
     bot.add_cog(DevBotCog(bot))
