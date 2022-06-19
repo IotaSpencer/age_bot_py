@@ -51,28 +51,28 @@ async def reply_self_is_dev(ctx: Union[Context, Message, Member, ApplicationCont
 async def reply_self_is_dev2(message: Message, bot: Bot):
     nenrei_user = bot.get_user(719736166819037314) # type: User
     member = message.author # type: User
-    self_is_dev_string = f"""
-    Hello {member_distinct(member)},
-    This is the development(alpha/beta) bot for {user_distinct(nenrei_user)}
-    
-    You should probably be sending this to Nenrei-Sama.
-    
-    Depending on what you're sending, Here's your options.
-    
-        * If you're saying 'Hi' or something like that, then you're dumb,
-            as this is not a chat bot.
-            
-        * If you are trying to verify your ID+tag, then you need to run the '/verify'
-            command that has '{nenrei_user.name}' next to it, not 'DevBot for Nenrei-Sama'
-        
-        * If you're asking a question about verification, ask in #hello on the server that
-            you have in common with me, if there are multiple, then ask in the one you're trying 
-            to currently verify in.
-        
-        * If you're interested in Nenrei-Sama/DevBot for Nenrei-Sama, please speak to/message
-            our owner {bot.get_user(bot.owner_id)}
-            
-        *** Anything else that hasn't been anticipated, most likely is nonsense."""
+    self_is_dev_string = [
+        f"Hello {member_distinct(member)},",
+        f"This is the development(alpha/beta) bot for {user_distinct(nenrei_user)}",
+        "\n",
+        f"You should probably be sending this to Nenrei-Sama.",
+        f"Instead of {bot.user.name}",
+        f"Depending on what you're sending, Here's your options.",
+        "\n",
+        f"* If you're saying 'Hi' or something like that, then you're dumb,",
+        f"as this is not a chat bot.",
+        "\n",
+        f"* If you are trying to verify your ID+tag, then you need to run the '/verify'",
+        f"command that has '{nenrei_user.name}' next to it, not 'DevBot for Nenrei-Sama'",
+        "\n",
+        f"* If you're asking a question about verification, ask in #hello on the server that",
+        f"you have in common with me, if there are multiple, then ask in the one you're trying",
+        f"to currently verify in.",
+        "\n",
+        f"* If you're interested in Nenrei-Sama/DevBot for Nenrei-Sama, please speak to/message",
+        f"our owner {bot.get_user(bot.owner_id)}",
+        "\n",
+        "*** Anything else that hasn't been anticipated, most likely is nonsense."]
     await message.reply(self_is_dev_string)
 
 def member_distinct(member: discord.Member) -> str:
