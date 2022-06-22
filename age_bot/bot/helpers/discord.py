@@ -73,17 +73,17 @@ async def reply_self_is_dev2(message: Message, bot: Bot):
         f"our owner {bot.get_user(bot.owner_id)}",
         "\n",
         "*** Anything else that hasn't been anticipated, most likely is nonsense."]
-    await message.reply(self_is_dev_string)
+    await message.reply(' '.join(self_is_dev_string))
 
-def member_distinct(member: discord.Member) -> str:
+def member_distinct(user: discord.User | discord.Member) -> str:
     """
     From a discord.Member object return the member's username and discrim
     as username#0000
 
-    :param member: a discord member object
+    :param user: a discord member or user object
     :return: str
     """
-    return "{}#{}".format(member.name, member.discriminator)
+    return "{}#{}".format(user.name, user.discriminator)
 
 
 author_distinct = member_distinct
