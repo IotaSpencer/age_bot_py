@@ -35,7 +35,7 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
             author_named_roles = [role.name for role in author_roles]
             adult_role = await get_adult_role(ctx)
             guild = ctx.guild_id
-            db_guild = Configs.serverdb.servers[str(guild)]
+            db_guild = Configs.sdb.servers[str(guild)]
             guild = ctx.guild
             verify_channel = db_guild.verify_channel
             channel = await guild.fetch_channel(verify_channel)

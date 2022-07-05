@@ -12,7 +12,7 @@ def is_valid_server_in_db(self):
             in_discord = True
         else:
             pass
-        if guild_id in Configs.serverdb.servers.keys():
+        if guild_id in Configs.sdb.servers.keys():
             in_db = True
         else:
             pass

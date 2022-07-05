@@ -26,12 +26,12 @@ async def start(env) -> None:
     print(env)
     if env == 'prod':
         bot = ProdBot(intents=discord.Intents.all())
-        token = Configs.config.bot.token
+        token = Configs.cfg.bot.token
         bot.disable_sending = False
 
     elif env == 'dev':
         bot = DevBot(intents=discord.Intents.all())
-        token = Configs.devconfig.bot.token
+        token = Configs.dcfg.bot.token
         bot.disable_sending = True
         bot.load_extension('jishaku')
         bot.load_extension('age_bot.bot.cogs.devbotcog')

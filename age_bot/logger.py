@@ -1,8 +1,5 @@
-import colorlog
-import logging
+import logging, datetime, sys, json_logging, flask, colorlog, discord
 from asyncio.subprocess import STDOUT
-import sys
-import discord
 
 
 class LevelFilter(logging.Filter):

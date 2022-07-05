@@ -21,7 +21,7 @@ class ServerInfo(Cog, command_attrs=dict(hidden=True)):
         self.bot = bot
 
     async def make_db_server_info_embed(self, ctx: Context, guild: Guild):
-        adult_role = guild.get_role(Configs.serverdb.servers[str(guild.id)].role)
+        adult_role = guild.get_role(Configs.sdb.servers[str(guild.id)].role)
 
         adults = adult_role.members
         everyone = guild.members
@@ -73,7 +73,7 @@ class ServersInfo(Cog, command_attrs=dict(hidden=True)):
         db_server_pages = []  # type: list[str,discord.Embed]
         discord_embeds = []  # type: list[discord.Embed]
 
-        db_servers = [item for item in Configs.serverdb.servers.keys()]
+        db_servers = [item for item in Configs.sdb.servers.keys()]
         discord_servers = ctx.bot.guilds
         for server in db_servers:
             fetched_guild = ctx.bot.get_guild(int(server))
@@ -99,7 +99,7 @@ class ServersInfo(Cog, command_attrs=dict(hidden=True)):
         db_server_embeds = []  # type: list[discord.Embed]
         discord_embeds = []  # type: list[discord.Embed]
 
-        db_servers = [item for item in Configs.serverdb.servers.keys()]
+        db_servers = [item for item in Configs.sdb.servers.keys()]
         discord_servers = ctx.bot.guilds
 
         for server in db_servers:

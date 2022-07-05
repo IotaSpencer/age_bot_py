@@ -14,9 +14,9 @@ from ..bot.helpers.decorators import *
 class Bot(bridge.Bot):
     def __init__(self, **options):
         super().__init__(**options)
-        token = Configs.config.bot.token
-        prefix = Configs.config.bot.prefix
-        db_guilds = Configs.serverdb.servers.keys()
+        token = Configs.cfg.bot.token
+        prefix = Configs.cfg.bot.prefix
+        db_guilds = Configs.sdb.servers.keys()
         debug_guilds = [server for server in db_guilds]
         self.command_prefix = prefix
         self.debug_guilds = debug_guilds
@@ -34,21 +34,21 @@ class Bot(bridge.Bot):
 class DevBot(Bot):
     def __init__(self, **options):
         super().__init__(**options)
-        prefix = Configs.devconfig.bot.prefix
+        prefix = Configs.dcfg.bot.prefix
         self.command_prefix = prefix
         try:
-            self.owner_ids = Configs.devconfig.bot.owners
+            self.owner_ids = Configs.dcfg.bot.owners
             puts(self.owner_ids)
         except omegaconf.errors.ConfigAttributeError:
-            self.owner_ids = [Configs.devconfig.bot.owner]
+            self.owner_ids = [Configs.dcfg.bot.owner]
 
 class ProdBot(Bot):
     def __init__(self, **options):
         super().__init__(**options)
-        prefix = Configs.config.bot.prefix
+        prefix = Configs.cfg.bot.prefix
         self.command_prefix = prefix
         try:
-            self.owner_ids = Configs.config.bot.owners
+            self.owner_ids = Configs.cfg.bot.owners
             puts(self.owner_ids)
         except omegaconf.errors.ConfigAttributeError:
-            self.owner_ids = [Configs.config.bot.owner]
+            self.owner_ids = [Configs.cfg.bot.owner]

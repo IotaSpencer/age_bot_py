@@ -28,7 +28,7 @@ class BadHello(commands.Cog):
                     our_message = await message.author.send(
                         f"Hello, {message.author}, in order to post or read {message.guild} messages you must be a certain"
                         f" role as well as submitted a form of ID with the server in question. For {message.guild} "
-                        f"that role is **{message.guild.get_role(Configs.serverdb.servers[str(message.guild.id)].role).name}** "
+                        f"that role is **{message.guild.get_role(Configs.sdb.servers[str(message.guild.id)].role).name}** "
                         f"\n\n"
                         f"To do so.. please run the command /verify in #hello and I will message you with further "
                         f"instructions. "

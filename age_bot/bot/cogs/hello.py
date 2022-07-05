@@ -33,7 +33,7 @@ class Hello(discord.Cog):
                 f"Do not worry about the '&verify 626...."
                 f"\n\n"
                 f"For {ctx.guild.name} that role is "
-                f"{ctx.guild.get_role(Configs.serverdb.servers[str(ctx.guild.id)].role)} "
+                f"{ctx.guild.get_role(Configs.sdb.servers[str(ctx.guild.id)].role)} "
                 f"\n\n"
                 f"To do so, please run the **command** /verify"
                 f"",
@@ -47,7 +47,7 @@ class Hello(discord.Cog):
         else:
             pass
         usr = ctx.guild.get_member_named(user)  # type: Member
-        adult_role = ctx.guild.get_role(Configs.serverdb.servers[str(ctx.guild.id)].role)
+        adult_role = ctx.guild.get_role(Configs.sdb.servers[str(ctx.guild.id)].role)
         await usr.send(
             f"Hello, {user_distinct(usr)}, in order to post or read {ctx.guild.name} messages you must be a "
             f"certain role as well as "

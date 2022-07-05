@@ -97,7 +97,7 @@ def is_not_adult(member: Member, guild: Guild):
     :arg guild: Guild
     """
     try:
-        adult_role = guild.get_role(Configs.serverdb.servers[str(guild.id)].role)
+        adult_role = guild.get_role(Configs.sdb.servers[str(guild.id)].role)
         member_roles = member.roles
         if not member.bot:
             member_is_not_adult = adult_role not in member_roles
@@ -144,7 +144,7 @@ def server_confirm_roles(server: Guild, way: Optional[str]) -> List[discord.Role
     """
     # usually just admin and mod roles
     server_id = server.id
-    guild_db_obj = Configs.serverdb.servers[str(server_id)]
+    guild_db_obj = Configs.sdb.servers[str(server_id)]
     roles = guild_db_obj.can_confirm
     server_roles = server.roles
     confirm_roles = [role for role in server_roles if role.id in roles]
@@ -185,7 +185,7 @@ def server_helper_roles(server: Guild, way: Optional[str]) -> List[discord.Role]
     """
     # usually just 'Server Helpers'
     server_id = server.id
-    guild_db_obj = Configs.serverdb.servers[str(server_id)]
+    guild_db_obj = Configs.sdb.servers[str(server_id)]
     roles = guild_db_obj.can_help
     server_roles = server.roles
     help_roles = [role for role in server_roles if role.id in roles]
@@ -216,4 +216,4 @@ def has_server_helper_role(server: Guild, user: Union[Member, User]) -> bool:
 
 
 async def get_adult_role(ctx):
-    return ctx.guild.get_role(Configs.serverdb.servers[str(ctx.guild.id)].role)
+    return ctx.guild.get_role(Configs.sdb.servers[str(ctx.guild.id)].role)

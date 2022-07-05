@@ -40,7 +40,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
         if check_if_tester_or_main_bot(ctx, self.bot):
             member = ctx.author  # type: Union[Member, User]
             guild = ctx.guild_id
-            db_guild = Configs.serverdb.servers[str(guild)]
+            db_guild = Configs.sdb.servers[str(guild)]
             guild = ctx.guild
             verify_channel = db_guild.verify_channel
             if ctx.channel.name == 'hello':
@@ -92,7 +92,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
 
 
                 except Forbidden:
-                    hello_channel = Configs.serverdb.servers[str(ctx.guild.id)].hello_channel
+                    hello_channel = Configs.sdb.servers[str(ctx.guild.id)].hello_channel
                     hello_chan = await ctx.guild.fetch_channel(hello_channel)  # type: TextChannel
                     await hello_chan.send(
                         f"Hey {ctx.user.mention}, I can't seem to send you a message, please make sure you "
@@ -117,7 +117,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
                         using the examples in the channel possibly called '#id-example'""")
 
         if isinstance(error, Forbidden):
-            hello_channel = Configs.serverdb.servers[str(ctx.guild.id)].hello_channel
+            hello_channel = Configs.sdb.servers[str(ctx.guild.id)].hello_channel
             hello_chan = await ctx.guild.fetch_channel(hello_channel)  # type: TextChannel
             await hello_chan.send(f"Hey {ctx.member.mention}, I can't seem to send you a message, please make sure you "
                                   f"have accept messages from server members ticked. If you are really sure this is "
@@ -132,7 +132,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
                         using the examples in the channel possibly called '#id-example'""")
 
         if isinstance(error, Forbidden):
-            hello_channel = Configs.serverdb.servers[str(ctx.guild.id)].hello_channel
+            hello_channel = Configs.sdb.servers[str(ctx.guild.id)].hello_channel
             hello_chan = await ctx.guild.fetch_channel(hello_channel)  # type: TextChannel
             await hello_chan.send(f"Hey {ctx.member.mention}, I can't seem to send you a message, please make sure you "
                                   f"have accept messages from server members ticked. If you are really sure this is "
