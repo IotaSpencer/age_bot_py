@@ -38,7 +38,7 @@ class DevBot(Bot):
         self.command_prefix = prefix
         try:
             self.owner_ids = Configs.dcfg.bot.owners
-            puts(self.owner_ids)
+            # puts(self.owner_ids)
         except omegaconf.errors.ConfigAttributeError:
             self.owner_ids = [Configs.dcfg.bot.owner]
 
@@ -49,6 +49,6 @@ class ProdBot(Bot):
         self.command_prefix = prefix
         try:
             self.owner_ids = Configs.cfg.bot.owners
-            puts(self.owner_ids)
+            # puts(self.owner_ids)
         except omegaconf.errors.ConfigAttributeError:
             self.owner_ids = [Configs.cfg.bot.owner]
