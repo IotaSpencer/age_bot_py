@@ -16,19 +16,19 @@ from age_bot.config import Configs
 def check_if_tester_or_main_bot(ctx: Union[Context, Message, Member, ApplicationContext], bot: Bot) -> bool:
     if ctx.__class__.__name__ in ['Message']:
         message = ctx # type: Union[Message, BridgeExtContext]
-        if bot.user.id == 719736166819037314 or (message.author.id in Configs.dcfg.bot.testers or message.author.id in Configs.config.bot.testers):
+        if bot.user.id == 719736166819037314 or (message.author.id in Configs.dcfg.bot.testers or message.author.id in Configs.cfg.bot.testers) or message.author.bot == True:
             return True
         else:
             return False
     elif ctx.__class__.__name__ in ['Member']:
         member = ctx # type: Member
-        if bot.user.id == 719736166819037314 or (member.id in Configs.dcfg.bot.testers or member.id in Configs.config.bot.testers):
+        if bot.user.id == 719736166819037314 or (member.id in Configs.dcfg.bot.testers or member.id in Configs.cfg.bot.testers):
             return True
         else:
             return False
     else:
         ctx = ctx # type: Union[Context, ApplicationContext]
-        if bot.user.id == 719736166819037314 or (ctx.user.id in Configs.dcfg.bot.testers or ctx.user.id in Configs.config.bot.testers):
+        if bot.user.id == 719736166819037314 or (ctx.user.id in Configs.dcfg.bot.testers or ctx.user.id in Configs.cfg.bot.testers):
             return True
         else:
             return False

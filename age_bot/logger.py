@@ -116,6 +116,7 @@ logging.config.dictConfig({
             '()': DiscordHandler,
             'regular_message_text': '',
             'embeds_title': 'Log Message',
+            'filters': [],
             'webhook_url': Configs.hook.outgoing.nenrei_dev,
 
         },
