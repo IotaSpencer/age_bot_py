@@ -44,7 +44,7 @@ logging.config.dictConfig({
         }
     },
     'formatters': {
-        'telegram_formatters': {
+        'telegram_formatter': {
             'format': "<b>%(levelname)s</b> <b>%(name)s</b> <b>%(asctime)s</b>\n"
                       "     <b>%(filename)s</b> <b>%(funcName)s</b> <b>%(lineno)s</b>"
                       "         ```%(message)s```"
@@ -127,7 +127,7 @@ logging.config.dictConfig({
         'telegram_handler': {
             'token': Configs.hook.telegram.token,
             'channel_id': telegram_chat_id,
-            'formatter': Configs.hook.telegram.formatter,
+            'formatter': 'telegram_formatter',
             'parse_mode': Configs.hook.telegram.parse_mode
         }
     },
