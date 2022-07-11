@@ -45,7 +45,7 @@ logging.config.dictConfig({
     'formatters': {
         'telegram_formatter': {
             'format': "<b>%(levelname)s</b> <b>%(name)s</b> <b>%(asctime)s</b>\n"
-                      "     <b>%(filename)s</b> <b>%(funcName)s</b> <b>%(lineno)s</b>"
+                      "     <b>%(filename)s</b> <b>%(funcName)s</b> <b>%(lineno)s</b>\n"
                       "         ```%(message)s```"
         },
         'file_formatter': {
@@ -65,11 +65,6 @@ logging.config.dictConfig({
                     'W': 'yellow',
                     'I': 'green',
                     'D': 'blue',
-                },
-                'traceback': {
-                    'E': 'red',
-                    'C': 'red',
-                    'W': 'yellow',
                 },
                 'name': {
                     'E': 'red',
@@ -111,7 +106,7 @@ logging.config.dictConfig({
         },
         'stream_handler': {
             'level': 'INFO',
-            'class': 'colorlog.StreamHandler',
+            '()': 'colorlog.StreamHandler',
             'formatter': 'stdout_formatter',
             'filters': ['level_filter']
 
