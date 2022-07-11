@@ -113,12 +113,14 @@ logging.config.dictConfig({
         },
         'discord_handler': {
             'sender_name': 'AgeBot',
+            '()': DiscordHandler,
             'regular_message_text': '',
             'embeds_title': 'Log Message',
             'webhook_url': Configs.hook.outgoing.nenrei_dev,
 
         },
         'telegram_handler': {
+            '()': TelegramHandler,
             'token': Configs.hook.telegram.token,
             'channel_id': Configs.hook.telegram.chat_id,
             'formatter': 'telegram_formatter',
