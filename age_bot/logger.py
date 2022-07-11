@@ -31,7 +31,6 @@ class EmojiFilter(logging.Filter):
             return True
         except:
             return False
-telegram_chat_id = Configs.hook.telegram.chat_ids[0] # type: list
 logging.config.dictConfig({
     'version': 1,
     'filters': {
@@ -126,7 +125,7 @@ logging.config.dictConfig({
         },
         'telegram_handler': {
             'token': Configs.hook.telegram.token,
-            'channel_id': telegram_chat_id,
+            'channel_id': Configs.hook.telegram.chat_id,
             'formatter': 'telegram_formatter',
             'parse_mode': Configs.hook.telegram.parse_mode
         }
