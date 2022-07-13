@@ -1,5 +1,6 @@
 --pre
 git+https://github.com/Pycord-Development/pycord#egg=py-cord
+git+https://github.com/IotaSpencer/logging-disgram#egg=logging-disgram
 yaml2object==1.0.13
 asyncclick==8.0.3.2
 setuptools==62.1.0

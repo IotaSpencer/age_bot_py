@@ -1,6 +1,6 @@
 import logging, datetime, sys, json_logging, flask, colorlog, discord
 from asyncio.subprocess import STDOUT
-from custom_handlers.logging_handlers import DiscordHandler, TelegramHandler
+from logging_disgram.logging_handlers import DiscordHandler, TelegramHandler
 import logging.config
 from age_bot.config import Configs
 from logging import LogRecord
@@ -113,6 +113,7 @@ logging.config.dictConfig({
         },
         'discord_handler': {
             'sender_name': 'AgeBot',
+            'avatar_url': "https://images-ext-2.discordapp.net/external/bYpfdlmDpj9gJZ6R7TjNKmbpfEWlhVXfkVj81dCo-30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/929996821571452969/1ceae3ca5833bd12ee758c6e62cbf45f.png?width=468&height=468",
             '()': DiscordHandler,
             'regular_message_text': '',
             'embeds_title': 'Log Message',
