@@ -118,9 +118,6 @@ logging.config.dictConfig({
             '()': 'colorlog.StreamHandler',
             'formatter': 'stdout_formatter',
             'filters': ['level_filter'],
-            'secondary_log_colors': secondary_log_colors,
-            'reset': True,
-            'log_colors': log_colors,
 
         },
         'discord_handler': {
