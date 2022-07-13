@@ -90,6 +90,11 @@ logging.config.dictConfig({
                       "     <b>%(filename)s</b> <b>%(funcName)s</b> <b>%(lineno)s</b>\n"
                       "         ```%(message)s```"
         },
+        'discord_format': {
+            'format':"**%(levelname)s** **%(name)s** **%(asctime)s**\n"
+                      "     **%(filename)s** **%(funcName)s** **%(lineno)s**\n"
+                      "         ```%(message)s```"
+        },
         'file_formatter': {
             'format': "%(asctime)s:%(levelname)s:%(name)s:\n"
                       "       in %(filename)s:%(funcName)s:%(lineno)s:\n"
@@ -124,6 +129,7 @@ logging.config.dictConfig({
             'sender_name': 'AgeBot',
             'avatar_url': "https://images-ext-2.discordapp.net/external/bYpfdlmDpj9gJZ6R7TjNKmbpfEWlhVXfkVj81dCo-30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/929996821571452969/1ceae3ca5833bd12ee758c6e62cbf45f.png?width=468&height=468",
             '()': DiscordHandler,
+            'formatter': 'discord_format',
             'regular_message_text': '',
             'embeds_title': 'Log Message',
             'filters': [],
