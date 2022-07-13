@@ -131,6 +131,9 @@ logging.config.dictConfig({
     'loggers': {
         'discord': {
             'handlers': ['telegram_handler', 'file_handler', 'stream_handler', 'discord_handler']
+        },
+        'root': {
+            'handlers': ['telegram_handler', 'file_handler', 'stream_handler', 'discord_handler']
         }
     },
 
