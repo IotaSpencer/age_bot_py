@@ -5,6 +5,7 @@ import logging.config
 from age_bot.config import Configs
 from logging import LogRecord
 
+
 class LevelFilter(logging.Filter):
     """
     This is a filter which changes the levelname to that of its Initial letter
@@ -15,8 +16,47 @@ class LevelFilter(logging.Filter):
         record.levelname = record.levelname[0]
         return True
 
+
+secondary_log_colors = {
+    'message': {
+        'E': 'red',
+        'C': 'red',
+        'W': 'yellow',
+        'I': 'green',
+        'D': 'blue',
+    },
+    'name': {
+        'E': 'red',
+        'C': 'red',
+        'W': 'yellow',
+        'I': 'green',
+        'D': 'blue',
+    },
+    'file': {
+        'E': 'red',
+        'C': 'red',
+        'W': 'yellow',
+        'I': 'green',
+        'D': 'blue',
+    }
+}
+log_colors = {
+    'DEBUG': 'cyan',
+    'INFO': 'green',
+    'WARNING': 'yellow',
+    'ERROR': 'red',
+    'CRITICAL': 'red,bg_white',
+    'D': 'cyan',
+    'I': 'green',
+    'W': 'yellow',
+    'E': 'red',
+    'C': 'red,bg_white'
+}
+
+
 class EmojiFilter(logging.Filter):
     """This is a filter that replaces levelname with emojis"""
+
     def filter(self, record: LogRecord) -> bool:
         level = record.levelname
         levels = {
@@ -31,6 +71,8 @@ class EmojiFilter(logging.Filter):
             return True
         except:
             return False
+
+
 logging.config.dictConfig({
     'version': 1,
     'filters': {
@@ -49,51 +91,18 @@ logging.config.dictConfig({
                       "         ```%(message)s```"
         },
         'file_formatter': {
-            'format':   "%(asctime)s:%(levelname)s:%(name)s:\n"
-                        "       in %(filename)s:%(funcName)s:%(lineno)s:\n"
-                        "               %(message)s"
+            'format': "%(asctime)s:%(levelname)s:%(name)s:\n"
+                      "       in %(filename)s:%(funcName)s:%(lineno)s:\n"
+                      "               %(message)s"
         },
         'stdout_formatter': {
-            'format':   "%(asctime)s:%(log_color)s%(levelname)s%(reset)s:%(name_log_color)s%(name)s%(reset)s:\n"
-                        "       in %(file_log_color)s%(filename)s:%(funcName)s:%(lineno)s%(reset)s\n"
-                        "               %(message_log_color)s%(message)s%(reset)s",
-       		'()': 'colorlog.ColoredFormatter',
-            'secondary_log_colors': {
-                'message': {
-                    'E': 'red',
-                    'C': 'red',
-                    'W': 'yellow',
-                    'I': 'green',
-                    'D': 'blue',
-                },
-                'name': {
-                    'E': 'red',
-                    'C': 'red',
-                    'W': 'yellow',
-                    'I': 'green',
-                    'D': 'blue',
-                },
-                'file': {
-                    'E': 'red',
-                    'C': 'red',
-                    'W': 'yellow',
-                    'I': 'green',
-                    'D': 'blue',
-                }
-            },
+            'format': "%(asctime)s:%(log_color)s%(levelname)s%(reset)s:%(name_log_color)s%(name)s%(reset)s:\n"
+                      "       in %(file_log_color)s%(filename)s:%(funcName)s:%(lineno)s%(reset)s\n"
+                      "               %(message_log_color)s%(message)s%(reset)s",
+            '()': 'colorlog.ColoredFormatter',
+            'secondary_log_colors': secondary_log_colors,
             'reset': True,
-            'log_colors': {
-                'DEBUG': 'cyan',
-                'INFO': 'green',
-                'WARNING': 'yellow',
-                'ERROR': 'red',
-                'CRITICAL': 'red,bg_white',
-                'D': 'cyan',
-                'I': 'green',
-                'W': 'yellow',
-                'E': 'red',
-                'C': 'red,bg_white'
-            }
+            'log_colors': log_colors,
         }
     },
     'handlers': {
@@ -108,7 +117,10 @@ logging.config.dictConfig({
             'level': 'INFO',
             '()': 'colorlog.StreamHandler',
             'formatter': 'stdout_formatter',
-            'filters': ['level_filter']
+            'filters': ['level_filter'],
+            'secondary_log_colors': secondary_log_colors,
+            'reset': True,
+            'log_colors': log_colors,
 
         },
         'discord_handler': {
