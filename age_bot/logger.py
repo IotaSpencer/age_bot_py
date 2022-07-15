@@ -72,7 +72,7 @@ class EmojiFilter(logging.Filter):
         except:
             return False
 
-
+handlers = ['telegram_handler', 'file_handler', 'stream_handler', 'discord_handler']
 logging.config.dictConfig({
     'version': 1,
     'filters': {
@@ -146,10 +146,16 @@ logging.config.dictConfig({
     },
     'loggers': {
         'discord': {
-            'handlers': ['telegram_handler', 'file_handler', 'stream_handler', 'discord_handler']
+            'handlers': handlers
         },
         'root': {
-            'handlers': ['telegram_handler', 'file_handler', 'stream_handler', 'discord_handler']
+            'handlers': handlers
+        },
+        'discord.gateway': {
+            'handlers': handlers
+        },
+        'gateway': {
+            'handlers': handlers
         }
     },
 
