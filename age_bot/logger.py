@@ -53,7 +53,6 @@ log_colors = {
     'C': 'red,bg_white'
 }
 
-
 class EmojiFilter(logging.Filter):
     """This is a filter that replaces levelname with emojis"""
 
@@ -88,17 +87,20 @@ logging.config.dictConfig({
         'telegram_formatter': {
             'format': "<b>%(levelname)s</b> <b>%(name)s</b> <b>%(asctime)s</b>\n"
                       "     <b>%(filename)s</b> <b>%(funcName)s</b> <b>%(lineno)s</b>\n"
-                      "         ```%(message)s```"
+                      "         ```%(message)s```",
+            #'style': '{'
         },
         'discord_format': {
-            'format':"**%(levelname)s:<10** **%(name)s** **%(asctime)s**\n"
-                      "     **%(filename)s** **%(funcName)s** **%(lineno)s**\n"
-                      "         ```%(message)s```"
+            'format':"**{levelname:<10}** **{name}** **{asctime}**\n"
+                      "     **{filename}** **{funcName}** **{lineno}**\n"
+                      "         ```{message}```",
+            'style': '{'
         },
         'file_formatter': {
             'format': "%(asctime)s:%(levelname)s:%(name)s:\n"
                       "       in %(filename)s:%(funcName)s:%(lineno)s:\n"
-                      "               %(message)s"
+                      "               %(message)s",
+            #'style': '{'
         },
         'stdout_formatter': {
             'format': "%(asctime)s:%(log_color)s%(levelname)s%(reset)s:%(name_log_color)s%(name)s%(reset)s:\n"
