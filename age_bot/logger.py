@@ -91,7 +91,7 @@ logging.config.dictConfig({
                       "         ```%(message)s```"
         },
         'discord_format': {
-            'format':"**%(levelname)s** **%(name)s** **%(asctime)s**\n"
+            'format':"**%(levelname:<10)s** **%(name)s** **%(asctime)s**\n"
                       "     **%(filename)s** **%(funcName)s** **%(lineno)s**\n"
                       "         ```%(message)s```"
         },
@@ -159,7 +159,9 @@ logging.config.dictConfig({
             'handlers': handlers
         }
     },
-
+    'root': {
+        'handlers': handlers
+    },
 })
 
 logger = logging
