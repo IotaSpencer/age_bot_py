@@ -124,7 +124,7 @@ logging.config.dictConfig({
             'level': 'DEBUG',
             '()': 'colorlog.StreamHandler',
             'formatter': 'stdout_formatter',
-            'filters': ['level_filter'],
+            #'filters': ['level_filter'],
 
         },
         'discord_handler': {
