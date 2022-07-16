@@ -13,7 +13,7 @@ class LevelFilter(logging.Filter):
     """
 
     def filter(self, record):
-        record.levelname = record.levelname[0]
+        record.level_initial = record.levelname[0]
         return True
 
 
@@ -91,13 +91,13 @@ logging.config.dictConfig({
             #'style': '{'
         },
         'discord_format': {
-            'format':"**{levelname:<10}** **{name}** **{asctime}**\n"
+            'format':"**{level_emoji:<10}** **{name}** **{asctime}**\n"
                       "     **{filename}** **{funcName}** **{lineno}**\n"
                       "         ```{message}```",
             'style': '{'
         },
         'file_formatter': {
-            'format': "%(asctime)s:%(levelname)s:%(name)s:\n"
+            'format': "%(asctime)s:%(level_initial)s:%(name)s:\n"
                       "       in %(filename)s:%(funcName)s:%(lineno)s:\n"
                       "               %(message)s",
             #'style': '{'
@@ -154,11 +154,11 @@ logging.config.dictConfig({
         },
         'discord.gateway': {
             'handlers': handlers,
-            'propagate': True
+            'propagate': False
         },
         'gateway': {
             'handlers': handlers,
-            'propagate': True
+            'propagate': False
         }
     },
     'root': {
