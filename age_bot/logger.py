@@ -150,6 +150,7 @@ logging.config.dictConfig({
     'loggers': {
         'discord': {
             'handlers': handlers,
+            'propagate': False,
             'filters': ['emoji_filter']
         },
         'discord.gateway': {
