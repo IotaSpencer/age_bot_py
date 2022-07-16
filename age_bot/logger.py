@@ -135,7 +135,7 @@ logging.config.dictConfig({
             'formatter': 'discord_format',
             'regular_message_text': '',
             'embeds_title': 'Log Message',
-            'filters': [],
+            'filters': ['emoji_filter'],
             'webhook_url': Configs.hook.outgoing.nenrei_dev,
 
         },
@@ -149,16 +149,16 @@ logging.config.dictConfig({
     },
     'loggers': {
         'discord': {
-            'handlers': handlers
-        },
-        'root': {
-            'handlers': handlers
+            'handlers': handlers,
+            'filters': ['emoji_filter']
         },
         'discord.gateway': {
-            'handlers': handlers
+            'handlers': handlers,
+            'propagate': True
         },
         'gateway': {
-            'handlers': handlers
+            'handlers': handlers,
+            'propagate': True
         }
     },
     'root': {
