@@ -5,17 +5,15 @@ import omegaconf.errors
 from discord.ext import bridge
 import arrow as arw
 # local
-from ..config import Configs
-from ..logger import logger
-from ..bot.helpers.discord import *
-from ..bot.helpers.decorators import *
+from age_bot.config import Configs
+from age_bot.logger import logger
+from age_bot.bot.helpers.discord import *
+from age_bot.bot.helpers.decorators import *
 
 
 class Bot(bridge.Bot):
     def __init__(self, **options):
         super().__init__(**options)
-        token = Configs.cfg.bot.token
-        prefix = Configs.cfg.bot.prefix
         db_guilds = Configs.sdb.servers.keys()
         debug_guilds = [server for server in db_guilds]
         self.command_prefix = prefix
