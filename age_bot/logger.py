@@ -152,6 +152,10 @@ logging.config.dictConfig({
         'gateway': {
             'handlers': handlers,
             'propagate': False
+        },
+        'discord.client': {
+            'handlers': handlers,
+            'filters': ['emoji_filter']
         }
     },
     'root': {
