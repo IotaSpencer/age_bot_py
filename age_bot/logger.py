@@ -114,21 +114,18 @@ logging.config.dictConfig({
     },
     'handlers': {
         'file_handler': {
-            'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'formatter': 'file_formatter',
             'filename': 'discord.log',
             'mode': 'w+'
         },
         'stream_handler': {
-            'level': 'DEBUG',
             '()': 'colorlog.StreamHandler',
             'formatter': 'stdout_formatter',
             #'filters': ['level_filter'],
 
         },
         'discord_handler': {
-            'level': 'DEBUG',
             'sender_name': 'AgeBot',
             'avatar_url': "https://images-ext-2.discordapp.net/external/bYpfdlmDpj9gJZ6R7TjNKmbpfEWlhVXfkVj81dCo-30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/929996821571452969/1ceae3ca5833bd12ee758c6e62cbf45f.png?width=468&height=468",
             '()': DiscordHandler,
@@ -152,16 +149,6 @@ logging.config.dictConfig({
             'handlers': handlers,
             'propagate': True,
             'filters': ['emoji_filter']
-        },
-        'discord.gateway': {
-            'handlers': handlers,
-            'propagate': True
-        },
-        'discord.client': {
-            'handlers': handlers,
-            'propagate': True,
-            'filters': ['emoji_filter']
-
         },
         'gateway': {
             'handlers': handlers,
