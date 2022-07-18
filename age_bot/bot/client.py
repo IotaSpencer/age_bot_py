@@ -10,7 +10,7 @@ from discord.ext import bridge
 import discord.ext.commands as commands
 
 # local import
-from age_bot.bot import ProdBot, DevBot
+from age_bot.bot.bot import ProdBot, DevBot
 from age_bot.config import Configs
 from age_bot.logger import logger
 
