@@ -16,7 +16,6 @@ class Bot(bridge.Bot):
         super().__init__(**options)
         db_guilds = Configs.sdb.servers.keys()
         debug_guilds = [server for server in db_guilds]
-        self.command_prefix = prefix
         self.debug_guilds = debug_guilds
         self.max_messages = 10000
         self.status = discord.Status.online
