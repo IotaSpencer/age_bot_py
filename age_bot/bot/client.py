@@ -10,9 +10,9 @@ from discord.ext import bridge
 import discord.ext.commands as commands
 
 # local import
-from .bot import ProdBot, DevBot
-from ..config import Configs
-from ..logger import logger
+from age_bot.bot import ProdBot, DevBot
+from age_bot.config import Configs
+from age_bot.logger import logger
 
 
 async def start(env) -> None:
