@@ -144,20 +144,21 @@ logging.config.dictConfig({
             'parse_mode': Configs.hook.telegram.parse_mode
         }
     },
-    'loggers': {
-        'discord': {
-            'handlers': handlers,
-            'filters': ['emoji_filter']
-        },
-        'gateway': {
-            'handlers': handlers,
-            'propagate': False
-        },
-        'discord.client': {
-            'handlers': handlers,
-            'filters': ['emoji_filter']
-        }
-    },
+    # 'loggers': {
+    #     'discord': {
+    #         'handlers': handlers,
+    #         'filters': ['emoji_filter']
+    #     },
+    #     'gateway': {
+    #         'handlers': handlers,
+    #         'propagate': False
+    #     },
+    #     'discord.client': {
+    #         'handlers': handlers,
+    #         'propagate': False,
+    #         'filters': ['emoji_filter']
+    #     }
+    # },
     'root': {
         'handlers': handlers
     },
