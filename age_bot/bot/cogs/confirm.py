@@ -14,7 +14,7 @@ from discord import \
 # local
 from age_bot.bot.helpers import AgeConverter
 from age_bot.logger import logger
-from age_bot.bot.helpers.perms_predicate import *
+from age_bot.bot.helpers.perms_predicate import confirmable_check, helper_check
 
 
 class Confirm(Cog, command_attrs=dict(hidden=True)):
