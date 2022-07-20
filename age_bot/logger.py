@@ -122,7 +122,7 @@ logging.config.dictConfig({
         'stream_handler': {
             '()': 'colorlog.StreamHandler',
             'formatter': 'stdout_formatter',
-            #'filters': ['level_filter'],
+            'filters': ['level_filter'],
 
         },
         'discord_handler': {
@@ -160,7 +160,8 @@ logging.config.dictConfig({
     #     }
     # },
     'root': {
-        'handlers': handlers
+        'handlers': handlers,
+        'level': 'NOTSET'
     },
 })
 
