@@ -8,7 +8,7 @@ from discord.ext import commands
 from discord import Cog
 from discord.ext.commands import Converter, group
 from discord import Message, slash_command, ApplicationContext
-
+import discord
 # local
 from age_bot.bot.helpers import AgeConverter
 from age_bot.logger import logger
