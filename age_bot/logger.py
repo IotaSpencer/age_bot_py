@@ -106,7 +106,7 @@ logging.config.dictConfig({
             'format': "%(asctime)s:%(log_color)s%(levelname)s%(reset)s:%(name_log_color)s%(name)s%(reset)s:\n"
                       "       in %(file_log_color)s%(filename)s:%(funcName)s:%(lineno)s%(reset)s\n"
                       "               %(message_log_color)s%(message)s%(reset)s",
-            '()': colorlog.ColoredFormatter,
+            '()': 'colorlog.ColoredFormatter',
             'secondary_log_colors': secondary_log_colors,
             'reset': True,
             'log_colors': log_colors,
@@ -114,13 +114,13 @@ logging.config.dictConfig({
     },
     'handlers': {
         'file_handler': {
-            'class': logging.FileHandler,
+            'class': 'logging.FileHandler',
             'formatter': 'file_formatter',
             'filename': 'discord.log',
             'mode': 'w+'
         },
         'stream_handler': {
-            '()': colorlog.StreamHandler,
+            '()': 'colorlog.StreamHandler',
             'formatter': 'stdout_formatter',
             'filters': ['level_filter'],
 
