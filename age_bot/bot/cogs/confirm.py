@@ -11,6 +11,7 @@ from discord import Message, slash_command, ApplicationContext
 import discord
 # local
 from age_bot.bot.helpers import AgeConverter
+from age_bot.bot.helpers.discord import get_adult_role, check_if_tester_or_main_bot
 from age_bot.logger import logger
 from age_bot.bot.helpers.perms_predicate import confirmable_check, helper_check
 from age_bot.exceptions import ConfirmPermError, HelperPermError
