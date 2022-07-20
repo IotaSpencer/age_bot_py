@@ -63,7 +63,7 @@ class EmojiFilter(logging.Filter):
             'ERROR': '‼',
             'CRITICAL': '☠',
             'DEBUG': '❓',
-            'INFO': '✔'
+            'INFO': '✅'
         }
         try:
             record.level_emoji = levels[level]
