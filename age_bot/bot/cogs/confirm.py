@@ -6,7 +6,7 @@ import re
 import arrow as arw
 from discord.ext import commands
 from discord import Cog
-from discord.ext.commands import Converter, group
+from discord.ext.commands import Converter, group, Context
 from discord import Message, slash_command, ApplicationContext
 import discord
 # local
