@@ -117,12 +117,13 @@ logging.config.dictConfig({
             'class': 'logging.FileHandler',
             'formatter': 'file_formatter',
             'filename': 'discord.log',
+            'filters': ['level_filter'],
             'mode': 'w+'
         },
         'stream_handler': {
             '()': 'colorlog.StreamHandler',
             'formatter': 'stdout_formatter',
-            'filters': ['level_filter'],
+            # 'filters': ['level_filter'],
 
         },
         'discord_handler': {
