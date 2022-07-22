@@ -14,7 +14,7 @@ import arrow as arw
 
 
 # local imports
-from age_bot.bot.helpers import AgeConverter
+from age_bot.bot.helpers import calculate_age
 from age_bot.config import Configs
 from age_bot.logger import logger
 
@@ -25,8 +25,8 @@ class AgeCalc(Cog, command_attrs=dict(hidden=True)):
         self.ext_path = 'age_bot.bot.cogs.age_calc'
 
     @bridge.bridge_command(name='agecalc', description='calculates age of users')
-    async def agecalc(self, ctx: Union[BridgeApplicationContext, BridgeExtContext], dob: AgeConverter):
-        age = dob
+    async def agecalc(self, ctx: Union[BridgeApplicationContext, BridgeExtContext], dob: str):
+        age = calculate_age(dob)
         await ctx.defer(ephemeral=True)
         await ctx.respond(age, ephemeral=True)
 
