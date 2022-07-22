@@ -10,7 +10,7 @@ from discord.ext.commands import Converter, group, Context
 from discord import Message, slash_command, ApplicationContext
 import discord
 # local
-from age_bot.bot.helpers import AgeConverter
+from age_bot.bot.helpers import calculate_age
 from age_bot.bot.helpers.discord import get_adult_role, check_if_tester_or_main_bot, member_distinct
 from age_bot.logger import logger
 from age_bot.bot.helpers.perms_predicate import confirmable_check, helper_check
@@ -26,11 +26,12 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
 
     @slash_command(name="adultify", description="Manually add the 'adult' role to a member",
                    default_permission=False)
-    async def slash_adultify(self, ctx: ApplicationContext, user: discord.Member = None, dob: AgeConverter = None):
+    async def slash_adultify(self, ctx: ApplicationContext, user: discord.Member = None, dob: str = None):
         """[user] [dob]"""
         if check_if_tester_or_main_bot(ctx, self.bot):
             await ctx.defer()
             author = ctx.user
+            age = calculate_age(dob)
             author_roles = author.roles
             author_named_roles = [role.name for role in author_roles]
             adult_role = await get_adult_role(ctx)
