@@ -12,10 +12,7 @@ from . import discord, info_embeds, decorators
 from . import wait_fors
 
 
-class AgeConverter(Converter):
-    async def convert(self, ctx: Union[ApplicationContext, Context], argument: str):
-        now = arw.now()
-        d_o_b = arw.get(argument, "DD/MM/YYYY")
-        age = ((now.date().year - d_o_b.date().year) * 372 + (now.date().month - d_o_b.date().month) * 31 + (
-                now.date().day - d_o_b.date().day)) / 372
-        return str(age)
+def calculate_age(dob):
+    today = date.today()
+    born = arw.get(dob, 'DD/MM/YYYY')
+    return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
