@@ -4,7 +4,6 @@ import asyncclick as click
 import age_bot.bot.client
 from collections.abc import MutableMapping
 from multiprocessing import Process,Queue,Pipe
-from age_bot.logger import env_recv
 
 class AgeBotCLI(MutableMapping):
     def __init__(self, home=None, debug=False):
