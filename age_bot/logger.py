@@ -130,6 +130,9 @@ logging.config.dictConfig({
         'emoji_filter': {
             '()': EmojiFilter,
 
+        },
+        'escape_markdown': {
+            '()': EscapeFilenameforDiscord,
         }
     },
     'formatters': {
@@ -182,7 +185,7 @@ logging.config.dictConfig({
             'formatter': 'discord_format',
             'regular_message_text': '',
             'embeds_title': f'Log Message from {os.environ["AGEBOT_ENV"]}',
-            'filters': ['emoji_filter'],
+            'filters': ['emoji_filter', 'escape_markdown'],
             'webhook_url': Configs.hook.outgoing.nenrei_dev,
 
         },
