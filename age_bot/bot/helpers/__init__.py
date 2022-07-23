@@ -11,8 +11,7 @@ import arrow as arw
 from . import discord, info_embeds, decorators
 from . import wait_fors
 
-
 def calculate_age(dob):
-    today = date.today()
+    today = arw.now()
     born = arw.get(dob, 'DD/MM/YYYY')
     return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
