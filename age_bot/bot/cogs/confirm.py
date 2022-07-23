@@ -13,6 +13,7 @@ import discord
 from age_bot.bot.helpers import calculate_age
 from age_bot.bot.helpers.discord import get_adult_role, check_if_tester_or_main_bot, member_distinct
 from age_bot.logger import logger
+from age_bot.config import Configs
 from age_bot.bot.helpers.perms_predicate import confirmable_check, helper_check
 from age_bot.exceptions import ConfirmPermError, HelperPermError
 
