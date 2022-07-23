@@ -6,8 +6,54 @@ from age_bot.config import Configs
 from logging import LogRecord
 import os
 
-def env_recv(env):
-    return env
+def escape_markdown(text, *, as_needed=False, ignore_links=True):
+    r"""A helper function that escapes Discord's markdown.
+
+    Parameters
+    -----------
+    text: :class:`str`
+        The text to escape markdown from.
+    as_needed: :class:`bool`
+        Whether to escape the markdown characters as needed. This
+        means that it does not escape extraneous characters if it's
+        not necessary, e.g. ``**hello**`` is escaped into ``\*\*hello**``
+        instead of ``\*\*hello\*\*``. Note however that this can open
+        you up to some clever syntax abuse. Defaults to ``False``.
+    ignore_links: :class:`bool`
+        Whether to leave links alone when escaping markdown. For example,
+        if a URL in the text contains characters such as ``_`` then it will
+        be left alone. This option is not supported with ``as_needed``.
+        Defaults to ``True``.
+
+    Returns
+    --------
+    :class:`str`
+        The text with the markdown special characters escaped with a slash.
+    """
+
+    if not as_needed:
+        url_regex = r'(?P<url><[^: >]+:\/[^ >]+>|(?:https?|steam):\/\/[^\s<]+[^<.,:;\"\'\]\s])'
+        def replacement(match):
+            groupdict = match.groupdict()
+            is_url = groupdict.get('url')
+            if is_url:
+                return is_url
+            return '\\' + groupdict['markdown']
+
+        regex = r'(?P<markdown>[_\\~|\*`]|%s)' % _MARKDOWN_ESCAPE_COMMON
+        if ignore_links:
+            regex = '(?:%s|%s)' % (url_regex, regex)
+        return re.sub(regex, replacement, text)
+    else:
+        text = re.sub(r'\\', r'\\\\', text)
+        return _MARKDOWN_ESCAPE_REGEX.sub(r'\\\1', text)
+
+class EscapeFilenameforDiscord(logging.Filter):
+    def filter(self, record):
+        if record.filename:
+
+            record.filename = escape_markdown(record.filename)
+        return True
 
 class LevelFilter(logging.Filter):
     """
@@ -94,8 +140,8 @@ logging.config.dictConfig({
             #'style': '{'
         },
         'discord_format': {
-            'format':"**{level_emoji:<10}** **{name}** **{asctime}**\n"
-                      "     **{filename}** **{funcName}** **{lineno}**\n"
+            'format':"{level_emoji}->**{levelname}** \n**Logger**: {name}\n**When**: {asctime}\n"
+                      "     **In**: {filename}:{funcName}:{lineno}\n"
                       "         ```{message}```",
             'style': '{'
         },
