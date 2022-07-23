@@ -1,7 +1,10 @@
 import os.path
+import os
 import asyncclick as click
 import age_bot.bot.client
 from collections.abc import MutableMapping
+from multiprocessing import Process,Queue,Pipe
+from age_bot.logger import env_recv
 
 class AgeBotCLI(MutableMapping):
     def __init__(self, home=None, debug=False):
@@ -30,6 +33,7 @@ class AgeBotCLI(MutableMapping):
 def cli(ctx, debug, env):
     ctx.obj = AgeBotCLI(debug)
     ctx.obj.env = env
+    os.environ['AGEBOT_ENV'] = env
 
 
 @cli.command()
