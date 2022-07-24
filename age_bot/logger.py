@@ -3,8 +3,14 @@ from asyncio.subprocess import STDOUT
 from logging_disgram.logging_handlers import DiscordHandler, TelegramHandler
 import logging.config
 from age_bot.config import Configs
+from discord import _
 from logging import LogRecord
 import os
+
+_MARKDOWN_ESCAPE_SUBREGEX = '|'.join(r'\{0}(?=([\s\S]*((?<!\{0})\{0})))'.format(c)
+                                     for c in ('*', '`', '_', '~', '|'))
+_MARKDOWN_ESCAPE_COMMON = r'^>(?:>>)?\s|\[.+\]\(.+\)'
+_MARKDOWN_ESCAPE_REGEX = re.compile(r'(?P<markdown>%s|%s)' % (_MARKDOWN_ESCAPE_SUBREGEX, _MARKDOWN_ESCAPE_COMMON))
 
 def escape_markdown(text, *, as_needed=False, ignore_links=True):
     r"""A helper function that escapes Discord's markdown.
