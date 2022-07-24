@@ -3,7 +3,6 @@ from asyncio.subprocess import STDOUT
 from logging_disgram.logging_handlers import DiscordHandler, TelegramHandler
 import logging.config
 from age_bot.config import Configs
-from discord import _
 from logging import LogRecord
 import os
 
