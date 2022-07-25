@@ -37,4 +37,4 @@ class EmojiFilter(logging.Filter):
 
 emoji_filter = EmojiFilter()
 level_filter = LevelFilter()
-escape_markdown = EscapeFilenameforDiscord()
+markdown_filter = EscapeFilenameforDiscord()
