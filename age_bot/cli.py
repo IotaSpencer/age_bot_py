@@ -40,7 +40,7 @@ def cli(ctx, debug, env):
 async def start(ctx):
     await age_bot.bot.client.start(ctx.obj.env)
     from age_bot.loggers import logger, init_loggers
-    init_loggers()
+    await init_loggers()
 
 
 @cli.command()

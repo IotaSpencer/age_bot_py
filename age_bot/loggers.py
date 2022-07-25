@@ -16,7 +16,7 @@ logger = logging.getLogger('discord')
 logger.setLevel(colorlog.DEBUG)
 
 
-def init_loggers():
+async def init_loggers():
     """Initialize the loggers"""
     ################
     #  Formatters  #
@@ -24,7 +24,7 @@ def init_loggers():
     discord_format = logging.Formatter(
         "{level_emoji}->**{levelname}** \n**Logger**: {name}\n**When**: {asctime}\n"
         "     **In**: {filename}:{funcName}:{lineno}\n"
-        "         ```{message}```", )
+        "         ```{message}```", style='{')
     telegram_format = logging.Formatter(
         "<b>%(levelname)s</b> <b>%(name)s</b> <b>%(asctime)s</b>\n"
         "     <b>%(filename)s</b> <b>%(funcName)s</b> <b>%(lineno)s</b>\n"
