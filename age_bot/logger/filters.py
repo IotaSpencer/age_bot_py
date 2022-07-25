@@ -1,4 +1,5 @@
-
+import logging
+from logging import LogRecord
 class EscapeFilenameforDiscord(logging.Filter):
     def filter(self, record):
         if record.filename:
