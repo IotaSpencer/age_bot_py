@@ -12,7 +12,7 @@ from discord.ext.commands import guild_only
 from age_bot.bot.helpers.discord import *
 from age_bot.bot.helpers.perms_predicate import *
 from ...config import Configs
-from age_bot.logger import logger
+from age_bot.loggers import logger
 
 
 class Hello(discord.Cog):

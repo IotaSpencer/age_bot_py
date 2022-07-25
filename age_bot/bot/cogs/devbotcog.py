@@ -4,7 +4,7 @@
 from discord.ext.commands import Cog, command
 from discord import AutoShardedBot
 # local
-from age_bot.logger import logger
+from age_bot.loggers import logger
 from age_bot.bot.helpers.discord import *
 import age_bot.bot.bot
 

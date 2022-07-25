@@ -16,7 +16,7 @@ import arrow as arw
 # local imports
 from age_bot.bot.helpers import calculate_age
 from age_bot.config import Configs
-from age_bot.logger import logger
+from age_bot.loggers import logger
 
 
 class AgeCalc(Cog, command_attrs=dict(hidden=True)):

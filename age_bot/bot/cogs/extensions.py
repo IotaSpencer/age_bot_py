@@ -6,7 +6,7 @@ import discord
 from discord.ext import commands
 
 # local
-from age_bot.logger import logger
+from age_bot.loggers import logger
 
 
 class Extensions(commands.Cog, command_attrs=dict(hidden=True)):

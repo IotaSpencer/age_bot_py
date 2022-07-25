@@ -9,7 +9,7 @@ from discord import Message
 
 # local
 from age_bot.bot.helpers.discord import *
-from age_bot.logger import logger
+from age_bot.loggers import logger
 from age_bot.config import Configs
 from age_bot.bot.helpers.decorators import *
 

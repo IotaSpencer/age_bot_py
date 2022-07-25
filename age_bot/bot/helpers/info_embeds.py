@@ -13,7 +13,7 @@ from discord import Member, Guild, Message, utils, Component
 from typing import List, Union
 
 from age_bot.config import Configs
-from age_bot.logger import logger
+from age_bot.loggers import logger
 
 
 class ServerInfo(Cog, command_attrs=dict(hidden=True)):

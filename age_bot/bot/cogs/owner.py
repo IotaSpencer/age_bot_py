@@ -6,7 +6,7 @@ import discord
 from discord.ext import commands, bridge
 
 # local
-from age_bot.logger import logger
+from age_bot.loggers import logger
 
 
 class Owner(commands.Cog, command_attrs=dict(hidden=True)):

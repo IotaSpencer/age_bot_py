@@ -12,7 +12,7 @@ import discord.ext.commands as commands
 # local import
 from age_bot.bot.bot import ProdBot, DevBot
 from age_bot.config import Configs
-from age_bot.logger import logger
+from age_bot.loggers import logger
 
 
 async def start(env) -> None:

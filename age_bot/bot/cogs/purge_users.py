@@ -13,7 +13,7 @@ from omegaconf.errors import ConfigKeyError
 import yaml as YAML
 
 # local imports
-from age_bot.logger import logger
+from age_bot.loggers import logger
 from age_bot.exceptions import *
 from age_bot.bot.helpers.discord import *
 from chunk_list import chunks

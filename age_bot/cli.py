@@ -39,7 +39,7 @@ def cli(ctx, debug, env):
 @click.pass_context
 async def start(ctx):
     await age_bot.bot.client.start(ctx.obj.env)
-    from age_bot.logger import logger, init_loggers
+    from age_bot.loggers import logger, init_loggers
     init_loggers()
 
 

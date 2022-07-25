@@ -4,7 +4,7 @@
 from discord.ext.commands import Cog, command
 
 # local
-from age_bot.logger import logger
+from age_bot.loggers import logger
 
 
 class Admin(Cog, command_attrs=dict(hidden=True)):
