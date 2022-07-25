@@ -9,7 +9,7 @@ from logging_disgram.logging_handlers import DiscordHandler, TelegramHandler
 
 # local
 from age_bot.config import Configs
-from logger.dicts import log_colors, secondary_log_colors
+from age_bot.logger.dicts import log_colors, secondary_log_colors
 from logger.filters import emoji_filter, level_filter, escape_markdown
 
 logger = logging.getLogger('discord')
