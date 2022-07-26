@@ -10,7 +10,10 @@ from discord.commands import ApplicationContext
 from omegaconf.dictconfig import DictConfig
 
 # local
+from omegaconf.errors import ConfigKeyError
+
 from age_bot.config import Configs
+from age_bot.exceptions import GuildNotInDBError, NoGuildInContextError
 
 
 def check_if_tester_or_main_bot(ctx: Union[Context, Message, Member, ApplicationContext], bot: Bot) -> bool:
@@ -80,7 +83,7 @@ def member_distinct(user: discord.User | discord.Member) -> str:
     From a discord.Member object return the member's username and discrim
     as username#0000
 
-    :param user: a discord member or user object
+    :param: user: a discord member or user object
     :return: str
     """
     return "{}#{}".format(user.name, user.discriminator)
@@ -115,7 +118,7 @@ def grab_guild(ctx: ApplicationContext):
         raise NoGuildInContextError
 
 
-def find_shamed(channels: List[TextChannel]) -> TextChannel:
+def find_shamed(channels: List[TextChannel]) -> TextChannel | None:
     for channel in channels:
         if channel.name == 'named-and-shamed':
             return channel  # type: TextChannel
@@ -138,8 +141,8 @@ def has_role(user, role):
 
 def server_confirm_roles(server: Guild, way: Optional[str]) -> List[discord.Role] | List[str] | List[DictConfig]:
     """
-    :param way: how to return the roles
-    :param server: Guild to check confirm'able roles on
+    :param: way: how to return the roles
+    :param: server: Guild to check confirm'able roles on
     :return: list[discord.Role]
     """
     # usually just admin and mod roles
@@ -179,8 +182,8 @@ def server_helper_roles(server: Guild, way: Optional[str]) -> List[discord.Role]
     """
     Get a list of 'helper' roles in 'server' and return them in a certain 'way'
 
-    :param way: how to return roles
-    :param server: Guild to check helper roles on
+    :param: way: how to return roles
+    :param: server: Guild to check helper roles on
     :return: Union[List[str], List[discord.Role], DictConfig]
     """
     # usually just 'Server Helpers'

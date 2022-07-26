@@ -15,7 +15,7 @@ import yaml as YAML
 # local imports
 from age_bot.loggers import logger
 from age_bot.exceptions import *
-from age_bot.bot.helpers.discord import *
+from age_bot.bot.helpers.discord_helpers import *
 from chunk_list import chunks
 from age_bot.bot.helpers.perms_predicate import *
 

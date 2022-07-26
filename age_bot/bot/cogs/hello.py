@@ -9,7 +9,7 @@ from discord import Member, Message
 # local imports
 from discord.ext.bridge import BridgeApplicationContext, BridgeExtContext
 from discord.ext.commands import guild_only
-from age_bot.bot.helpers.discord import *
+from age_bot.bot.helpers.discord_helpers import *
 from age_bot.bot.helpers.perms_predicate import *
 from ...config import Configs
 from age_bot.loggers import logger

@@ -3,19 +3,19 @@ import asyncio
 import re
 # 3rd party
 
-import arrow as arw
 from discord.ext import commands
-from discord import Cog
-from discord.ext.commands import Converter, group, Context
+from discord import Cog, Member
+from discord.ext.commands import Context
 from discord import Message, slash_command, ApplicationContext
 import discord
 # local
 from age_bot.bot.helpers import calculate_age
-from age_bot.bot.helpers.discord import get_adult_role, check_if_tester_or_main_bot, member_distinct, has_server_confirm_role, has_server_helper_role
+from age_bot.bot.helpers.discord_helpers import get_adult_role, check_if_tester_or_main_bot, member_distinct, \
+    has_server_confirm_role, reply_self_is_dev
 from age_bot.loggers import logger
 from age_bot.config import Configs
-from age_bot.bot.helpers.perms_predicate import confirmable_check, helper_check
-from age_bot.exceptions import ConfirmPermError, HelperPermError
+from age_bot.bot.helpers.perms_predicate import confirmable_check
+from age_bot.exceptions import ConfirmPermError
 
 
 class Confirm(Cog, command_attrs=dict(hidden=True)):
@@ -33,8 +33,6 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
             await ctx.defer(ephemeral=True)
             author = ctx.user
             age = calculate_age(dob)
-            author_roles = author.roles
-            author_named_roles = [role.name for role in author_roles]
             adult_role = await get_adult_role(ctx)
             guild = ctx.guild_id
             db_guild = Configs.sdb.servers[str(guild)]
@@ -66,7 +64,7 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
                     await ctx.respond(content="Command Triggered.", ephemeral=True)
                     await channel.send(embed=e)  # sends the embed
                     await user.send(content=f"You've been confirmed to be a(n) {adult_role.name} on {ctx.guild.name}")
-                except asyncio.TimeoutError as e:
+                except asyncio.TimeoutError:
                     await ctx.respond(content=f"Sorry, you have 30 seconds to decide. Try again or forget it.")
 
             else:
@@ -123,11 +121,12 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
             await ctx.reply(''.join(traceback.format_exception(
                 type(error), error, error.__traceback__)))
 
+    # noinspection PyTypeChecker
     @confirmable_check()
     @commands.command(usage="<message> <user> <reason...>", description="Reject an ID.")
     async def reject(self, ctx: Context, message: int, user: str, reason: str):
         member = ctx.guild.get_member_named(user)  # type: Member
-        msg = {}
+        msg = ''
         try:
             msg = await ctx.channel.fetch_message(message)  # type: Message
         finally:
@@ -167,39 +166,3 @@ def setup(bot):
 def teardown(bot):
     bot.remove_cog(Confirm(bot))
     logger.info('Unloaded Confirm')
-
-    # @group('rej')
-    # async def rej(self, ctx):
-    #     pass
-    #
-    # @rej.command()
-    # async def not_id_or_tag(self, ctx: Context, message: int, user: str, extra: str):
-    #     member = ctx.guild.get_member_named(user)  # type: Member
-    #     msg = {}
-    #     try:
-    #         msg = await ctx.channel.fetch_message(message)  # type: Message
-    #     finally:
-    #         apos = "'" if member.name.endswith('s') else "'s"
-    #         await ctx.channel.send(
-    #             f"""{user}{apos} verification rejected, not an ID or discord tag with \"{extra}\" extra context.""")
-    #         await msg.delete()
-    #         await member.send(f"Your submission was rejected due to there not being an ID+discordtag in the photo")
-    #         if extra:
-    #             await member.send(f"Your rejection was given the following extra context — \"{extra}\"")
-    #         await member.send(f"If applicable, try again later following the instructions laid out in the rejection "
-    #                           f"message above.")
-    #
-    # @not_id_or_tag.error
-    # async def not_id_or_tag_error(self, ctx, error):
-    #     if isinstance(error, commands.MissingAnyRole):
-    #         await ctx.send(
-    #             f"You are not allowed to use this command, you're missing all of these roles ({error})".format(
-    #                 error=error.missing_roles))
-    #     if isinstance(error, commands.MessageNotFound):
-    #         await ctx.send(
-    #             f"This message ({error.argument}) does not exist or is too old to delete. If need be, delete the message manually."
-    #         )
-    #     if isinstance(error, commands.MemberNotFound):
-    #         await ctx.send(
-    #             f"This member ({error.argument}) does not exist, or is not in the cache"
-    #         )
