@@ -52,10 +52,10 @@ async def init_loggers():
     stream_handler = colorlog.StreamHandler(stream=sys.stdout)
     stream_handler.setFormatter(stdout_format)
     discord_handler = DiscordHandler(formatter=discord_format,
-                                     sender_name=f"AgeBot {' beta' if os.environ['AGEBOT_ENV'] == 'dev' else ''}",
+                                     sender_name=f"AgeBot{' beta' if os.environ['AGEBOT_ENV'] == 'dev' else f''}",
                                      avatar_url="https://images-ext-2.discordapp.net/external/bYpfdlmDpj9gJZ6R7TjNKmbpfEWlhVXfkVj81dCo-30/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/929996821571452969/1ceae3ca5833bd12ee758c6e62cbf45f.png?width=468&height=468",
                                      regular_message_text='',
-                                     embeds_title=f"Log Message from '{'DevBot' if os.environ['AGEBOT_ENV'] == 'dev' else ''}'",
+                                     embeds_title=f"Log Message from {f'DevBot' if os.environ['AGEBOT_ENV'] == 'dev' else f'ProdBot'}",
                                      webhook_url=Configs.hook.outgoing.nenrei_dev
                                      )
     telegram_handler = TelegramHandler(formatter=telegram_format,
