@@ -68,6 +68,7 @@ async def init_loggers():
     #############################
     discord_handler.addFilter(markdown_filter)
     discord_handler.addFilter(emoji_filter)
+    discord_handler.setLevel('INFO')
     stream_handler.addFilter(level_filter)
     telegram_handler.addFilter(markdown_filter)
     telegram_handler.addFilter(emoji_filter)
