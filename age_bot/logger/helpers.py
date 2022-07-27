@@ -1,18 +1,18 @@
 import re
 
 
-def escape(str):
+def escape(str: str) -> str:
     # \ -> \\
-    str = re.sub(r"""\\""", "\\\\", str)
+    str = str.replace("""\\""", """\\\\""")
     # - -> \_
-    str = re.sub('_', "\\_", str)
+    str = str.replace("_", "\\_")
     # * -> \*
-    str = re.sub(r"""\*""", "\\*", str)
+    str = str.replace("""*""", "\\*")
     # ~ -> \~
-    str = re.sub('~', "\\~", str)
+    str = str.replace("~", "\\~")
     # ` -> \`
-    str = re.sub('`', '\\`', str)
+    str = str.replace("`", "\\`")
     # | -> \|
-    str = re.sub('|', '\\|', str)
+    str = str.replace('|', "\\|")
 
     return str
