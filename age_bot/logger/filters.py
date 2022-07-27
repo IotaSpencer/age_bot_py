@@ -1,9 +1,11 @@
 import logging
 from logging import LogRecord
+from age_bot.logger.helpers import escape
+
 class EscapeFilenameforDiscord(logging.Filter):
     def filter(self, record):
         if record.filename:
-            record.filename = escape_markdown(record.filename)
+            record.filename = escape(record.filename)
         return True
 
 class LevelFilter(logging.Filter):
