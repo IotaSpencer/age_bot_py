@@ -14,7 +14,7 @@ from age_bot.logger.filters import emoji_filter, level_filter, markdown_filter
 from age_bot.logger.helpers import escape
 
 logger = logging.getLogger('discord')
-logger.setLevel(colorlog.DEBUG)
+logger.setLevel(colorlog.INFO)
 
 
 async def init_loggers():
