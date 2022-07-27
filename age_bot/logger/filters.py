@@ -6,6 +6,7 @@ class EscapeFilenameforDiscord(logging.Filter):
     def filter(self, record):
         if record.filename:
             record.filename = escape(record.filename)
+            record.funcName = escape(record.funcName)
         return True
 
 class LevelFilter(logging.Filter):
