@@ -11,7 +11,7 @@ from logging_disgram.logging_handlers import DiscordHandler, TelegramHandler
 from age_bot.config import Configs
 from age_bot.logger.dicts import log_colors, secondary_log_colors
 from age_bot.logger.filters import emoji_filter, level_filter, markdown_filter
-from age_bot.logger.helpers import escape_markdown
+from age_bot.logger.helpers import escape
 
 logger = logging.getLogger('discord')
 logger.setLevel(colorlog.DEBUG)
