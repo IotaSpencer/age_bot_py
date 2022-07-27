@@ -66,7 +66,7 @@ async def init_loggers():
     #############################
     #  Add Filters to Handlers  #
     #############################
-    discord_handler.addFilter(escape_markdown)
+    discord_handler.addFilter(markdown_filter)
     discord_handler.addFilter(emoji_filter)
     stream_handler.addFilter(level_filter)
     telegram_handler.addFilter(markdown_filter)
