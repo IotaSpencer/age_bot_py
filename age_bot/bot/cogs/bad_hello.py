@@ -31,7 +31,7 @@ class BadHello(commands.Cog):
                         f"that role is **{message.guild.get_role(Configs.sdb.servers[str(message.guild.id)].role).name}** "
                         f"\n\n"
                         f"To do so.. please run the **command** /verify in #hello and I will message you with further "
-                        f"instructions. Also see the slash-commands channel for info on how to use slash commands."
+                        f"instructions. Also see the #slash-commands channel for info on how to use slash commands."
                         f"\n\n"
                         f"You are receiving this message because you messaged #{message.channel} a message that triggered "
                         f"me.\n "
