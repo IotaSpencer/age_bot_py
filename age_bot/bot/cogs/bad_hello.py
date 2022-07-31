@@ -22,16 +22,16 @@ class BadHello(commands.Cog):
     @discord.Cog.listener()
     async def on_message(self, message: Message):
         if check_if_tester_or_main_bot(message, self.bot):
-            if message.author.bot is not True:
-                if re.search("^([!@$/]?(verify|hello)\S+)$",
-                             message.content, re.IGNORECASE) and message.channel.name == 'hello':
+            if ((message.author.bot is not True and re.search("^([!@$/]?(verify|hello))$",
+                                                              message.content, re.IGNORECASE)) and message.channel.name == 'hello'):
+                try:
                     our_message = await message.author.send(
                         f"Hello, {message.author}, in order to post or read {message.guild} messages you must be a certain"
                         f" role as well as submitted a form of ID with the server in question. For {message.guild} "
                         f"that role is **{message.guild.get_role(Configs.sdb.servers[str(message.guild.id)].role).name}** "
                         f"\n\n"
-                        f"To do so.. please run the command /verify in #hello and I will message you with further "
-                        f"instructions. "
+                        f"To do so.. please run the **command** /verify in #hello and I will message you with further "
+                        f"instructions. Also see the slash-commands channel for info on how to use slash commands."
                         f"\n\n"
                         f"You are receiving this message because you messaged #{message.channel} a message that triggered "
                         f"me.\n "
@@ -41,6 +41,11 @@ class BadHello(commands.Cog):
                         f"non-complying questions or messages will be deleted.")
                     await message.delete(delay=0)
                     await our_message.delete(delay=120)
+                except Forbidden:
+                    hello_channel = Configs.sdb.servers[str(message.guild.id)].hello_channel
+                    hello_chan = await message.guild.fetch_channel(hello_channel)
+                    await hello_chan.send(f"Hey {message.author.mention}, I can't seem to send you a message, please make sure you "
+                                            f"have accept messages from server members ticked.", delete_after=120)
         else:
             logger.info(f"dev env active, ignoring {inspect.stack()[0][3]} in {Path(__file__).stem}")
             pass
