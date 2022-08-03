@@ -101,7 +101,7 @@ class IDStuff(commands.Cog, command_attrs=dict(hidden=True)):
 
 
                 finally:
-                    logger.debug('Making sure we sent our message')
+                    logger.info('Making sure we sent our message')
                     await member.send(
                         "If you haven't received a message that your submission has been sent, let the admins of "
                         "the applicable server know to contact the owner of this bot(iotaspencer#0001).")
