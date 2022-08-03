@@ -2,6 +2,7 @@
 from typing import Union
 import inspect
 from pathlib import Path
+import re
 # 3rd Party
 import discord
 from discord.ext import commands, bridge
@@ -29,13 +30,13 @@ class Hello(discord.Cog):
                 f"Hello, {member_distinct(ctx.author)}, in order to post or read {ctx.guild.name} messages you must be a certain role as well as "
                 f"submitted a form of ID with the server in question."
                 f"\n\n"
-                f"Please see #id-example and #upload-example for examples on how to upload and format your message.\n"
-                f"Do not worry about the '&verify 626...."
+                f"Please see #id-example for examples on how and format your message."
                 f"\n\n"
                 f"For {ctx.guild.name} that role is "
                 f"{ctx.guild.get_role(Configs.sdb.servers[str(ctx.guild.id)].role)} "
                 f"\n\n"
-                f"To do so, please run the **command** /verify"
+                f"To do so, please run the **command** /verify, and I will message you with further instructions. "
+                f"Also see the #slash-commands channel for info on how to use slash commands."
                 f"",
             )
 
@@ -56,10 +57,10 @@ class Hello(discord.Cog):
             f"Please see #id-example and #upload-example for examples on how to upload and format your message.\n"
 
             f"\n\n"
-            f"For {ctx.guild.name} that role is "
-            f"{adult_role} "
+            f"For {ctx.guild.name} that role is {adult_role} "
             f"\n\n"
-            f"To do so, please run the command /verify in #hello"
+            f"To do so, please run the command /verify in #hello, and I will message you with further instructions. "
+            f"Also see the #slash-commands channel for info on how to use slash commands."
         )
 
     @discord.Cog.listener()
@@ -68,7 +69,33 @@ class Hello(discord.Cog):
             orig_msg = msg
             if msg.guild and msg.channel:
                 if msg.channel.name == 'hello':
-                    if msg.channel_mentions:
+                    if message.author.bot is not True and \
+                            re.search("^([!@$/]?(verify|hello))$", message.content, re.IGNORECASE) and \
+                            message.channel.name == 'hello':
+                        try:
+                            our_message = await message.author.send(
+                                f"Hello, {message.author}, in order to post or read {message.guild} messages you must be a certain"
+                                f" role as well as submitted a form of ID with the server in question. For {message.guild} "
+                                f"that role is **{message.guild.get_role(Configs.sdb.servers[str(message.guild.id)].role).name}** "
+                                f"\n\n"
+                                f"To do so.. please run the **command** /verify in #hello and I will message you with further "
+                                f"instructions. Also see the #slash-commands channel for info on how to use slash commands."
+                                f"\n\n"
+                                f"You are receiving this message because you messaged #{message.channel} a message that triggered "
+                                f"me.\n "
+                                f"Your message will now be deleted since the message holds no purpose in #{message.channel}."
+                                f"\n\n"
+                                f"You may ask questions about the process in #{message.channel} but other than that, "
+                                f"non-complying questions or messages will be deleted.")
+                            await message.delete(delay=0)
+                            await our_message.delete(delay=120)
+                        except Forbidden:
+                            hello_channel = Configs.sdb.servers[str(message.guild.id)].hello_channel
+                            hello_chan = await message.guild.fetch_channel(hello_channel)
+                            await hello_chan.send(
+                                f"Hey {message.author.mention}, I can't seem to send you a message, please make sure you "
+                                f"have accept messages from server members ticked.", delete_after=120)
+                    elif msg.channel_mentions and msg.author.bot is not True: # Don't react to bots
                         if msg.channel_mentions[0].name == 'hello':
                             shame_msg = await msg.reply(content="The command is '&hello' nothing else"
                                                                 "As per our above rules, as you mentioned the channel, "
