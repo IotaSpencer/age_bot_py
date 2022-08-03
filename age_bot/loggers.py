@@ -74,3 +74,6 @@ async def init_loggers():
     telegram_handler.addFilter(emoji_filter)
     for handler in [discord_handler, stream_handler, file_handler, telegram_handler]:
         logger.addHandler(handler)
+    logger.getChild('gateway').handlers = [discord_handler]
+    logger.getChild('login').handlers = [discord_handler]
+    logger.info('Loggers initialized')
