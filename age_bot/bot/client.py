@@ -44,7 +44,6 @@ async def start(env) -> None:
     bot.load_extension('age_bot.bot.cogs.owner')
     bot.load_extension('age_bot.bot.cogs.id_stuff')
     bot.load_extension('age_bot.bot.cogs.hello')
-    bot.load_extension('age_bot.bot.cogs.bad_hello')
     bot.load_extension('age_bot.bot.cogs.join_message')
     bot.load_extension('age_bot.bot.cogs.age_calc')
     bot.load_extension('age_bot.bot.cogs.purge_users')
