@@ -99,7 +99,7 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
             await msg.delete()
 
     @confirm.error
-    async def confirm_error(self, ctx, error):
+    async def confirm_error(self, ctx, error: Union[commands.MissingAnyRole,commands.MemberNotFound, commands.MessageNotFound, ConfirmPermError]):
         # if isinstance(error, TypeError):
         if isinstance(error, commands.MissingAnyRole):
             await ctx.send(
@@ -116,6 +116,21 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
             )
         elif isinstance(error, ConfirmPermError):
             await ctx.reply(f"""You do not have permission to use this command.""")
+        elif isinstance(error, discord.HTTPException):
+            assert isinstance(error, discord.HTTPException), "This is not a discord.HTTPException"
+            if error.code == 50007:
+                await ctx.send(
+                    "Cannot send messages to this user, they have DMs disabled."
+                )
+            else:
+                await ctx.send(
+                    "An HTTP Exception occurred while sending running the command. Please try again later or see the logs."
+                )
+                logger.error(f"A discord error occured via the REST/HTTP API.\n"
+                             f"Error Code: {error.code}\n"
+                             f"Error Args: {error.args}\n"
+                             f"Error Status: {error.status}\n"
+                             f"Error Response: {error.response.text}")
         else:
             import traceback
             await ctx.reply(''.join(traceback.format_exception(
@@ -125,7 +140,7 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
     @confirmable_check()
     @commands.command(usage="<message> <user> <reason...>", description="Reject an ID.")
     async def reject(self, ctx: Context, message: int, user: str, reason: str):
-        member = ctx.guild.get_member_named(user)  # type: Member
+        member = ctx.guild.get_member_named(member_distinct(user))  # type: Member
         msg = ''
         try:
             msg = await ctx.channel.fetch_message(message)  # type: Message
@@ -137,21 +152,40 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
                               f"message above.")
 
     @reject.error
-    async def reject_error(self, ctx, error):
+    async def reject_error(self, ctx, error: Union[commands.MissingAnyRole, commands.MemberNotFound, commands.MessageNotFound, ConfirmPermError, discord.HTTPException]):
         if isinstance(error, commands.MissingAnyRole):
+            assert isinstance(error, commands.MissingAnyRole)
             await ctx.send(
                 f"You are not allowed to use this command, you're missing all of these roles ({error})".format(
                     error=error.missing_roles))
         elif isinstance(error, commands.MessageNotFound):
+            assert isinstance(error, commands.MessageNotFound)
             await ctx.send(
                 f"This message ({error.argument}) does not exist or is too old to delete. If need be, delete the message manually."
             )
         elif isinstance(error, commands.MemberNotFound):
+            assert isinstance(error, commands.MemberNotFound)
             await ctx.send(
                 f"This member ({error.argument}) does not exist, or is not in the cache"
             )
         elif isinstance(error, ConfirmPermError):
             await ctx.reply(f"""You do not have permission to use this command.""")
+        elif isinstance(error, discord.HTTPException):
+            assert isinstance(error, discord.HTTPException), "This is not a discord.HTTPException"
+            if error.code == 50007:
+                await ctx.send(
+                    "Cannot send messages to this user, they have DMs disabled."
+                )
+            else:
+                await ctx.send(
+                    "An HTTP Exception occurred while sending running the command. Please try again later or see the logs."
+                )
+                logger.error(f"A discord error occured via the REST/HTTP API.\n"
+                             f"Error Code: {error.code}\n"
+                             f"Error Args: {error.args}\n"
+                             f"Error Status: {error.status}\n"
+                             f"Error Response: {error.response.text}")
+            await ctx.reply(f"{error}")
         else:
             import traceback
             await ctx.reply(''.join(traceback.format_exception(
