@@ -25,8 +25,9 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
         self.bot = bot
         self.ext_path = 'age_bot.bot.cogs.confirm'
 
-
-    @slash_command(name="adultify", description="Manually add the 'adult' role to a member if they can't use the verification system", usage="<user> <dob: DD/MM/YYYY format>",
+    @slash_command(name="adultify",
+                   description="Manually add the 'adult' role to a member if they can't use the verification system",
+                   usage="<user> <dob: DD/MM/YYYY format>",
                    default_permission=False)
     async def slash_adultify(self, ctx: ApplicationContext, user: discord.Member = None, dob: str = None):
         """[user] [dob]"""
@@ -43,15 +44,20 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
             if has_server_confirm_role(guild, ctx.author):
                 try:
 
-                    await ctx.respond("Are you sure you want to add the 'adult' role to {}? (yes/no)".format(user.mention), ephemeral=True)
-                    await ctx.respond("Please make sure to check that the ID+Tag photo is a valid submission and that the user is 18+", ephemeral=True)
+                    await ctx.respond(
+                        "Are you sure you want to add the 'adult' role to {}? (yes/no)".format(user.mention),
+                        ephemeral=True)
+                    await ctx.respond(
+                        "Please make sure to check that the ID+Tag photo is a valid submission and that the user is 18+",
+                        ephemeral=True)
+
                     def check(m: Message) -> bool:
                         return re.search(r"""^(Y(es)?|[Nn](o)?)""", m.content, re.IGNORECASE) is not None and \
                                m.author.id == ctx.author.id and m.author.id == ctx.user.id
 
                     msg = await ctx.bot.wait_for('message', timeout=30.0, check=check)
                     match msg.content:
-                        case 'Yes'| 'yes' | 'Y' | 'y' | 'YES':
+                        case 'Yes' | 'yes' | 'Y' | 'y' | 'YES':
                             disclaimer_reply = True
                         case 'No' | 'no' | 'N' | 'n' | 'NO':
                             disclaimer_reply = False
@@ -100,7 +106,8 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
             await msg.delete()
 
     @confirm.error
-    async def confirm_error(self, ctx, error: Union[commands.MissingAnyRole,commands.MemberNotFound, commands.MessageNotFound, ConfirmPermError]):
+    async def confirm_error(self, ctx, error: Union[
+        commands.MissingAnyRole, commands.MemberNotFound, commands.MessageNotFound, ConfirmPermError]):
         # if isinstance(error, TypeError):
         if isinstance(error, commands.MissingAnyRole):
             await ctx.send(
@@ -153,7 +160,8 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
                               f"message above.")
 
     @reject.error
-    async def reject_error(self, ctx, error: Union[commands.MissingAnyRole, commands.MemberNotFound, commands.MessageNotFound, ConfirmPermError, discord.HTTPException]):
+    async def reject_error(self, ctx, error: Union[
+        commands.MissingAnyRole, commands.MemberNotFound, commands.MessageNotFound, ConfirmPermError, discord.HTTPException]):
         if isinstance(error, commands.MissingAnyRole):
             assert isinstance(error, commands.MissingAnyRole)
             await ctx.send(

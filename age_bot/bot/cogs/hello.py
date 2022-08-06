@@ -41,7 +41,7 @@ class Hello(discord.Cog):
             )
 
     @helper_check()
-    @discord.commands.default_permissions(manage_server=True)
+    @discord.commands.default_permissions(manage_guild=True)
     @bridge.bridge_command(signature='')
     async def fhello(self, ctx: Union[BridgeApplicationContext, BridgeExtContext], user: discord.Member):
         if is_slash_command(ctx):
