@@ -2,6 +2,7 @@
 import asyncio
 import re
 # 3rd party
+from typing import Union
 
 from discord.ext import commands
 from discord import Cog, Member
