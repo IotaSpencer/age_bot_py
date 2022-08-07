@@ -32,6 +32,7 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
     async def slash_adultify(self, ctx: ApplicationContext, user: discord.Member = None, dob: str = None):
         """[user] [dob]"""
         if check_if_tester_or_main_bot(ctx, self.bot):
+            disclaimer_reply = None
             await ctx.defer(ephemeral=True)
             author = ctx.user
             age = calculate_age(dob)
@@ -47,6 +48,7 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
                     await ctx.respond(
                         "Are you sure you want to add the 'adult' role to {}? (yes/no)".format(user.mention),
                         ephemeral=True)
+                    await ctx.respond(f"This user is according to you, {age}", ephemeral=True)
                     await ctx.respond(
                         "Please make sure to check that the ID+Tag photo is a valid submission and that the user is 18+",
                         ephemeral=True)
@@ -61,16 +63,21 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
                             disclaimer_reply = True
                         case 'No' | 'no' | 'N' | 'n' | 'NO':
                             disclaimer_reply = False
-                    audit_log_string = f"{ctx.user.mention} manually gave {user.mention} the {adult_role} Role."
-                    await user.add_roles(adult_role, reason=audit_log_string)
-                    e = discord.Embed(title="Manual Adult")
-                    e.set_author(name=ctx.author)
-                    e.add_field(name="Action", value=audit_log_string)
-                    e.add_field(name="Input", value=f"{dob}")
-                    e.colour = adult_role.color
-                    await ctx.respond(content="Command Triggered.", ephemeral=True)
-                    await channel.send(embed=e)  # sends the embed
-                    await user.send(content=f"You've been confirmed to be a(n) {adult_role.name} on {ctx.guild.name}")
+                    if isinstance(disclaimer_reply, bool):
+                        await user.add_roles(adult_role)
+                        await ctx.respond(
+                            "{} has been given the 'adult' role".format(user.mention),
+                            ephemeral=True)
+                        audit_log_string = f"{ctx.user.mention} manually gave {user.mention} the {adult_role} Role."
+                        await user.add_roles(adult_role, reason=audit_log_string)
+                        e = discord.Embed(title="Manual Adult")
+                        e.set_author(name=ctx.author)
+                        e.add_field(name="Action", value=audit_log_string)
+                        e.add_field(name="Input", value=f"{dob}")
+                        e.colour = adult_role.color
+                        await ctx.respond(content="Command Triggered.", ephemeral=True)
+                        await channel.send(embed=e)  # sends the embed
+                        await user.send(content=f"You've been confirmed to be a(n) {adult_role.name} on {ctx.guild.name}")
                 except asyncio.TimeoutError:
                     await ctx.respond(content=f"Sorry, you have 30 seconds to decide. Try again or forget it.")
 
@@ -107,7 +114,7 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
 
     @confirm.error
     async def confirm_error(self, ctx, error: Union[
-        commands.MissingAnyRole, commands.MemberNotFound, commands.MessageNotFound, ConfirmPermError]):
+            commands.MissingAnyRole, commands.MemberNotFound, commands.MessageNotFound, ConfirmPermError]):
         # if isinstance(error, TypeError):
         if isinstance(error, commands.MissingAnyRole):
             await ctx.send(
@@ -134,7 +141,7 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
                 await ctx.send(
                     "An HTTP Exception occurred while sending running the command. Please try again later or see the logs."
                 )
-                logger.error(f"A discord error occured via the REST/HTTP API.\n"
+                logger.error(f"A discord error occurred via the REST/HTTP API.\n"
                              f"Error Code: {error.code}\n"
                              f"Error Args: {error.args}\n"
                              f"Error Status: {error.status}\n"
@@ -148,7 +155,7 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
     @confirmable_check()
     @commands.command(usage="<message> <user> <reason...>", description="Reject an ID.")
     async def reject(self, ctx: Context, message: int, user: str, reason: str):
-        member = ctx.guild.get_member_named(member_distinct(user))  # type: Member
+        member = ctx.guild.get_member_named(user)  # type: Member
         msg = ''
         try:
             msg = await ctx.channel.fetch_message(message)  # type: Message
@@ -161,7 +168,7 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
 
     @reject.error
     async def reject_error(self, ctx, error: Union[
-        commands.MissingAnyRole, commands.MemberNotFound, commands.MessageNotFound, ConfirmPermError, discord.HTTPException]):
+            commands.MissingAnyRole, commands.MemberNotFound, commands.MessageNotFound, ConfirmPermError, discord.HTTPException]):
         if isinstance(error, commands.MissingAnyRole):
             assert isinstance(error, commands.MissingAnyRole)
             await ctx.send(
@@ -189,7 +196,7 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
                 await ctx.send(
                     "An HTTP Exception occurred while sending running the command. Please try again later or see the logs."
                 )
-                logger.error(f"A discord error occured via the REST/HTTP API.\n"
+                logger.error(f"A discord error occurred via the REST/HTTP API.\n"
                              f"Error Code: {error.code}\n"
                              f"Error Args: {error.args}\n"
                              f"Error Status: {error.status}\n"
