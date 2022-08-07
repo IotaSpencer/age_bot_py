@@ -186,6 +186,8 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
             )
         elif isinstance(error, ConfirmPermError):
             await ctx.reply(f"""You do not have permission to use this command.""")
+        elif isinstance(error, AttributeError):
+            await ctx.reply(f"""This user left.""")
         elif isinstance(error, discord.HTTPException):
             assert isinstance(error, discord.HTTPException), "This is not a discord.HTTPException"
             if error.code == 50007:
