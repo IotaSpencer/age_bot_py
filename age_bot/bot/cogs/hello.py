@@ -70,31 +70,31 @@ class Hello(discord.Cog):
             orig_msg = msg
             if msg.guild and msg.channel: # check if message is in a guild and has a channel
                 if msg.channel.name == 'hello': # check if message is in the hello channel
-                    if message.author.bot is not True and \
-                        re.search("^([!@$/]?(verify|hello))$", message.content, re.IGNORECASE) and \
-                            message.channel.name == 'hello':
+                    if msg.author.bot is not True and \
+                        re.search("^([!@$/]?(verify|hello))$", msg.content, re.IGNORECASE) and \
+                            msg.channel.name == 'hello':
                         try:
-                            our_message = await message.author.send(
-                                f"Hello, {message.author}, in order to post or read {message.guild} messages you must be a certain"
-                                f" role as well as submitted a form of ID with the server in question. For {message.guild} "
-                                f"that role is **{get_adult_role(ctx)}** "
+                            our_message = await msg.author.send(
+                                f"Hello, {msg.author}, in order to post or read {msg.guild} messages you must be a certain"
+                                f" role as well as submitted a form of ID with the server in question. For {msg.guild} "
+                                f"that role is **{get_adult_role(msg)}** "
                                 f"\n\n"
                                 f"To do so.. please run the **command** /verify in #hello and I will message you with further "
                                 f"instructions. Also see the #slash-commands channel for info on how to use slash commands."
                                 f"\n\n"
-                                f"You are receiving this message because you messaged #{message.channel} a message that triggered "
+                                f"You are receiving this message because you messaged #{msg.channel} a message that triggered "
                                 f"me.\n "
-                                f"Your message will now be deleted since the message holds no purpose in #{message.channel}."
+                                f"Your message will now be deleted since the message holds no purpose in #{msg.channel}."
                                 f"\n\n"
-                                f"You may ask questions about the process in #{message.channel} but other than that, "
+                                f"You may ask questions about the process in #{msg.channel} but other than that, "
                                 f"non-complying questions or messages will be deleted.")
-                            await message.delete(delay=0)
+                            await msg.delete(delay=120)
                             await our_message.delete(delay=120)
                         except Forbidden:
-                            hello_channel = Configs.sdb.servers[str(message.guild.id)].hello_channel
-                            hello_chan = await message.guild.fetch_channel(hello_channel)
+                            hello_channel = Configs.sdb.servers[str(msg.guild.id)].hello_channel
+                            hello_chan = await msg.guild.fetch_channel(hello_channel)
                             await hello_chan.send(
-                                f"Hey {message.author.mention}, I can't seem to send you a message, please make sure you "
+                                f"Hey {msg.author.mention}, I can't seem to send you a message, please make sure you "
                                 f"have accept messages from server members ticked.", delete_after=120)
                     elif msg.channel_mentions and msg.author.bot is not True: # Don't react to bots
                         if msg.channel_mentions[0].name == 'hello':
