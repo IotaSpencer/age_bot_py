@@ -22,7 +22,7 @@ class Fun(commands.Cog):
     async def ping(self, ctx: Context):
         await ctx.reply("Pong %sms" % ctx.bot.latency)
 
-    @slash_command()
+    @slash_command(guild_ids=[])
     async def whoami(self, ctx: ApplicationContext):
         await ctx.respond(ephemeral=True, content=f"Hello {member_distinct(ctx.user)}.\n"
                                                   "My name is 年齢-様 or Nenrei-Sama, or just Nenrei.\n"
