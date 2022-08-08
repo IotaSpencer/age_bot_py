@@ -29,8 +29,8 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
                    description="Manually add the 'adult' role to a member if they can't use the verification system",
                    usage="<user> <dob: DD/MM/YYYY format>",
                    default_permission=False)
-    async def slash_adultify(self, ctx: ApplicationContext, user: discord.Member = None, dob: str = None):
-        """[user] [dob]"""
+    async def slash_adultify(self, ctx: ApplicationContext, user: discord.Member, dob: str):
+        """<user> <dob>"""
         if check_if_tester_or_main_bot(ctx, self.bot):
             disclaimer_reply = None
             await ctx.defer(ephemeral=True)
