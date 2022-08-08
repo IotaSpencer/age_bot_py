@@ -1,19 +1,23 @@
 # built-in
-from typing import Union
 import inspect
-from pathlib import Path
 import re
-# 3rd Party
+from pathlib import Path
+from typing import Union
+
 import discord
-from discord.ext import commands, bridge
-from discord import Member, Message
-# local imports
-from discord.ext.bridge import BridgeApplicationContext, BridgeExtContext
-from discord.ext.commands import guild_only
-from age_bot.bot.helpers.discord_helpers import *
-from age_bot.bot.helpers.perms_predicate import *
-from ...config import Configs
 from age_bot.loggers import logger
+from bot.helpers.discord_helpers import check_if_tester_or_main_bot, find_shamed, get_adult_role, is_slash_command, \
+    member_distinct, \
+    user_distinct
+from bot.helpers.perms_predicate import helper_check
+from discord import Forbidden, Message
+# 3rd Party
+from discord.ext import bridge
+from discord.ext.bridge import BridgeApplicationContext, BridgeExtContext
+# local imports
+from discord.ext.commands import guild_only
+
+from ...config import Configs
 
 
 class Hello(discord.Cog):
@@ -24,13 +28,14 @@ class Hello(discord.Cog):
     @guild_only()
     @bridge.bridge_command()
     async def hello(self, ctx):
-        await ctx.defer(ephemeral=True) if ctx.__class__.__name__ in ['ApplicationContext', 'BridgeApplicationContext'] else await ctx.defer()
+        await ctx.defer(ephemeral=True) if ctx.__class__.__name__ in ['ApplicationContext',
+                                                                      'BridgeApplicationContext'] else await ctx.defer()
         if check_if_tester_or_main_bot(ctx, self.bot):
             await ctx.reply(
                 f"Hello, {member_distinct(ctx.author)}, in order to post or read {ctx.guild.name} messages you must be a certain role as well as "
-                f"submitted a form of ID with the server in question."
+                f"submitted a form of ID+Discord-tag with the server in question."
                 f"\n\n"
-                f"Please see #id-example for examples on how and format your message."
+                f"Please see #id-example for examples on how to prep your photo."
                 f"\n\n"
                 f"For {ctx.guild.name} that role is "
                 f"{get_adult_role(ctx)} "
@@ -48,30 +53,28 @@ class Hello(discord.Cog):
             ctx.defer(ephemeral=True)
         else:
             pass
-        usr = ctx.guild.get_member_named(user)  # type: Member
         adult_role = get_adult_role(ctx)
-        await usr.send(
-            f"Hello, {user_distinct(usr)}, in order to post or read {ctx.guild.name} messages you must be a "
+        await user.send(
+            f"Hello, {user_distinct(user)}, in order to post or read {ctx.guild.name} messages you must be a "
             f"certain role as well as "
-            f"submitted a form of ID with the server in question."
+            f"submitted a form of ID+Discord-tag with the server in question."
             f"\n\n"
-            f"Please see #id-example for examples on how to upload and format your message.\n"
-
+            f"Please see #id-example for examples on how to prep your photo.\n"
             f"\n\n"
             f"For {ctx.guild.name} that role is {adult_role} "
             f"\n\n"
-            f"To do so, please run the command /verify in #hello, and I will message you with further instructions. "
+            f"To do so, please run the command **/verify** in #hello, and I will message you with further instructions. "
             f"Also see the #slash-commands channel for info on how to use slash commands."
         )
+        await ctx.respond(f"**/hello** forced on {member_distinct(user)}")
 
     @discord.Cog.listener()
     async def on_message(self, msg: Message):
         if check_if_tester_or_main_bot(msg, self.bot):
-            orig_msg = msg
-            if msg.guild and msg.channel: # check if message is in a guild and has a channel
-                if msg.channel.name == 'hello': # check if message is in the hello channel
+            if msg.guild and msg.channel:  # check if message is in a guild and has a channel
+                if msg.channel.name == 'hello':  # check if message is in the hello channel
                     if msg.author.bot is not True and \
-                        re.search("^([!@$/]?(verify|hello))$", msg.content, re.IGNORECASE) and \
+                            re.search("^([!@$/]?(verify|hello))$", msg.content, re.IGNORECASE) and \
                             msg.channel.name == 'hello':
                         try:
                             our_message = await msg.author.send(
@@ -79,7 +82,7 @@ class Hello(discord.Cog):
                                 f" role as well as submitted a form of ID with the server in question. For {msg.guild} "
                                 f"that role is **{get_adult_role(msg)}** "
                                 f"\n\n"
-                                f"To do so.. please run the **command** /verify in #hello and I will message you with further "
+                                f"To do so.. please run the **slash-command** /verify in #hello and I will message you with further "
                                 f"instructions. Also see the #slash-commands channel for info on how to use slash commands."
                                 f"\n\n"
                                 f"You are receiving this message because you messaged #{msg.channel} a message that triggered "
@@ -96,7 +99,7 @@ class Hello(discord.Cog):
                             await hello_chan.send(
                                 f"Hey {msg.author.mention}, I can't seem to send you a message, please make sure you "
                                 f"have accept messages from server members ticked.", delete_after=120)
-                    elif msg.channel_mentions and msg.author.bot is not True: # Don't react to bots
+                    elif msg.channel_mentions and msg.author.bot is not True:  # Don't react to bots
                         if msg.channel_mentions[0].name == 'hello':
                             shame_msg = await msg.reply(content="The command is '/hello' nothing else"
                                                                 "As per our above rules, as you mentioned the channel, "
@@ -121,6 +124,7 @@ class Hello(discord.Cog):
         else:
             logger.info(f"dev env active, ignoring {inspect.stack()[0][3]} in {Path(__file__).stem}")
             pass
+
 
 def setup(bot):
     bot.add_cog(Hello(bot))
