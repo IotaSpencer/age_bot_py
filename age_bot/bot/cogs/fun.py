@@ -3,6 +3,8 @@ import asyncio
 
 # 3rd party
 import discord
+from bot.helpers.discord_helpers import member_distinct
+from discord import ApplicationContext, slash_command
 from discord.ext import commands, pages, bridge
 
 # local
@@ -21,6 +23,20 @@ class Fun(commands.Cog):
     @bridge.bridge_command()
     async def ping(self, ctx: Context):
         await ctx.reply("Pong %sms" % ctx.bot.latency)
+
+    @slash_command()
+    async def whoami(self, ctx: ApplicationContext):
+        await ctx.respond(ephemeral=True, content=f"Hello {member_distinct(ctx.user)}.\n"
+                                                  "My name is 年齢-様 or Nenrei-Sama, or just Nenrei.\n"
+                                                  "I'm a bot that helps some server owners verify that their users are as old as they say they are."
+                                                  "I do this by receiving your ID+discord tag after you run the slash-command **/verify**"
+                                                  "in the '#hello' channel of the servers I share with you.\n"
+                                                  "\n"
+                                                  "For more information, see one of the following.\n"
+                                                  "> * The aforementioned '#hello' channel\n"
+                                                  "> * An admin of one of the servers I share with you.\n"
+                                                  "> * My owner and developer iotaspencer#0001 or his server.\n"
+                                                  ">     https://discord.gg/nBB7K5y -- If this invite becomes invalid, let him know.")
 
     @commands.guild_only()
     @commands.is_owner()
