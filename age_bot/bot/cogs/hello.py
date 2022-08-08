@@ -4,20 +4,20 @@ import re
 from pathlib import Path
 from typing import Union
 
-import discord
-from age_bot.loggers import logger
-from bot.helpers.discord_helpers import check_if_tester_or_main_bot, find_shamed, get_adult_role, is_slash_command, \
-    member_distinct, \
-    user_distinct
-from bot.helpers.perms_predicate import helper_check
-from discord import Forbidden, Message
 # 3rd Party
+import discord
 from discord.ext import bridge
 from discord.ext.bridge import BridgeApplicationContext, BridgeExtContext
-# local imports
+from discord import Forbidden, Message
 from discord.ext.commands import guild_only
 
-from ...config import Configs
+# local imports
+from age_bot.loggers import logger
+from age_bot.bot.helpers.discord_helpers import check_if_tester_or_main_bot, find_shamed, get_adult_role, is_slash_command, \
+    member_distinct, \
+    user_distinct
+from age_bot.bot.helpers.perms_predicate import helper_check
+from age_bot.config import Configs
 
 
 class Hello(discord.Cog):
