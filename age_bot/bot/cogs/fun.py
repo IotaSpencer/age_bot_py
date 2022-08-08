@@ -3,13 +3,11 @@ import asyncio
 
 # 3rd party
 import discord
-from bot.helpers.discord_helpers import member_distinct
 from discord import ApplicationContext, slash_command
 from discord.ext import commands, pages, bridge
 
 # local
-from discord.ext.commands import Context
-
+from age_bot.bot.helpers.discord_helpers import member_distinct
 from age_bot.loggers import logger
 from age_bot.config import Configs
 from age_bot.bot.helpers.info_embeds import *
