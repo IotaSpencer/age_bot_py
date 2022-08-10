@@ -6,7 +6,7 @@ from typing import Union
 
 from discord.ext import commands
 from discord import Cog, Member
-from discord.ext.commands import Context
+from discord.ext.commands import Context, MemberNotFound
 from discord import Message, slash_command, ApplicationContext
 import discord
 # local
@@ -77,7 +77,8 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
                         e.colour = adult_role.color
                         await ctx.respond(content="Command Triggered.", ephemeral=True)
                         await channel.send(embed=e)  # sends the embed
-                        await user.send(content=f"You've been confirmed to be a(n) {adult_role.name} on {ctx.guild.name}")
+                        await user.send(
+                            content=f"You've been confirmed to be a(n) {adult_role.name} on {ctx.guild.name}")
                 except asyncio.TimeoutError:
                     await ctx.respond(content=f"Sorry, you have 30 seconds to decide. Try again or forget it.")
 
@@ -95,6 +96,8 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
     @confirmable_check()
     async def confirm(self, ctx: Context, message: int, user: str):
         member = ctx.guild.get_member_named(user)
+        if member is None:
+            raise commands.MemberNotFound(user)
         adult_role = await get_adult_role(ctx)
         msg = await ctx.channel.fetch_message(message)
         try:
@@ -102,13 +105,11 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
             if not member.get_role(adult_role.id):
                 await member.add_roles(adult_role, reason='Moderator adulted member')
                 await ctx.channel.send(
-                    f"{member} was confirmed to be an {adult_role}".format(member=member_distinct(member),
-                                                                           adult_role=adult_role.name))
-                await member.send("You've been confirmed for '{adult_role}'".format(adult_role=adult_role.name))
+                    f"{member_distinct(member)} was confirmed to be an {adult_role.name}")
+                await member.send(f"You've been confirmed for '{adult_role.name}'")
             else:
                 await ctx.channel.send(
-                    "{member} already has the role {adult_role}.".format(member=member_distinct(member),
-                                                                         adult_role=adult_role.name))
+                    f"{member_distinct(member)} already has the role {adult_role.name}.")
         finally:
             await msg.delete()
 
@@ -118,11 +119,10 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
         # if isinstance(error, TypeError):
         if isinstance(error, commands.MissingAnyRole):
             await ctx.send(
-                "You are not allowed to use this command, you're missing all of these roles ({error})".format(
-                    error=error.missing_roles))
+                f"You are not allowed to use this command, you're missing all of these roles ({error.missing_roles})")
         elif isinstance(error, commands.MemberNotFound):
             await ctx.reply(
-                "This user is not in this guild, or is not cached."
+                f"This user ({error.argument}) is not in this guild(or left), or is not cached."
             )
         elif isinstance(error, commands.MessageNotFound):
             await ctx.reply(
@@ -131,11 +131,13 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
             )
         elif isinstance(error, ConfirmPermError):
             await ctx.reply(f"""You do not have permission to use this command.""")
+        elif isinstance(error, AttributeError):
+            await ctx.reply(f"""This user has already left.""")
         elif isinstance(error, discord.HTTPException):
             assert isinstance(error, discord.HTTPException), "This is not a discord.HTTPException"
             if error.code == 50007:
                 await ctx.send(
-                    "Cannot send messages to this user, they have DMs disabled."
+                    "Cannot send messages to this user, they probably have DMs disabled."
                 )
             else:
                 await ctx.send(
@@ -156,6 +158,8 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
     @commands.command(usage="<message> <user> <reason...>", description="Reject an ID.")
     async def reject(self, ctx: Context, message: int, user: str, reason: str):
         member = ctx.guild.get_member_named(user)  # type: Member
+        if member is None:
+            raise commands.MemberNotFound(user)
         msg = ''
         try:
             msg = await ctx.channel.fetch_message(message)  # type: Message
@@ -168,12 +172,11 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
 
     @reject.error
     async def reject_error(self, ctx, error: Union[
-            commands.MissingAnyRole, commands.MemberNotFound, commands.MessageNotFound, ConfirmPermError, discord.HTTPException]):
+            commands.MissingAnyRole, commands.MemberNotFound, commands.MessageNotFound, ConfirmPermError, AttributeError, discord.HTTPException]):
         if isinstance(error, commands.MissingAnyRole):
             assert isinstance(error, commands.MissingAnyRole)
             await ctx.send(
-                f"You are not allowed to use this command, you're missing all of these roles ({error})".format(
-                    error=error.missing_roles))
+                f"You are not allowed to use this command, you're missing all of these roles ({error.missing_roles})")
         elif isinstance(error, commands.MessageNotFound):
             assert isinstance(error, commands.MessageNotFound)
             await ctx.send(
@@ -182,7 +185,7 @@ class Confirm(Cog, command_attrs=dict(hidden=True)):
         elif isinstance(error, commands.MemberNotFound):
             assert isinstance(error, commands.MemberNotFound)
             await ctx.send(
-                f"This member ({error.argument}) does not exist, or is not in the cache"
+                f"This member ({error.argument}) does not exist(or left), or is not in the cache"
             )
         elif isinstance(error, ConfirmPermError):
             await ctx.reply(f"""You do not have permission to use this command.""")
