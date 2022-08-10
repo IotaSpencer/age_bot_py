@@ -38,7 +38,7 @@ class Hello(discord.Cog):
                 f"Please see #id-example for examples on how to prep your photo."
                 f"\n\n"
                 f"For {ctx.guild.name} that role is "
-                f"{get_adult_role(ctx)} "
+                f"{await get_adult_role(ctx)} "
                 f"\n\n"
                 f"To do so, please run the **command** /verify, and I will message you with further instructions. "
                 f"Also see the #slash-commands channel for info on how to use slash commands."
@@ -53,7 +53,7 @@ class Hello(discord.Cog):
             ctx.defer(ephemeral=True)
         else:
             pass
-        adult_role = get_adult_role(ctx)
+        adult_role = await get_adult_role(ctx)
         await user.send(
             f"Hello, {user_distinct(user)}, in order to post or read {ctx.guild.name} messages you must be a "
             f"certain role as well as "
@@ -80,7 +80,7 @@ class Hello(discord.Cog):
                             our_message = await msg.author.send(
                                 f"Hello, {msg.author}, in order to post or read {msg.guild} messages you must be a certain"
                                 f" role as well as submitted a form of ID with the server in question. For {msg.guild} "
-                                f"that role is **{get_adult_role(msg)}** "
+                                f"that role is **{await get_adult_role(msg)}** "
                                 f"\n\n"
                                 f"To do so.. please run the **slash-command** /verify in #hello and I will message you with further "
                                 f"instructions. Also see the #slash-commands channel for info on how to use slash commands."
